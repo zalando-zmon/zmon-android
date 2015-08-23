@@ -32,8 +32,8 @@
 
             <AutoCompleteTextView
                 style="@style/AppTheme.Login.TextView"
-                android:id="@+id/email"
-                android:hint="@string/prompt_email"
+                android:id="@+id/username"
+                android:hint="@string/prompt_username"
                 android:inputType="textEmailAddress"
                 android:maxLines="1"
                 android:singleLine="true" />

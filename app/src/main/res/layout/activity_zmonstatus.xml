@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    style="@style/AppTheme.ZmonStatus"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <RelativeLayout
+        style="@style/AppTheme.ZmonStatus.Row"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <TextView
+            android:id="@+id/queue_size"
+            style="@style/AppTheme.ZmonStatus.Text.InQueue"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+
+        <TextView
+            style="@style/AppTheme.ZmonStatus.Text"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_toRightOf="@id/queue_size"
+            android:text="@string/in_queue" />
+
+    </RelativeLayout>
+
+    <RelativeLayout
+        style="@style/AppTheme.ZmonStatus.Row"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <TextView
+            android:id="@+id/active_workers"
+            style="@style/AppTheme.ZmonStatus.Text.ActiveWorkers"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+
+        <TextView
+            android:id="@+id/workers_separator"
+            style="@style/AppTheme.ZmonStatus.Text"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_toRightOf="@id/active_workers"
+            android:text="@string/workers_separator" />
+
+        <TextView
+            android:id="@+id/total_workers"
+            style="@style/AppTheme.ZmonStatus.Text.ActiveWorkers"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_toRightOf="@id/workers_separator" />
+
+        <TextView
+            style="@style/AppTheme.ZmonStatus.Text"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_toRightOf="@id/total_workers"
+            android:text="@string/active_workers" />
+
+    </RelativeLayout>
+
+</LinearLayout>

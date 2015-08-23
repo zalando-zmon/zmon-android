@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="in_queue">in queue</string>
+    <string name="active_workers">active workers</string>
+    <string name="workers_separator">/</string>
+</resources>

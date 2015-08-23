@@ -5,4 +5,7 @@
     <color name="alert_red">#dd3010</color>
     <color name="alert_orange">#e77a1d</color>
     <color name="alert_yellow">#ebb129</color>
+
+    <color name="status_green">#78B924</color>
+    <color name="status_red">#EF5157</color>
 </resources>
