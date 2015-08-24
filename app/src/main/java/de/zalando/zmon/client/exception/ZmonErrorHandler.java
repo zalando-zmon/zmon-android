@@ -1,4 +1,4 @@
-package de.zalando.zmon.client;
+package de.zalando.zmon.client.exception;
 
 import android.util.Log;
 

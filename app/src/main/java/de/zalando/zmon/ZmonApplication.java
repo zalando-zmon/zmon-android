@@ -15,7 +15,7 @@ import java.lang.reflect.Type;
 import java.util.Date;
 
 import de.zalando.zmon.auth.Authorization;
-import de.zalando.zmon.client.ZmonErrorHandler;
+import de.zalando.zmon.client.exception.ZmonErrorHandler;
 import de.zalando.zmon.client.ZmonLoginService;
 import de.zalando.zmon.client.ZmonStatusService;
 import retrofit.RestAdapter;
