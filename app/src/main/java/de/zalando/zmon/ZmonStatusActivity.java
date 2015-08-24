@@ -6,6 +6,9 @@ import android.os.Bundle;
 import android.util.Log;
 import android.widget.TextView;
 
+import java.util.concurrent.ScheduledThreadPoolExecutor;
+import java.util.concurrent.TimeUnit;
+
 import de.zalando.zmon.client.ZmonStatusService;
 import de.zalando.zmon.client.domain.ZmonStatus;
 
@@ -14,6 +17,8 @@ public class ZmonStatusActivity extends Activity {
     private TextView queueSize;
     private TextView activeWorkers;
     private TextView totalWorkers;
+
+    private ScheduledThreadPoolExecutor statusUpdateExecutor = new ScheduledThreadPoolExecutor(5);
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -26,18 +31,48 @@ public class ZmonStatusActivity extends Activity {
     }
 
     @Override
-    protected void onStart() {
-        super.onStart();
-        updateZmonStatus();
+    protected void onResume() {
+        super.onResume();
+
+        if (statusUpdateExecutor != null) {
+            Log.w("[zmon]", "ScheduledThreadPoolExecutor is alive although he should not be!");
+            statusUpdateExecutor.shutdownNow();
+        }
+
+        Log.d("[zmon]", "Start zmon status updater");
+
+        statusUpdateExecutor = new ScheduledThreadPoolExecutor(1);
+        statusUpdateExecutor.scheduleAtFixedRate(new Runnable() {
+            @Override
+            public void run() {
+                updateZmonStatus();
+            }
+        }, 0, 5000, TimeUnit.MILLISECONDS);
     }
 
     @Override
-    protected void onResume() {
-        super.onResume();
-        updateZmonStatus();
+    protected void onPause() {
+        super.onPause();
+        shutdownStatusUpdateExecutor();
+    }
+
+    @Override
+    protected void onStop() {
+        super.onStop();
+        shutdownStatusUpdateExecutor();
+    }
+
+    private void shutdownStatusUpdateExecutor() {
+        if (statusUpdateExecutor != null) {
+            Log.d("[zmon]", "Stop zmon status updater");
+            statusUpdateExecutor.shutdown();
+            statusUpdateExecutor = null;
+        }
     }
 
     private void updateZmonStatus() {
+        Log.d("[zmon]", "Start process to update zmon2 status");
+
         new GetZmonStatusTask() {
             @Override
             protected void onPostExecute(ZmonStatus status) {
