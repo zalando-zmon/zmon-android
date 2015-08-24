@@ -28,17 +28,17 @@
 
     <style name="AppTheme.ZmonStatus.Text.InQueue">
         <item name="android:paddingRight">10dp</item>
-        <item name="android:textColor">@color/status_green</item>
+        <item name="android:textColor">@color/status_ok</item>
     </style>
 
     <style name="AppTheme.ZmonStatus.Text.ActiveWorkers">
         <item name="android:paddingRight">5dp</item>
-        <item name="android:textColor">@color/status_red</item>
+        <item name="android:textColor">@color/status_warning</item>
     </style>
 
     <style name="AppTheme.ZmonStatus.Text.TotalWorkers">
         <item name="android:paddingRight">10dp</item>
-        <item name="android:textColor">@color/status_red</item>
+        <item name="android:textColor">@color/status_warning</item>
     </style>
 
 </resources>

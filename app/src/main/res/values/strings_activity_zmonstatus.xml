@@ -3,4 +3,6 @@
     <string name="in_queue">in queue</string>
     <string name="active_workers">active workers</string>
     <string name="workers_separator">/</string>
+
+    <string name="error_network">Network Error</string>
 </resources>

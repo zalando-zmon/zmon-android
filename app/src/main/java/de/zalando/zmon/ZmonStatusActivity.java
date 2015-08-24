@@ -1,6 +1,7 @@
 package de.zalando.zmon;
 
 import android.app.Activity;
+import android.app.AlertDialog;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.util.Log;
@@ -78,24 +79,66 @@ public class ZmonStatusActivity extends Activity {
             protected void onPostExecute(ZmonStatus status) {
                 super.onPostExecute(status);
 
-                Log.d("[zmon]", "Zmon2 Total Workers  = " + status.getWorkersTotal());
-                Log.d("[zmon]", "Zmon2 Active Workers = " + status.getWorkersActive());
-                Log.d("[zmon]", "Zmon2 Workers        = " + status.getWorkers().size());
-                Log.d("[zmon]", "Zmon2 Queue Size     = " + status.getQueueSize());
-                Log.d("[zmon]", "Zmon2 Queues         = " + status.getQueues().size());
-
-                queueSize.setText(Integer.toString(status.getQueueSize()));
-                activeWorkers.setText(Integer.toString(status.getWorkersActive()));
-                totalWorkers.setText(Integer.toString(status.getWorkersTotal()));
+                if (status != null) {
+                    updateZmonStatusNumbers(status);
+                    updateZmonStatusColors(status);
+                }
             }
         }.execute();
+    }
+
+    private void updateZmonStatusNumbers(ZmonStatus status) {
+        Log.d("[zmon]", "Zmon2 Total Workers  = " + status.getWorkersTotal());
+        Log.d("[zmon]", "Zmon2 Active Workers = " + status.getWorkersActive());
+        Log.d("[zmon]", "Zmon2 Workers        = " + status.getWorkers().size());
+        Log.d("[zmon]", "Zmon2 Queue Size     = " + status.getQueueSize());
+        Log.d("[zmon]", "Zmon2 Queues         = " + status.getQueues().size());
+
+        queueSize.setText(Integer.toString(status.getQueueSize()));
+        activeWorkers.setText(Integer.toString(status.getWorkersActive()));
+        totalWorkers.setText(Integer.toString(status.getWorkersTotal()));
+    }
+
+    private void updateZmonStatusColors(ZmonStatus status) {
+        if (status.getQueueSize() > 1000) {
+            queueSize.setTextColor(getResources().getColor(R.color.status_warning));
+        } else {
+            queueSize.setTextColor(getResources().getColor(R.color.status_ok));
+        }
+
+        if (status.getWorkersActive() < status.getWorkersTotal()) {
+            activeWorkers.setTextColor(getResources().getColor(R.color.status_warning));
+            totalWorkers.setTextColor(getResources().getColor(R.color.status_warning));
+        } else {
+            activeWorkers.setTextColor(getResources().getColor(R.color.status_ok));
+            totalWorkers.setTextColor(getResources().getColor(R.color.status_ok));
+        }
+    }
+
+    private void displayError(final Exception e) {
+        runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                new AlertDialog.Builder(ZmonStatusActivity.this)
+                        .setTitle(R.string.error_network)
+                        .setMessage(e.getMessage())
+                        .show();
+            }
+        });
     }
 
     public class GetZmonStatusTask extends AsyncTask<Void, Void, ZmonStatus> {
         @Override
         protected ZmonStatus doInBackground(Void... voids) {
-            final ZmonStatusService statusService = ((ZmonApplication) getApplication()).getZmonStatusService();
-            return statusService.getStatus();
+            try {
+                final ZmonStatusService statusService = ((ZmonApplication) getApplication()).getZmonStatusService();
+                return statusService.getStatus();
+            } catch (Exception e) {
+                Log.e("[zmon]", "Error while fetching zmon2 status", e);
+                displayError(e);
+            }
+
+            return null;
         }
     }
 }
