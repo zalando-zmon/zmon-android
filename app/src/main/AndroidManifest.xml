@@ -27,6 +27,7 @@
         </activity>
 
         <activity
+            android:label="@string/label_zmonstatus"
             android:name=".ZmonStatusActivity"
             android:theme="@style/AppTheme" />
     </application>
