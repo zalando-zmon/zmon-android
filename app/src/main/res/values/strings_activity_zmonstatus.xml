@@ -4,5 +4,8 @@
     <string name="active_workers">active workers</string>
     <string name="workers_separator">/</string>
 
+    <string name="menu_pause">Pause</string>
+    <string name="menu_resume">Resume</string>
+
     <string name="error_network">Network Error</string>
 </resources>
