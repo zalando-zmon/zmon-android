@@ -30,6 +30,11 @@
             android:label="@string/label_zmonstatus"
             android:name=".ZmonStatusActivity"
             android:theme="@style/AppTheme" />
+
+        <activity
+            android:label="@string/label_dashboard"
+            android:name=".ZmonDashboardActivity"
+            android:theme="@style/AppTheme" />
     </application>
 
 </manifest>
