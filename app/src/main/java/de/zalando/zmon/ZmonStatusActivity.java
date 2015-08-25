@@ -8,27 +8,22 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
-import android.widget.TextView;
 
 import java.util.concurrent.ScheduledThreadPoolExecutor;
 import java.util.concurrent.TimeUnit;
 
 import de.zalando.zmon.client.ZmonStatusService;
 import de.zalando.zmon.client.domain.ZmonStatus;
+import de.zalando.zmon.fragment.ZmonStatusFragment;
 
 public class ZmonStatusActivity extends AppCompatActivity {
 
     private static final String EXTRA_IS_STATUS_UPDATER_PAUSED = "extra.is.status.updater.paused";
-    private static final String EXTRA_QUEUE_SIZE = "extra.queue.size";
-    private static final String EXTRA_ACTIVE_WORKERS = "extra.active.workers";
-    private static final String EXTRA_TOTAL_WORKERS = "extra.total.workers";
+
+    private ZmonStatusFragment zmonStatusFragment;
 
     private MenuItem pauseItem;
     private MenuItem resumeItem;
-
-    private TextView queueSize;
-    private TextView activeWorkers;
-    private TextView totalWorkers;
 
     private ScheduledThreadPoolExecutor statusUpdateExecutor = new ScheduledThreadPoolExecutor(5);
     private boolean isStatusUpdateExecutorPaused = false;
@@ -38,16 +33,13 @@ public class ZmonStatusActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_zmonstatus);
 
-        queueSize = (TextView) findViewById(R.id.queue_size);
-        activeWorkers = (TextView) findViewById(R.id.active_workers);
-        totalWorkers = (TextView) findViewById(R.id.total_workers);
-
         if (savedInstanceState != null) {
             isStatusUpdateExecutorPaused = savedInstanceState.getBoolean(EXTRA_IS_STATUS_UPDATER_PAUSED, false);
-            queueSize.setText(savedInstanceState.getString(EXTRA_QUEUE_SIZE));
-            activeWorkers.setText(savedInstanceState.getString(EXTRA_ACTIVE_WORKERS));
-            totalWorkers.setText(savedInstanceState.getString(EXTRA_TOTAL_WORKERS));
         }
+
+        zmonStatusFragment = new ZmonStatusFragment();
+
+        getSupportFragmentManager().beginTransaction().replace(R.id.content_frame, zmonStatusFragment).commit();
     }
 
     @Override
@@ -84,15 +76,6 @@ public class ZmonStatusActivity extends AppCompatActivity {
     protected void onStop() {
         super.onStop();
         shutdownStatusUpdateExecutor();
-    }
-
-    @Override
-    protected void onSaveInstanceState(Bundle outState) {
-        super.onSaveInstanceState(outState);
-        outState.putBoolean(EXTRA_IS_STATUS_UPDATER_PAUSED, isStatusUpdateExecutorPaused);
-        outState.putString(EXTRA_QUEUE_SIZE, queueSize.getText().toString());
-        outState.putString(EXTRA_ACTIVE_WORKERS, activeWorkers.getText().toString());
-        outState.putString(EXTRA_TOTAL_WORKERS, totalWorkers.getText().toString());
     }
 
     @Override
@@ -160,46 +143,25 @@ public class ZmonStatusActivity extends AppCompatActivity {
                 super.onPostExecute(status);
 
                 if (status != null) {
-                    updateZmonStatusNumbers(status);
-                    updateZmonStatusColors(status);
+                    Log.d("[zmon]", "Zmon2 Total Workers  = " + status.getWorkersTotal());
+                    Log.d("[zmon]", "Zmon2 Active Workers = " + status.getWorkersActive());
+                    Log.d("[zmon]", "Zmon2 Workers        = " + status.getWorkers().size());
+                    Log.d("[zmon]", "Zmon2 Queue Size     = " + status.getQueueSize());
+                    Log.d("[zmon]", "Zmon2 Queues         = " + status.getQueues().size());
+
+                    zmonStatusFragment.update(status);
+                } else {
+                    Log.w("[zmon]", "No zmon2 status received");
                 }
             }
         }.execute();
-    }
-
-    private void updateZmonStatusNumbers(ZmonStatus status) {
-        Log.d("[zmon]", "Zmon2 Total Workers  = " + status.getWorkersTotal());
-        Log.d("[zmon]", "Zmon2 Active Workers = " + status.getWorkersActive());
-        Log.d("[zmon]", "Zmon2 Workers        = " + status.getWorkers().size());
-        Log.d("[zmon]", "Zmon2 Queue Size     = " + status.getQueueSize());
-        Log.d("[zmon]", "Zmon2 Queues         = " + status.getQueues().size());
-
-        queueSize.setText(Integer.toString(status.getQueueSize()));
-        activeWorkers.setText(Integer.toString(status.getWorkersActive()));
-        totalWorkers.setText(Integer.toString(status.getWorkersTotal()));
-    }
-
-    private void updateZmonStatusColors(ZmonStatus status) {
-        if (status.getQueueSize() > 1000) {
-            queueSize.setTextColor(getResources().getColor(R.color.status_warning));
-        } else {
-            queueSize.setTextColor(getResources().getColor(R.color.status_ok));
-        }
-
-        if (status.getWorkersActive() < status.getWorkersTotal()) {
-            activeWorkers.setTextColor(getResources().getColor(R.color.status_warning));
-            totalWorkers.setTextColor(getResources().getColor(R.color.status_warning));
-        } else {
-            activeWorkers.setTextColor(getResources().getColor(R.color.status_ok));
-            totalWorkers.setTextColor(getResources().getColor(R.color.status_ok));
-        }
     }
 
     private void displayError(final Exception e) {
         runOnUiThread(new Runnable() {
             @Override
             public void run() {
-                new AlertDialog.Builder(ZmonStatusActivity.this)
+                new AlertDialog.Builder(getParent())
                         .setTitle(R.string.error_network)
                         .setMessage(e.getMessage())
                         .show();
