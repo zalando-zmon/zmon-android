@@ -4,12 +4,6 @@ import android.app.AlertDialog;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.util.Log;
-import android.view.Menu;
-import android.view.MenuInflater;
-import android.view.MenuItem;
-
-import java.util.concurrent.ScheduledThreadPoolExecutor;
-import java.util.concurrent.TimeUnit;
 
 import de.zalando.zmon.client.ZmonStatusService;
 import de.zalando.zmon.client.domain.ZmonStatus;
@@ -17,15 +11,7 @@ import de.zalando.zmon.fragment.ZmonStatusFragment;
 
 public class ZmonStatusActivity extends BaseActivity {
 
-    private static final String EXTRA_IS_STATUS_UPDATER_PAUSED = "extra.is.status.updater.paused";
-
     private ZmonStatusFragment zmonStatusFragment;
-
-    private MenuItem pauseItem;
-    private MenuItem resumeItem;
-
-    private ScheduledThreadPoolExecutor statusUpdateExecutor = new ScheduledThreadPoolExecutor(5);
-    private boolean isStatusUpdateExecutorPaused = false;
 
     @Override
     protected int getLayoutId() {
@@ -36,10 +22,6 @@ public class ZmonStatusActivity extends BaseActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        if (savedInstanceState != null) {
-            isStatusUpdateExecutorPaused = savedInstanceState.getBoolean(EXTRA_IS_STATUS_UPDATER_PAUSED, false);
-        }
-
         zmonStatusFragment = new ZmonStatusFragment();
 
         getSupportFragmentManager()
@@ -49,98 +31,7 @@ public class ZmonStatusActivity extends BaseActivity {
     }
 
     @Override
-    public boolean onPrepareOptionsMenu(Menu menu) {
-        pauseItem = menu.findItem(R.id.pause);
-        resumeItem = menu.findItem(R.id.resume);
-
-        pauseItem.setVisible(!isStatusUpdateExecutorPaused);
-        resumeItem.setVisible(isStatusUpdateExecutorPaused);
-
-        return super.onPrepareOptionsMenu(menu);
-    }
-
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        MenuInflater menuInflater = getMenuInflater();
-        menuInflater.inflate(R.menu.menu_zmonstatus, menu);
-        return super.onCreateOptionsMenu(menu);
-    }
-
-    @Override
-    protected void onResume() {
-        super.onResume();
-        startStatusUpdateExecutor();
-    }
-
-    @Override
-    protected void onPause() {
-        super.onPause();
-        shutdownStatusUpdateExecutor();
-    }
-
-    @Override
-    protected void onStop() {
-        super.onStop();
-        shutdownStatusUpdateExecutor();
-    }
-
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        switch (item.getItemId()) {
-            case R.id.pause:
-                pauseStatusUpdaterExecutor();
-                return true;
-
-            case R.id.resume:
-                resumeStatusUpdaterExecutor();
-                return true;
-        }
-        return super.onOptionsItemSelected(item);
-    }
-
-    private void startStatusUpdateExecutor() {
-        if (statusUpdateExecutor != null) {
-            statusUpdateExecutor.shutdownNow();
-        }
-
-        if (!isStatusUpdateExecutorPaused) {
-            Log.d("[zmon]", "Start zmon status updater");
-
-            statusUpdateExecutor = new ScheduledThreadPoolExecutor(1);
-            statusUpdateExecutor.scheduleAtFixedRate(new Runnable() {
-                @Override
-                public void run() {
-                    updateZmonStatus();
-                }
-            }, 0, 5000, TimeUnit.MILLISECONDS);
-        }
-    }
-
-    private void pauseStatusUpdaterExecutor() {
-        Log.d("[zmon]", "Pause zmon status updater");
-        isStatusUpdateExecutorPaused = true;
-        pauseItem.setVisible(false);
-        resumeItem.setVisible(true);
-        shutdownStatusUpdateExecutor();
-    }
-
-    private void resumeStatusUpdaterExecutor() {
-        Log.d("[zmon]", "Resume zmon status updater");
-        isStatusUpdateExecutorPaused = false;
-        pauseItem.setVisible(true);
-        resumeItem.setVisible(false);
-        startStatusUpdateExecutor();
-    }
-
-    private void shutdownStatusUpdateExecutor() {
-        if (statusUpdateExecutor != null) {
-            Log.d("[zmon]", "Stop zmon status updater");
-            statusUpdateExecutor.shutdown();
-            statusUpdateExecutor = null;
-        }
-    }
-
-    private void updateZmonStatus() {
+    protected void runJob() {
         Log.d("[zmon]", "Start process to update zmon2 status");
 
         new GetZmonStatusTask() {

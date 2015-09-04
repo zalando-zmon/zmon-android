@@ -2,6 +2,8 @@ package de.zalando.zmon;
 
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.support.v7.app.AlertDialog;
+import android.util.Log;
 
 import java.util.List;
 
@@ -30,9 +32,7 @@ public class ZmonDashboardActivity extends BaseActivity {
     }
 
     @Override
-    protected void onResume() {
-        super.onResume();
-
+    protected void runJob() {
         new GetZmonAlertsTask((ZmonApplication) getApplication()) {
             @Override
             protected void onPostExecute(final List<ZmonAlertStatus> zmonAlertStatuses) {
@@ -46,7 +46,19 @@ public class ZmonDashboardActivity extends BaseActivity {
         }.execute("PayProc & Tooling/Payment Processing/Backend");
     }
 
-    private static class GetZmonAlertsTask extends AsyncTask<String, Void, List<ZmonAlertStatus>> {
+    private void displayError(final Exception e) {
+        runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                new AlertDialog.Builder(getParent())
+                        .setTitle(R.string.error_network)
+                        .setMessage(e.getMessage())
+                        .show();
+            }
+        });
+    }
+
+    private class GetZmonAlertsTask extends AsyncTask<String, Void, List<ZmonAlertStatus>> {
 
         private final ZmonApplication zmonApplication;
 
@@ -56,7 +68,14 @@ public class ZmonDashboardActivity extends BaseActivity {
 
         @Override
         protected List<ZmonAlertStatus> doInBackground(String... teams) {
-            return zmonApplication.getZmonAlertsService().listByTeam(teams[0]);
+            try {
+                return zmonApplication.getZmonAlertsService().listByTeam(teams[0]);
+            } catch (Exception e) {
+                Log.e("[zmon]", "Error while fetching alerts", e);
+                displayError(e);
+            }
+
+            return null;
         }
     }
 }
