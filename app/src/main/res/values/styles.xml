@@ -5,7 +5,8 @@
         <!-- Customize your theme here. -->
     </style>
 
-    <style name="AppTheme.Login"></style>
+    <style name="AppTheme.Login">
+    </style>
 
     <style name="AppTheme.Login.TextView">
         <item name="android:layout_width">match_parent</item>
@@ -16,7 +17,8 @@
         <item name="android:background">@color/zalando_orange</item>
     </style>
 
-    <style name="AppTheme.ZmonStatus"></style>
+    <style name="AppTheme.ZmonStatus">
+    </style>
 
     <style name="AppTheme.ZmonStatus.Row">
         <item name="android:padding">10dp</item>
@@ -39,6 +41,14 @@
     <style name="AppTheme.ZmonStatus.Text.TotalWorkers">
         <item name="android:paddingRight">10dp</item>
         <item name="android:textColor">@color/status_warning</item>
+    </style>
+
+    <style name="AppTheme.AlertStatus">
+        <item name="android:layout_margin">10dp</item>
+    </style>
+
+    <style name="AppTheme.AlertStatus.Message">
+        <item name="android:textSize">16sp</item>
     </style>
 
 </resources>
