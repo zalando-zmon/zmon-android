@@ -15,6 +15,7 @@ import java.lang.reflect.Type;
 import java.util.Date;
 
 import de.zalando.zmon.auth.Authorization;
+import de.zalando.zmon.client.ZmonAlertsService;
 import de.zalando.zmon.client.exception.ZmonErrorHandler;
 import de.zalando.zmon.client.ZmonLoginService;
 import de.zalando.zmon.client.ZmonStatusService;
@@ -27,6 +28,7 @@ public class ZmonApplication extends Application {
 
     private ZmonLoginService zmonLoginService;
     private ZmonStatusService zmonStatusService;
+    private ZmonAlertsService zmonAlertsService;
 
     private Authorization authorization;
 
@@ -70,6 +72,19 @@ public class ZmonApplication extends Application {
         }
 
         return zmonStatusService;
+    }
+
+    public ZmonAlertsService getZmonAlertsService() {
+        if (zmonAlertsService == null) {
+            zmonAlertsService = new RestAdapter.Builder()
+                    .setEndpoint("https://zmon2.zalando.net")
+                    .setLogLevel(RestAdapter.LogLevel.FULL)
+                    .setConverter(new GsonConverter(getGson()))
+                    .build()
+                    .create(ZmonAlertsService.class);
+        }
+
+        return zmonAlertsService;
     }
 
     public Authorization getAuthorization() {
