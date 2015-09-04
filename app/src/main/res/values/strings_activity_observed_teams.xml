@@ -1,4 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="label_observed_teams">Observed Teams</string>
+    <string name="team_save">Add</string>
+    <string name="hint_add_new_team">Add new team</string>
 </resources>

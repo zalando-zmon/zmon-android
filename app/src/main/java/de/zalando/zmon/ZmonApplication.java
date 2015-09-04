@@ -1,7 +1,5 @@
 package de.zalando.zmon;
 
-import android.app.Application;
-
 import com.google.gson.FieldNamingPolicy;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
@@ -10,19 +8,20 @@ import com.google.gson.JsonDeserializer;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonParseException;
 import com.google.gson.internal.bind.DateTypeAdapter;
+import com.orm.SugarApp;
 
 import java.lang.reflect.Type;
 import java.util.Date;
 
 import de.zalando.zmon.auth.Authorization;
 import de.zalando.zmon.client.ZmonAlertsService;
-import de.zalando.zmon.client.exception.ZmonErrorHandler;
 import de.zalando.zmon.client.ZmonLoginService;
 import de.zalando.zmon.client.ZmonStatusService;
+import de.zalando.zmon.client.exception.ZmonErrorHandler;
 import retrofit.RestAdapter;
 import retrofit.converter.GsonConverter;
 
-public class ZmonApplication extends Application {
+public class ZmonApplication extends SugarApp {
 
     private Gson gson;
 

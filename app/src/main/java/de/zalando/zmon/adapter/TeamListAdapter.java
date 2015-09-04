@@ -8,16 +8,16 @@ import android.widget.TextView;
 
 import java.util.List;
 
-import de.zalando.zmon.client.domain.ZmonTeam;
+import de.zalando.zmon.persistence.Team;
 
 public class TeamListAdapter extends BaseAdapter {
 
     private final Context context;
 
-    private final List<ZmonTeam> teams;
+    private final List<Team> teams;
 
 
-    public TeamListAdapter(Context context, List<ZmonTeam> teams) {
+    public TeamListAdapter(Context context, List<Team> teams) {
         this.context = context;
         this.teams = teams;
     }
@@ -39,7 +39,7 @@ public class TeamListAdapter extends BaseAdapter {
 
     @Override
     public View getView(int i, View view, ViewGroup viewGroup) {
-        ZmonTeam team = (ZmonTeam) getItem(i);
+        Team team = (Team) getItem(i);
 
         TextView tv = new TextView(context);
         tv.setText(team.getName());

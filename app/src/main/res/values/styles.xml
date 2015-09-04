@@ -5,8 +5,7 @@
         <!-- Customize your theme here. -->
     </style>
 
-    <style name="AppTheme.Navigation">
-    </style>
+    <style name="AppTheme.Navigation"></style>
 
     <style name="AppTheme.Navigation.Item">
         <item name="android:paddingTop">5dp</item>
@@ -19,8 +18,7 @@
         <item name="android:textStyle">bold</item>
     </style>
 
-    <style name="AppTheme.Login">
-    </style>
+    <style name="AppTheme.Login"></style>
 
     <style name="AppTheme.Login.TextView">
         <item name="android:layout_width">match_parent</item>
@@ -31,8 +29,7 @@
         <item name="android:background">@color/zalando_orange</item>
     </style>
 
-    <style name="AppTheme.ZmonStatus">
-    </style>
+    <style name="AppTheme.ZmonStatus"></style>
 
     <style name="AppTheme.ZmonStatus.Row">
         <item name="android:padding">10dp</item>
@@ -63,6 +60,18 @@
 
     <style name="AppTheme.AlertStatus.Message">
         <item name="android:textSize">16sp</item>
+    </style>
+
+    <style name="AppTheme.AddTeam"></style>
+
+    <style name="AppTheme.AddTeam.Container"></style>
+
+    <style name="AppTheme.AddTeam.Text">
+        <item name="android:textSize">16dp</item>
+    </style>
+
+    <style name="AppTheme.AddTeam.Button">
+        <item name="android:textSize">16dp</item>
     </style>
 
 </resources>

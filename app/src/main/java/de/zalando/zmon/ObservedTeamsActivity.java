@@ -2,12 +2,12 @@ package de.zalando.zmon;
 
 import android.os.Bundle;
 
-import com.google.common.collect.Lists;
+import java.util.List;
 
-import de.zalando.zmon.client.domain.ZmonTeam;
 import de.zalando.zmon.fragment.TeamListFragment;
+import de.zalando.zmon.persistence.Team;
 
-public class ObservedTeamsActivity extends BaseActivity {
+public class ObservedTeamsActivity extends BaseActivity implements TeamListFragment.Callback {
 
     private TeamListFragment teamListFragment;
 
@@ -32,7 +32,13 @@ public class ObservedTeamsActivity extends BaseActivity {
     protected void onStart() {
         super.onStart();
 
-        // TODO search teams from persistence layer
-        teamListFragment.setTeams(Lists.newArrayList(ZmonTeam.of("Team A"), ZmonTeam.of("Team B")));
+        teamListFragment.setTeams(Team.listAll(Team.class));
+    }
+
+    @Override
+    public void onCreateNewTeam(Team team) {
+        team.save();
+        List<Team> teams = Team.listAll(Team.class);
+        teamListFragment.setTeams(teams);
     }
 }

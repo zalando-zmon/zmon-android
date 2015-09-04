@@ -1,8 +1,9 @@
-package de.zalando.zmon.client.domain;
+package de.zalando.zmon.persistence;
 
 import com.google.common.base.MoreObjects;
+import com.orm.SugarRecord;
 
-public class ZmonTeam {
+public class Team extends SugarRecord<Team> {
 
     private String name;
 
@@ -19,8 +20,8 @@ public class ZmonTeam {
         return MoreObjects.toStringHelper(this).add("name", name).toString();
     }
 
-    public static ZmonTeam of(String name) {
-        ZmonTeam team = new ZmonTeam();
+    public static Team of(String name) {
+        Team team = new Team();
         team.setName(name);
 
         return team;
