@@ -29,7 +29,7 @@ public class AlertStatusListAdapter extends BaseAdapter {
             int prio1 = zmonAlertStatus.getAlertDefinition().getPriority();
             int prio2 = t1.getAlertDefinition().getPriority();
 
-            if (prio1 > prio2) {
+            if (prio1 < prio2) {
                 return -1;
             } else if (prio1 == prio2) {
                 return 0;
@@ -92,7 +92,7 @@ public class AlertStatusListAdapter extends BaseAdapter {
 
     private void setBackgroundColor(View container, int priority) {
         switch (priority) {
-            case 3:
+            case 1:
                 container.setBackground(context.getDrawable(R.color.alert_critical));
                 break;
             case 2:
