@@ -1,6 +1,7 @@
 package de.zalando.zmon.navigation;
 
 import android.content.Context;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
@@ -41,9 +42,12 @@ public class NavigationItemAdapter extends BaseAdapter {
     public View getView(int i, View view, ViewGroup viewGroup) {
         int item = (int) getItem(i);
 
-        TextView tv = new TextView(context);
-        tv.setText(context.getResources().getString(item));
+        LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
 
-        return tv;
+        View itemView = inflater.inflate(R.layout.listitem_navigation, viewGroup, false);
+        TextView itemText = (TextView) itemView.findViewById(R.id.item_text);
+        itemText.setText(context.getResources().getString(item));
+
+        return itemView;
     }
 }
