@@ -5,10 +5,16 @@ import android.os.Bundle;
 import android.support.v7.app.AlertDialog;
 import android.util.Log;
 
+import com.google.common.base.Function;
+import com.google.common.base.Joiner;
+import com.google.common.collect.Collections2;
+
+import java.util.Collection;
 import java.util.List;
 
 import de.zalando.zmon.client.domain.ZmonAlertStatus;
 import de.zalando.zmon.fragment.ZmonAlertListFragment;
+import de.zalando.zmon.persistence.Team;
 
 public class ZmonDashboardActivity extends SelfUpdatableActivity {
 
@@ -33,6 +39,14 @@ public class ZmonDashboardActivity extends SelfUpdatableActivity {
 
     @Override
     protected void runJob() {
+        List<Team> teams = Team.listAll(Team.class);
+        Collection<String> teamNames = Collections2.transform(teams, new Function<Team, String>() {
+            @Override
+            public String apply(Team team) {
+                return team.getName();
+            }
+        });
+
         new GetZmonAlertsTask((ZmonApplication) getApplication()) {
             @Override
             protected void onPostExecute(final List<ZmonAlertStatus> zmonAlertStatuses) {
@@ -43,7 +57,7 @@ public class ZmonDashboardActivity extends SelfUpdatableActivity {
                     }
                 });
             }
-        }.execute("PayProc & Tooling/Payment Processing/Backend");
+        }.execute(teamNames.toArray(new String[teamNames.size()]));
     }
 
     private void displayError(final Exception e) {
@@ -69,13 +83,20 @@ public class ZmonDashboardActivity extends SelfUpdatableActivity {
         @Override
         protected List<ZmonAlertStatus> doInBackground(String... teams) {
             try {
-                return zmonApplication.getZmonAlertsService().listByTeam(teams[0]);
+                String teamQueryString = makeTeamString(teams);
+                Log.d("zmon", "Query alerts for teams: " + teamQueryString);
+
+                return zmonApplication.getZmonAlertsService().listByTeam(teamQueryString);
             } catch (Exception e) {
                 Log.e("[zmon]", "Error while fetching alerts", e);
                 displayError(e);
             }
 
             return null;
+        }
+
+        private String makeTeamString(String... teams) {
+            return Joiner.on(",").join(teams);
         }
     }
 }
