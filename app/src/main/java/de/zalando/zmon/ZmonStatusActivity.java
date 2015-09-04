@@ -3,12 +3,10 @@ package de.zalando.zmon;
 import android.app.AlertDialog;
 import android.os.AsyncTask;
 import android.os.Bundle;
-import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
-import android.widget.ListView;
 
 import java.util.concurrent.ScheduledThreadPoolExecutor;
 import java.util.concurrent.TimeUnit;
@@ -16,10 +14,8 @@ import java.util.concurrent.TimeUnit;
 import de.zalando.zmon.client.ZmonStatusService;
 import de.zalando.zmon.client.domain.ZmonStatus;
 import de.zalando.zmon.fragment.ZmonStatusFragment;
-import de.zalando.zmon.navigation.NavigationClickListener;
-import de.zalando.zmon.navigation.NavigationItemAdapter;
 
-public class ZmonStatusActivity extends AppCompatActivity {
+public class ZmonStatusActivity extends BaseActivity {
 
     private static final String EXTRA_IS_STATUS_UPDATER_PAUSED = "extra.is.status.updater.paused";
 
@@ -32,21 +28,24 @@ public class ZmonStatusActivity extends AppCompatActivity {
     private boolean isStatusUpdateExecutorPaused = false;
 
     @Override
+    protected int getLayoutId() {
+        return R.layout.activity_zmonstatus;
+    }
+
+    @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_zmonstatus);
 
         if (savedInstanceState != null) {
             isStatusUpdateExecutorPaused = savedInstanceState.getBoolean(EXTRA_IS_STATUS_UPDATER_PAUSED, false);
         }
 
-        ListView navigationList = (ListView) findViewById(R.id.navigation_list);
-        navigationList.setAdapter(new NavigationItemAdapter(this));
-        navigationList.setOnItemClickListener(new NavigationClickListener(this));
-
         zmonStatusFragment = new ZmonStatusFragment();
 
-        getSupportFragmentManager().beginTransaction().replace(R.id.content_frame, zmonStatusFragment).commit();
+        getSupportFragmentManager()
+                .beginTransaction()
+                .replace(R.id.content_frame, zmonStatusFragment)
+                .commit();
     }
 
     @Override

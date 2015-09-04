@@ -2,21 +2,24 @@ package de.zalando.zmon;
 
 import android.os.AsyncTask;
 import android.os.Bundle;
-import android.support.v7.app.AppCompatActivity;
 
 import java.util.List;
 
 import de.zalando.zmon.client.domain.ZmonAlertStatus;
 import de.zalando.zmon.fragment.ZmonAlertListFragment;
 
-public class ZmonDashboardActivity extends AppCompatActivity {
+public class ZmonDashboardActivity extends BaseActivity {
 
     private ZmonAlertListFragment alertListFragment;
 
     @Override
+    protected int getLayoutId() {
+        return R.layout.activity_dashboard;
+    }
+
+    @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_dashboard);
 
         alertListFragment = new ZmonAlertListFragment();
 
