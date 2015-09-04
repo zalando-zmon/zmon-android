@@ -1,6 +1,7 @@
 package de.zalando.zmon.adapter;
 
 import android.content.Context;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
@@ -8,6 +9,7 @@ import android.widget.TextView;
 
 import java.util.List;
 
+import de.zalando.zmon.R;
 import de.zalando.zmon.persistence.Team;
 
 public class TeamListAdapter extends BaseAdapter {
@@ -41,9 +43,12 @@ public class TeamListAdapter extends BaseAdapter {
     public View getView(int i, View view, ViewGroup viewGroup) {
         Team team = (Team) getItem(i);
 
-        TextView tv = new TextView(context);
-        tv.setText(team.getName());
+        LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
 
-        return tv;
+        View itemView = inflater.inflate(R.layout.listitem_team, viewGroup, false);
+        TextView name = (TextView) itemView.findViewById(R.id.name);
+        name.setText(team.getName());
+
+        return itemView;
     }
 }

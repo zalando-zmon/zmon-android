@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <color name="zalando_orange">#f08532</color>
+    <color name="undo">#f08532</color>
 
     <color name="alert_critical">#dd3010</color>
     <color name="alert_medium">#e77a1d</color>

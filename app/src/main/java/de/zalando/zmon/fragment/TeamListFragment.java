@@ -6,9 +6,15 @@ import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AbsListView;
+import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ListView;
+import android.widget.Toast;
+
+import com.hudomju.swipe.SwipeToDismissTouchListener;
+import com.hudomju.swipe.adapter.ListViewAdapter;
 
 import java.util.List;
 
@@ -55,8 +61,40 @@ public class TeamListFragment extends Fragment {
         }
     }
 
-    public void setTeams(List<Team> teams) {
-        teamList.setAdapter(new TeamListAdapter(getActivity(), teams));
+    public void setTeams(final List<Team> teams) {
+        final TeamListAdapter adapter = new TeamListAdapter(getActivity(), teams);
+        teamList.setAdapter(adapter);
+
+        final SwipeToDismissTouchListener<ListViewAdapter> touchListener = new SwipeToDismissTouchListener<>(new ListViewAdapter(teamList), new SwipeToDismissTouchListener.DismissCallbacks<ListViewAdapter>() {
+            @Override
+            public boolean canDismiss(int i) {
+                return true;
+            }
+
+            @Override
+            public void onDismiss(ListViewAdapter listViewAdapter, int i) {
+                Team team = (Team) adapter.getItem(i);
+
+                teams.remove(team);
+                teamList.setAdapter(new TeamListAdapter(getActivity(), teams));
+
+                team.delete();
+                Toast.makeText(getActivity(), R.string.notification_team_deleted, Toast.LENGTH_SHORT).show();
+            }
+        });
+
+        teamList.setOnTouchListener(touchListener);
+        teamList.setOnScrollListener((AbsListView.OnScrollListener) touchListener.makeScrollListener());
+        teamList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                if (touchListener.existPendingDismisses()) {
+                    touchListener.undoPendingDismiss();
+                } else {
+                    Toast.makeText(getActivity(), "Position " + position, Toast.LENGTH_SHORT).show();
+                }
+            }
+        });
     }
 
     private void fireNewTeam(String teamName) {
