@@ -6,6 +6,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 
+import de.zalando.zmon.ObservedTeamsActivity;
 import de.zalando.zmon.R;
 import de.zalando.zmon.ZmonDashboardActivity;
 import de.zalando.zmon.ZmonStatusActivity;
@@ -29,6 +30,9 @@ public class NavigationClickListener implements AdapterView.OnItemClickListener 
 
             case R.string.nav_dashboard:
                 context.startActivity(new Intent(context, ZmonDashboardActivity.class));
+                return;
+            case R.string.nav_observed_teams:
+                context.startActivity(new Intent(context, ObservedTeamsActivity.class));
                 return;
         }
 

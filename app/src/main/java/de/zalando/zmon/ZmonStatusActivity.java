@@ -9,7 +9,7 @@ import de.zalando.zmon.client.ZmonStatusService;
 import de.zalando.zmon.client.domain.ZmonStatus;
 import de.zalando.zmon.fragment.ZmonStatusFragment;
 
-public class ZmonStatusActivity extends BaseActivity {
+public class ZmonStatusActivity extends SelfUpdatableActivity {
 
     private ZmonStatusFragment zmonStatusFragment;
 

@@ -10,7 +10,7 @@ import java.util.List;
 import de.zalando.zmon.client.domain.ZmonAlertStatus;
 import de.zalando.zmon.fragment.ZmonAlertListFragment;
 
-public class ZmonDashboardActivity extends BaseActivity {
+public class ZmonDashboardActivity extends SelfUpdatableActivity {
 
     private ZmonAlertListFragment alertListFragment;
 

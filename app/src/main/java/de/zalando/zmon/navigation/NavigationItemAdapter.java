@@ -13,7 +13,8 @@ public class NavigationItemAdapter extends BaseAdapter {
 
     private static final int[] navigationItems = {
             R.string.nav_zmon_status,
-            R.string.nav_dashboard
+            R.string.nav_dashboard,
+            R.string.nav_observed_teams
     };
 
     private final Context context;

@@ -2,4 +2,5 @@
 <resources>
     <string name="nav_zmon_status">ZMON Status</string>
     <string name="nav_dashboard">Dashboard</string>
+    <string name="nav_observed_teams">Observed Teams</string>
 </resources>

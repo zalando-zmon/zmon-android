@@ -27,13 +27,18 @@
         </activity>
 
         <activity
-            android:label="@string/label_zmonstatus"
             android:name=".ZmonStatusActivity"
+            android:label="@string/label_zmonstatus"
             android:theme="@style/AppTheme" />
 
         <activity
-            android:label="@string/label_dashboard"
             android:name=".ZmonDashboardActivity"
+            android:label="@string/label_dashboard"
+            android:theme="@style/AppTheme" />
+
+        <activity
+            android:name=".ObservedTeamsActivity"
+            android:label="@string/label_observed_teams"
             android:theme="@style/AppTheme" />
     </application>
 
