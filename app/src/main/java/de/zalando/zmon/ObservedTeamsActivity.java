@@ -36,9 +36,16 @@ public class ObservedTeamsActivity extends BaseActivity implements TeamListFragm
     }
 
     @Override
-    public void onCreateNewTeam(Team team) {
+    public void onTeamCreated(Team team) {
         team.save();
         List<Team> teams = Team.listAll(Team.class);
         teamListFragment.setTeams(teams);
+    }
+
+    @Override
+    public void onTeamRemoved(Team team) {
+        if (team != null) {
+            team.delete();
+        }
     }
 }

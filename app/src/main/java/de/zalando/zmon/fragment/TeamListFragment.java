@@ -13,6 +13,7 @@ import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.Toast;
 
+import com.google.common.base.Strings;
 import com.hudomju.swipe.SwipeToDismissTouchListener;
 import com.hudomju.swipe.adapter.ListViewAdapter;
 
@@ -25,7 +26,9 @@ import de.zalando.zmon.persistence.Team;
 public class TeamListFragment extends Fragment {
 
     public interface Callback {
-        void onCreateNewTeam(Team team);
+        void onTeamCreated(Team team);
+
+        void onTeamRemoved(Team team);
     }
 
     private ListView teamList;
@@ -44,8 +47,10 @@ public class TeamListFragment extends Fragment {
         addTeamBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                fireNewTeam(newTeamField.getText().toString());
-                newTeamField.setText("");
+                if (!Strings.isNullOrEmpty(newTeamField.getText().toString())) {
+                    fireNewTeam(newTeamField.getText().toString());
+                    newTeamField.setText("");
+                }
             }
         });
 
@@ -78,7 +83,9 @@ public class TeamListFragment extends Fragment {
                 teams.remove(team);
                 teamList.setAdapter(new TeamListAdapter(getActivity(), teams));
 
-                team.delete();
+                if (callback != null) {
+                    callback.onTeamRemoved(team);
+                }
                 Toast.makeText(getActivity(), R.string.notification_team_deleted, Toast.LENGTH_SHORT).show();
             }
         });
@@ -99,7 +106,7 @@ public class TeamListFragment extends Fragment {
 
     private void fireNewTeam(String teamName) {
         if (callback != null) {
-            callback.onCreateNewTeam(Team.of(teamName));
+            callback.onTeamCreated(Team.of(teamName));
         }
     }
 }
