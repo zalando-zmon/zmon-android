@@ -9,10 +9,17 @@
         android:layout_height="match_parent"
         android:orientation="vertical">
 
+        <android.support.v7.widget.Toolbar
+            android:id="@+id/toolbar_top"
+            style="@style/AppTheme.Toolbar">
+
+        </android.support.v7.widget.Toolbar>
+
         <FrameLayout
             android:id="@+id/teams_fragment"
             android:layout_width="match_parent"
-            android:layout_height="match_parent" />
+            android:layout_height="match_parent"
+            android:layout_below="@id/toolbar_top" />
 
     </RelativeLayout>
 

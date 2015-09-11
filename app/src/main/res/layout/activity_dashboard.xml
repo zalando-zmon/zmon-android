@@ -9,6 +9,12 @@
         android:layout_height="match_parent"
         android:orientation="vertical">
 
+        <android.support.v7.widget.Toolbar
+            android:id="@+id/toolbar_top"
+            style="@style/AppTheme.Toolbar">
+
+        </android.support.v7.widget.Toolbar>
+
         <FrameLayout
             android:id="@+id/alert_list_fragment"
             android:layout_width="match_parent"
