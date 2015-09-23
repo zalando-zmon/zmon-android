@@ -1,13 +1,7 @@
 package de.zalando.zmon;
 
-import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v7.app.AlertDialog;
-import android.util.Log;
-
-import com.google.common.base.Function;
-import com.google.common.base.Joiner;
-import com.google.common.collect.Collections2;
 
 import java.util.Collection;
 import java.util.List;
@@ -15,6 +9,7 @@ import java.util.List;
 import de.zalando.zmon.client.domain.ZmonAlertStatus;
 import de.zalando.zmon.fragment.ZmonAlertListFragment;
 import de.zalando.zmon.persistence.Team;
+import de.zalando.zmon.task.GetZmonAlertsTask;
 
 public class ZmonDashboardActivity extends SelfUpdatableActivity {
 
@@ -39,25 +34,24 @@ public class ZmonDashboardActivity extends SelfUpdatableActivity {
 
     @Override
     protected void runJob() {
-        List<Team> teams = Team.listAll(Team.class);
-        Collection<String> teamNames = Collections2.transform(teams, new Function<Team, String>() {
-            @Override
-            public String apply(Team team) {
-                return team.getName();
-            }
-        });
+        Collection<String> teamNames = Team.getAllTeamNames();
 
-        new GetZmonAlertsTask((ZmonApplication) getApplication()) {
+        new GetZmonAlertsTask((ZmonApplication) getApplication(), new GetZmonAlertsTask.Callback() {
             @Override
-            protected void onPostExecute(final List<ZmonAlertStatus> zmonAlertStatuses) {
+            public void onError(Exception e) {
+                ZmonDashboardActivity.this.displayError(e);
+            }
+
+            @Override
+            public void onResult(final List<ZmonAlertStatus> alertStatusList) {
                 runOnUiThread(new Runnable() {
                     @Override
                     public void run() {
-                        alertListFragment.setZmonAlertStatus(zmonAlertStatuses);
+                        alertListFragment.setZmonAlertStatus(alertStatusList);
                     }
                 });
             }
-        }.execute(teamNames.toArray(new String[teamNames.size()]));
+        }).execute(teamNames.toArray(new String[teamNames.size()]));
     }
 
     private void displayError(final Exception e) {
@@ -72,31 +66,4 @@ public class ZmonDashboardActivity extends SelfUpdatableActivity {
         });
     }
 
-    private class GetZmonAlertsTask extends AsyncTask<String, Void, List<ZmonAlertStatus>> {
-
-        private final ZmonApplication zmonApplication;
-
-        private GetZmonAlertsTask(ZmonApplication zmonApplication) {
-            this.zmonApplication = zmonApplication;
-        }
-
-        @Override
-        protected List<ZmonAlertStatus> doInBackground(String... teams) {
-            try {
-                String teamQueryString = makeTeamString(teams);
-                Log.d("zmon", "Query alerts for teams: " + teamQueryString);
-
-                return zmonApplication.getZmonAlertsService().listByTeam(teamQueryString);
-            } catch (Exception e) {
-                Log.e("[zmon]", "Error while fetching alerts", e);
-                displayError(e);
-            }
-
-            return null;
-        }
-
-        private String makeTeamString(String... teams) {
-            return Joiner.on(",").join(teams);
-        }
-    }
 }
