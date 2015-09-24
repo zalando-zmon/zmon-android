@@ -19,7 +19,6 @@ import de.zalando.zmon.client.ZmonLoginService;
 import de.zalando.zmon.client.ZmonStatusService;
 import de.zalando.zmon.client.ZmonTeamService;
 import de.zalando.zmon.client.exception.ZmonErrorHandler;
-import de.zalando.zmon.service.AlertPullService;
 import retrofit.RestAdapter;
 import retrofit.converter.GsonConverter;
 
@@ -33,6 +32,12 @@ public class ZmonApplication extends SugarApp {
     private ZmonTeamService zmonTeamService;
 
     private Authorization authorization;
+
+    @Override
+    public void onCreate() {
+        super.onCreate();
+        //AlertPullService.setup(this);
+    }
 
     private Gson getGson() {
         if (gson == null) {
@@ -48,12 +53,6 @@ public class ZmonApplication extends SugarApp {
         }
 
         return gson;
-    }
-
-    @Override
-    public void onCreate() {
-        super.onCreate();
-        AlertPullService.setup(this);
     }
 
     public ZmonLoginService getZmonLoginService() {

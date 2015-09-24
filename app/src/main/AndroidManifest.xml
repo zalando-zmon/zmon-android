@@ -56,6 +56,7 @@
             android:label="@string/label_observed_teams"
             android:theme="@style/AppTheme" />
 
+        <!--
         <receiver
             android:name=".receiver.LaunchServicesReceiver"
             android:enabled="true"
@@ -68,6 +69,7 @@
                 <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
         </receiver>
+        -->
 
         <service
             android:name=".service.AlertPullService"
