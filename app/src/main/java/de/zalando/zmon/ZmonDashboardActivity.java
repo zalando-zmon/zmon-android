@@ -3,6 +3,9 @@ package de.zalando.zmon;
 import android.os.Bundle;
 import android.support.v7.app.AlertDialog;
 
+import com.google.common.base.Function;
+import com.google.common.collect.Lists;
+
 import java.util.Collection;
 import java.util.List;
 
@@ -34,7 +37,13 @@ public class ZmonDashboardActivity extends SelfUpdatableActivity {
 
     @Override
     protected void runJob() {
-        Collection<String> teamNames = Team.getAllTeamNames();
+        List<Team> observedTeams = Team.find(Team.class, "observed = 1");
+        List<String> teamNames = Lists.transform(observedTeams, new Function<Team, String>() {
+            @Override
+            public String apply(Team team) {
+                return team.getName();
+            }
+        });
 
         new GetZmonAlertsTask((ZmonApplication) getApplication(), new GetZmonAlertsTask.Callback() {
             @Override
