@@ -8,30 +8,4 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content" />
 
-    <LinearLayout
-        style="@style/AppTheme.AddTeam.Container"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
-        android:orientation="horizontal">
-
-        <EditText
-            android:id="@+id/new_team"
-            style="@style/AppTheme.AddTeam.Text"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:hint="@string/hint_add_new_team"
-            android:inputType="text" />
-
-        <Button
-            android:id="@+id/add_team_button"
-            style="@style/AppTheme.AddTeam.Button"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_weight="4"
-            android:text="@string/team_save" />
-
-    </LinearLayout>
-
 </RelativeLayout>

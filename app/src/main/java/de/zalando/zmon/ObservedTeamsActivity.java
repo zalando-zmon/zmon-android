@@ -1,11 +1,17 @@
 package de.zalando.zmon;
 
 import android.os.Bundle;
+import android.util.Log;
+import android.widget.Toast;
+
+import com.google.common.base.Function;
+import com.google.common.collect.Lists;
 
 import java.util.List;
 
 import de.zalando.zmon.fragment.TeamListFragment;
 import de.zalando.zmon.persistence.Team;
+import de.zalando.zmon.task.GetZmonTeamsTask;
 
 public class ObservedTeamsActivity extends BaseActivity implements TeamListFragment.Callback {
 
@@ -32,20 +38,41 @@ public class ObservedTeamsActivity extends BaseActivity implements TeamListFragm
     protected void onStart() {
         super.onStart();
 
-        teamListFragment.setTeams(Team.listAll(Team.class));
+        new GetZmonTeamsTask((ZmonApplication) getApplication(), new GetZmonTeamsTask.Callback() {
+            @Override
+            public void onSuccess(List<String> teams) {
+                Log.i("zmon", "Successfully fetched " + teams.size() + " teams");
+
+                List<Team> teamList = Lists.transform(teams, new Function<String, Team>() {
+                    @Override
+                    public Team apply(String name) {
+                        List<Team> teams = Team.find(Team.class, "name = ?", name);
+                        if (teams == null || teams.isEmpty()) {
+                            return Team.of(name);
+                        } else {
+                            return teams.get(0);
+                        }
+                    }
+                });
+                teamListFragment.setTeams(teamList);
+            }
+
+            @Override
+            public void onError(Exception e) {
+                Toast.makeText(ObservedTeamsActivity.this, "Error while fetching teams!", Toast.LENGTH_SHORT).show();
+            }
+        }).execute();
     }
 
     @Override
-    public void onTeamCreated(Team team) {
+    public void onObserveTeam(Team team) {
+        team.setObserved(true);
         team.save();
-        List<Team> teams = Team.listAll(Team.class);
-        teamListFragment.setTeams(teams);
     }
 
     @Override
-    public void onTeamRemoved(Team team) {
-        if (team != null) {
-            team.delete();
-        }
+    public void onUnobserveTeam(Team team) {
+        team.setObserved(false);
+        team.save();
     }
 }

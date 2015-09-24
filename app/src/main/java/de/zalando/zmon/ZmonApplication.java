@@ -17,6 +17,7 @@ import de.zalando.zmon.auth.Authorization;
 import de.zalando.zmon.client.ZmonAlertsService;
 import de.zalando.zmon.client.ZmonLoginService;
 import de.zalando.zmon.client.ZmonStatusService;
+import de.zalando.zmon.client.ZmonTeamService;
 import de.zalando.zmon.client.exception.ZmonErrorHandler;
 import de.zalando.zmon.service.AlertPullService;
 import retrofit.RestAdapter;
@@ -29,6 +30,7 @@ public class ZmonApplication extends SugarApp {
     private ZmonLoginService zmonLoginService;
     private ZmonStatusService zmonStatusService;
     private ZmonAlertsService zmonAlertsService;
+    private ZmonTeamService zmonTeamService;
 
     private Authorization authorization;
 
@@ -91,6 +93,19 @@ public class ZmonApplication extends SugarApp {
         }
 
         return zmonAlertsService;
+    }
+
+    public ZmonTeamService getZmonTeamService() {
+        if (zmonTeamService == null) {
+            zmonTeamService = new RestAdapter.Builder()
+                    .setEndpoint("https://zmon2.zalando.net")
+                    .setLogLevel(RestAdapter.LogLevel.FULL)
+                    .setConverter(new GsonConverter(getGson()))
+                    .build()
+                    .create(ZmonTeamService.class);
+        }
+
+        return zmonTeamService;
     }
 
     public Authorization getAuthorization() {

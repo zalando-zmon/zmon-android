@@ -1,44 +1,20 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     style="@style/AppTheme.List.Item">
 
     <TextView
-        style="@style/AppTheme.List.Item.Text"
         android:id="@+id/name"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"/>
+        style="@style/AppTheme.List.Item.Text"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" />
 
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:height="32dp"
-        android:orientation="horizontal"
-        android:paddingLeft="5dp"
-        android:paddingRight="5dp"
-        android:visibility="gone"
-        android:weightSum="3">
+    <ImageView
+        android:id="@+id/observe"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentEnd="true"
+        android:layout_centerVertical="true"
+        android:contentDescription="@string/observe_team_btn"
+        android:src="@drawable/star_gray" />
 
-        <TextView
-            android:id="@+id/txt_delete"
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:layout_weight="2"
-            android:clickable="false"
-            android:gravity="center_vertical"
-            android:hapticFeedbackEnabled="true"
-            android:text="@string/team_deleted"
-            android:textColor="@android:color/white" />
-
-        <TextView
-            android:id="@+id/txt_undo"
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:layout_weight="1"
-            android:clickable="false"
-            android:gravity="center"
-            android:text="@string/undo_team_delete"
-            android:textColor="@color/undo" />
-
-    </LinearLayout>
-
-</FrameLayout>
+</RelativeLayout>

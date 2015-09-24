@@ -12,6 +12,8 @@ public class Team extends SugarRecord<Team> {
 
     private String name;
 
+    private boolean observed;
+
     public String getName() {
         return name;
     }
@@ -20,9 +22,17 @@ public class Team extends SugarRecord<Team> {
         this.name = name;
     }
 
+    public boolean isObserved() {
+        return observed;
+    }
+
+    public void setObserved(boolean observed) {
+        this.observed = observed;
+    }
+
     @Override
     public String toString() {
-        return MoreObjects.toStringHelper(this).add("name", name).toString();
+        return MoreObjects.toStringHelper(this).add("name", name).add("observed", observed).toString();
     }
 
     public static Team of(String name) {

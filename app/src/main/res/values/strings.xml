@@ -1,3 +1,5 @@
 <resources>
     <string name="app_name">ZMON</string>
+
+    <string name="observe_team_btn">Observe Team</string>
 </resources>
