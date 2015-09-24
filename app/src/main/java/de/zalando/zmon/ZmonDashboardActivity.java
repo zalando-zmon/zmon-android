@@ -37,13 +37,7 @@ public class ZmonDashboardActivity extends SelfUpdatableActivity {
 
     @Override
     protected void runJob() {
-        List<Team> observedTeams = Team.find(Team.class, "observed = 1");
-        List<String> teamNames = Lists.transform(observedTeams, new Function<Team, String>() {
-            @Override
-            public String apply(Team team) {
-                return team.getName();
-            }
-        });
+        Collection<String> teamNames = Team.getAllObservedTeamNames();
 
         new GetZmonAlertsTask((ZmonApplication) getApplication(), new GetZmonAlertsTask.Callback() {
             @Override

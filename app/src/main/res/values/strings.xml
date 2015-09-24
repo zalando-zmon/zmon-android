@@ -2,4 +2,6 @@
     <string name="app_name">ZMON</string>
 
     <string name="observe_team_btn">Observe Team</string>
+
+    <string name="notification_new_alerts">New alerts raised: </string>
 </resources>

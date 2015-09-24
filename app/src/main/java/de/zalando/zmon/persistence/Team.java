@@ -3,6 +3,7 @@ package de.zalando.zmon.persistence;
 import com.google.common.base.Function;
 import com.google.common.base.MoreObjects;
 import com.google.common.collect.Collections2;
+import com.google.common.collect.Lists;
 import com.orm.SugarRecord;
 
 import java.util.Collection;
@@ -45,6 +46,16 @@ public class Team extends SugarRecord<Team> {
     public static Collection<String> getAllTeamNames() {
         List<Team> teams = Team.listAll(Team.class);
         return Collections2.transform(teams, new Function<Team, String>() {
+            @Override
+            public String apply(Team team) {
+                return team.getName();
+            }
+        });
+    }
+
+    public static Collection<String> getAllObservedTeamNames() {
+        List<Team> observedTeams = Team.find(Team.class, "observed = 1");
+        return Lists.transform(observedTeams, new Function<Team, String>() {
             @Override
             public String apply(Team team) {
                 return team.getName();
