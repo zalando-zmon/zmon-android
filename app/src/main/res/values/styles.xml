@@ -7,6 +7,10 @@
         <item name="windowActionBar">false</item>
     </style>
 
+    <style name="AppTheme.Drawer">
+        <item name="android:background">@color/zalando_orange</item>
+    </style>
+
     <style name="AppTheme.Navigation"></style>
 
     <style name="AppTheme.Navigation.Item">

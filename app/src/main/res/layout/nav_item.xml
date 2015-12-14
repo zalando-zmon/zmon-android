@@ -6,7 +6,7 @@
     android:orientation="vertical">
 
     <TextView
-        android:id="@+id/item_text"
+        android:id="@+id/item_label"
         style="@style/AppTheme.Navigation.Text"
         android:layout_width="match_parent"
         android:layout_height="wrap_content" />

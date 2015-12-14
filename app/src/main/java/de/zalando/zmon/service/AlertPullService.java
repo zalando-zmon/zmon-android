@@ -1,7 +1,6 @@
 package de.zalando.zmon.service;
 
 import android.app.AlarmManager;
-import android.app.NotificationManager;
 import android.app.PendingIntent;
 import android.app.Service;
 import android.content.Context;
@@ -9,7 +8,6 @@ import android.content.Intent;
 import android.os.IBinder;
 import android.support.annotation.Nullable;
 import android.util.Log;
-import android.widget.Toast;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -34,6 +32,7 @@ public class AlertPullService extends Service {
     public int onStartCommand(Intent intent, int flags, int startId) {
         Log.d("zmon", "Start pulling alerts for observed teams");
 
+        /*
         new GetZmonAlertsTask((ZmonApplication) getApplication(), new GetZmonAlertsTask.Callback() {
             @Override
             public void onError(Exception e) {
@@ -45,6 +44,7 @@ public class AlertPullService extends Service {
                 checkForNewAlerts(alertStatusList);
             }
         }).execute(getTeams());
+        */
 
         return START_CONTINUATION_MASK;
     }
