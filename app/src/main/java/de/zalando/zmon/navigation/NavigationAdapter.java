@@ -17,6 +17,7 @@ public class NavigationAdapter extends RecyclerView.Adapter<NavigationAdapter.Vi
     public static final int[] navigationItems = {
             R.string.nav_zmon_status,
             R.string.nav_dashboard,
+            R.string.nav_observe_alerts,
             R.string.nav_observed_teams
     };
 

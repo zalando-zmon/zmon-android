@@ -19,6 +19,8 @@ public class ZmonAlertDefinition {
     private String status;
     private String condition;
     private String lastModifiedBy;
+    private String team;
+    private String responsibleTeam;
 
     private Date lastModified;
 
@@ -118,6 +120,21 @@ public class ZmonAlertDefinition {
         this.lastModified = lastModified;
     }
 
+    public String getTeam() {
+        return team;
+    }
+
+    public void setTeam(String team) {
+        this.team = team;
+    }
+
+    public String getResponsibleTeam() {
+        return responsibleTeam;
+    }
+
+    public void setResponsibleTeam(String responsibleTeam) {
+        this.responsibleTeam = responsibleTeam;
+    }
 
     @Override
     public String toString() {
@@ -128,6 +145,8 @@ public class ZmonAlertDefinition {
                 .add("description", description)
                 .add("priority", priority)
                 .add("status", status)
+                .add("team", team)
+                .add("responsibleTeam", responsibleTeam)
                 .toString();
     }
 }

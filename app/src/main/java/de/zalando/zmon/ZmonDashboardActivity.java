@@ -3,20 +3,17 @@ package de.zalando.zmon;
 import android.os.Bundle;
 import android.support.v7.app.AlertDialog;
 
-import com.google.common.base.Function;
-import com.google.common.collect.Lists;
-
 import java.util.Collection;
 import java.util.List;
 
 import de.zalando.zmon.client.domain.ZmonAlertStatus;
-import de.zalando.zmon.fragment.ZmonAlertListFragment;
+import de.zalando.zmon.fragment.ZmonDetailedAlertListFragment;
 import de.zalando.zmon.persistence.Team;
 import de.zalando.zmon.task.GetZmonAlertsTask;
 
 public class ZmonDashboardActivity extends SelfUpdatableActivity {
 
-    private ZmonAlertListFragment alertListFragment;
+    private ZmonDetailedAlertListFragment alertListFragment;
 
     @Override
     protected int getLayoutId() {
@@ -27,7 +24,7 @@ public class ZmonDashboardActivity extends SelfUpdatableActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        alertListFragment = new ZmonAlertListFragment();
+        alertListFragment = new ZmonDetailedAlertListFragment();
 
         getSupportFragmentManager()
                 .beginTransaction()

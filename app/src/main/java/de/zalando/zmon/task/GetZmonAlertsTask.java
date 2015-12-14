@@ -29,10 +29,16 @@ public class GetZmonAlertsTask extends AsyncTask<String, Void, List<ZmonAlertSta
     @Override
     protected List<ZmonAlertStatus> doInBackground(String... teams) {
         try {
-            String teamQueryString = makeTeamString(teams);
-            Log.d("zmon", "Query alerts for teams: " + teamQueryString);
+            if (teams != null && teams.length != 0) {
+                String teamQueryString = makeTeamString(teams);
+                Log.d("zmon", "Query alerts for teams: " + teamQueryString);
 
-            return zmonApplication.getZmonAlertsService().listByTeam(teamQueryString);
+                return zmonApplication.getZmonAlertsService().listByTeam(teamQueryString);
+            }
+            else {
+                Log.d("zmon", "Query all alerts");
+                return zmonApplication.getZmonAlertsService().list();
+            }
         } catch (Exception e) {
             Log.e("[zmon]", "Error while fetching alerts", e);
             callback.onError(e);

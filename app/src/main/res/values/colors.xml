@@ -11,4 +11,7 @@
 
     <color name="status_ok">#78B924</color>
     <color name="status_warning">#EF5157</color>
+
+    <color name="list_item_title">#FFF</color>
+    <color name="list_item_subtitle">#939393</color>
 </resources>

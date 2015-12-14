@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="label_observe_alerts">Monitor Alerts</string>
+
+    <string name="dialog_title_really_observe_alert">Alarm wirklich monitoren?</string>
+    <string name="dialog_text_really_observe_alert">Sind Sie sicher, dass sie diesen Alarm monitoren wollen? %s</string>
+    <string name="dialog_button_cancel_observe_alert">Nein</string>
+    <string name="dialog_button_submit_observe_alert">Ja</string>
+</resources>

@@ -11,10 +11,10 @@ import android.widget.ListView;
 import java.util.List;
 
 import de.zalando.zmon.R;
-import de.zalando.zmon.adapter.AlertStatusListAdapter;
+import de.zalando.zmon.adapter.AlertStatusDetailListAdapter;
 import de.zalando.zmon.client.domain.ZmonAlertStatus;
 
-public class ZmonAlertListFragment extends Fragment {
+public class ZmonDetailedAlertListFragment extends Fragment {
 
     private ListView alertList;
 
@@ -31,6 +31,6 @@ public class ZmonAlertListFragment extends Fragment {
     }
 
     public void setZmonAlertStatus(List<ZmonAlertStatus> alertStatusList) {
-        alertList.setAdapter(new AlertStatusListAdapter(getActivity(), alertStatusList));
+        alertList.setAdapter(new AlertStatusDetailListAdapter(getActivity(), alertStatusList));
     }
 }

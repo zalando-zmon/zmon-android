@@ -5,9 +5,19 @@
     android:orientation="vertical">
 
     <TextView
-        android:id="@+id/message"
+        android:id="@+id/name"
         style="@style/AppTheme.List.Item.Text"
         android:layout_width="match_parent"
-        android:layout_height="match_parent" />
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_vertical"
+        android:gravity="center_vertical" />
+
+    <TextView
+        android:id="@+id/team"
+        style="@style/AppTheme.List.Item.SmallText"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_vertical"
+        android:gravity="center_vertical" />
 
 </LinearLayout>

@@ -12,7 +12,6 @@ import android.view.GestureDetector;
 import android.view.Gravity;
 import android.view.MotionEvent;
 import android.view.View;
-import android.widget.TextView;
 
 import de.zalando.zmon.navigation.NavigationAdapter;
 
@@ -90,6 +89,9 @@ public abstract class BaseActivity extends AppCompatActivity {
                 break;
             case R.string.nav_dashboard:
                 startActivity(new Intent(this, ZmonDashboardActivity.class));
+                break;
+            case R.string.nav_observe_alerts:
+                startActivity(new Intent(this, ObserveAlertsActivity.class));
                 break;
             case R.string.nav_observed_teams:
                 startActivity(new Intent(this, ObservedTeamsActivity.class));

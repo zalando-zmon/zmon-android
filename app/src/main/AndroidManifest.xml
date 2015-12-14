@@ -62,6 +62,11 @@
             android:label="@string/label_observed_teams"
             android:theme="@style/AppTheme" />
 
+        <activity
+            android:name=".ObserveAlertsActivity"
+            android:label="@string/label_observe_alerts"
+            android:theme="@style/AppTheme" />
+
         <!-- list of receivers -->
         <receiver
             android:name=".receiver.AlertMessagesWakeupReceiver"
