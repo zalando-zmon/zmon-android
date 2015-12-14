@@ -1,0 +1,5 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="google_api_key">AIzaSyD750c08Hcx399n6_TljOaLxfqkTt40afU</string>
+    <string name="gcm_sender_id">150721504171</string>
+</resources>

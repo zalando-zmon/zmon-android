@@ -1,0 +1,5 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="google_api_key">TODO</string>
+    <string name="gcm_sender_id">TODO</string>
+</resources>

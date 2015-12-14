@@ -3,6 +3,8 @@
     <color name="zalando_orange">#f08532</color>
     <color name="undo">#f08532</color>
 
+    <color name="drawer_header">#838383</color>
+
     <color name="alert_critical">#dd3010</color>
     <color name="alert_medium">#e77a1d</color>
     <color name="alert_low">#ebb129</color>

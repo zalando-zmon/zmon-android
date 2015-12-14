@@ -1,5 +1,7 @@
 package de.zalando.zmon;
 
+import android.content.Intent;
+
 import com.google.gson.FieldNamingPolicy;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
@@ -21,6 +23,7 @@ import de.zalando.zmon.client.ZmonTeamService;
 import de.zalando.zmon.client.exception.ZmonErrorHandler;
 import de.zalando.zmon.client.profiler.LoggingProfiler;
 import de.zalando.zmon.service.AlertPullService;
+import de.zalando.zmon.service.SetupInstanceIDService;
 import retrofit.RestAdapter;
 import retrofit.converter.GsonConverter;
 
@@ -39,6 +42,8 @@ public class ZmonApplication extends SugarApp {
     public void onCreate() {
         super.onCreate();
         AlertPullService.setup(this);
+
+        startService(new Intent(this, SetupInstanceIDService.class));
     }
 
     private Gson getGson() {
