@@ -2,7 +2,6 @@ package de.zalando.zmon.client.exception;
 
 import android.util.Log;
 
-import de.zalando.zmon.client.exception.UnauthorizedException;
 import retrofit.ErrorHandler;
 import retrofit.RetrofitError;
 import retrofit.client.Response;

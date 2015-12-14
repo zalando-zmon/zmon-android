@@ -19,6 +19,7 @@ import de.zalando.zmon.client.ZmonLoginService;
 import de.zalando.zmon.client.ZmonStatusService;
 import de.zalando.zmon.client.ZmonTeamService;
 import de.zalando.zmon.client.exception.ZmonErrorHandler;
+import de.zalando.zmon.client.profiler.LoggingProfiler;
 import de.zalando.zmon.service.AlertPullService;
 import retrofit.RestAdapter;
 import retrofit.converter.GsonConverter;
@@ -62,6 +63,7 @@ public class ZmonApplication extends SugarApp {
                     .setEndpoint("https://zmon2.zalando.net")
                     .setErrorHandler(new ZmonErrorHandler())
                     .setLogLevel(RestAdapter.LogLevel.FULL)
+                    .setProfiler(new LoggingProfiler())
                     .build()
                     .create(ZmonLoginService.class);
         }
@@ -73,7 +75,9 @@ public class ZmonApplication extends SugarApp {
         if (zmonStatusService == null) {
             zmonStatusService = new RestAdapter.Builder()
                     .setEndpoint("https://zmon2.zalando.net")
+                    .setErrorHandler(new ZmonErrorHandler())
                     .setLogLevel(RestAdapter.LogLevel.FULL)
+                    .setProfiler(new LoggingProfiler())
                     .setConverter(new GsonConverter(getGson()))
                     .build()
                     .create(ZmonStatusService.class);
@@ -86,7 +90,9 @@ public class ZmonApplication extends SugarApp {
         if (zmonAlertsService == null) {
             zmonAlertsService = new RestAdapter.Builder()
                     .setEndpoint("https://zmon2.zalando.net")
+                    .setErrorHandler(new ZmonErrorHandler())
                     .setLogLevel(RestAdapter.LogLevel.FULL)
+                    .setProfiler(new LoggingProfiler())
                     .setConverter(new GsonConverter(getGson()))
                     .build()
                     .create(ZmonAlertsService.class);
@@ -99,7 +105,9 @@ public class ZmonApplication extends SugarApp {
         if (zmonTeamService == null) {
             zmonTeamService = new RestAdapter.Builder()
                     .setEndpoint("https://zmon2.zalando.net")
+                    .setErrorHandler(new ZmonErrorHandler())
                     .setLogLevel(RestAdapter.LogLevel.FULL)
+                    .setProfiler(new LoggingProfiler())
                     .setConverter(new GsonConverter(getGson()))
                     .build()
                     .create(ZmonTeamService.class);
