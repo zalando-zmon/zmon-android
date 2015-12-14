@@ -38,4 +38,22 @@ public class NotificationHelper {
         NotificationManager notificationManager = (NotificationManager) context.getSystemService(Context.NOTIFICATION_SERVICE);
         notificationManager.notify(0, notification);
     }
+
+    public void publishNewAlert(ZmonAlertStatus alert) {
+        Intent startApplicationIntent = new Intent(context, ZmonDashboardActivity.class);
+        TaskStackBuilder stackBuilder = TaskStackBuilder.create(context);
+        stackBuilder.addParentStack(ZmonDashboardActivity.class);
+        stackBuilder.addNextIntent(startApplicationIntent);
+        PendingIntent resultPendingIntent = stackBuilder.getPendingIntent(0, PendingIntent.FLAG_UPDATE_CURRENT);
+
+        Notification notification = new Notification.Builder(context)
+                .setContentTitle(context.getResources().getString(R.string.app_name))
+                .setContentText(String.format(context.getResources().getString(R.string.notification_new_alert), alert.getAlertDefinition().getName()))
+                .setSmallIcon(R.drawable.zmon_logo)
+                .setContentIntent(resultPendingIntent)
+                .build();
+
+        NotificationManager notificationManager = (NotificationManager) context.getSystemService(Context.NOTIFICATION_SERVICE);
+        notificationManager.notify(0, notification);
+    }
 }

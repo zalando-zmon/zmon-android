@@ -101,6 +101,7 @@
         </service>
 
         <service android:name=".service.SetupInstanceIDService" />
+        <service android:name=".service.RegisterAlertService" />
     </application>
 
 </manifest>

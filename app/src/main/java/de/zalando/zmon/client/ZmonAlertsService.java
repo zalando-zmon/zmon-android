@@ -13,4 +13,7 @@ public interface ZmonAlertsService {
 
     @GET("/rest/allAlerts")
     List<ZmonAlertStatus> listByTeam(@Query("team") String team);
+
+    @GET("/rest/alertsById")
+    List<ZmonAlertStatus> get(@Query("id") long id);
 }

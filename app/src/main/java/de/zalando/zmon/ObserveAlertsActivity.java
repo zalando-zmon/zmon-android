@@ -7,6 +7,7 @@ import java.util.List;
 
 import de.zalando.zmon.client.domain.ZmonAlertStatus;
 import de.zalando.zmon.fragment.AlertListFragment;
+import de.zalando.zmon.service.RegisterAlertService;
 import de.zalando.zmon.task.GetZmonAlertsTask;
 
 public class ObserveAlertsActivity extends BaseActivity implements AlertListFragment.Callback {
@@ -52,6 +53,6 @@ public class ObserveAlertsActivity extends BaseActivity implements AlertListFrag
     @Override
     public void onAlertSelected(ZmonAlertStatus alert) {
         Log.d("[zmon]", "Selected alert " + alert.getAlertDefinition().getName() + " for monitoring");
-        // TODO
+        startService(new RegisterAlertService.RegisterAlertIntent(this, alert.getAlertDefinition().getId()));
     }
 }

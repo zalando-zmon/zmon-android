@@ -4,4 +4,9 @@
     <string name="observe_team_btn">Observe Team</string>
 
     <string name="notification_new_alerts">New alerts raised: </string>
+
+    <string name="register_alert_error_title">Error</string>
+    <string name="register_alert_error_text">Could not register monitoring of Alert!</string>
+
+    <string name="notification_new_alert">Alert raised: %s</string>
 </resources>
