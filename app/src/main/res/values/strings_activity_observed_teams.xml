@@ -1,5 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+    <string name="observedteams_activity_label">Observed Teams</string>
+    <string name="observedteams_menu_add_team">Add Team</string>
+
+    <string name="remoteteamlist_dialog_really_observe_title">Really observe Team?</string>
+    <string name="remoteteamlist_dialog_really_observe_message">Are you sure that you want to monitor Team: %s ?</string>
+    <string name="remoteteamlist_dialog_really_observe_positive_button">Yes</string>
+    <string name="remoteteamlist_dialog_really_observe_negative_button">No</string>
+
     <string name="label_observed_teams">Observed Teams</string>
     <string name="team_save">Add</string>
     <string name="hint_add_new_team">Add new team</string>

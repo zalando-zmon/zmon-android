@@ -1,26 +1,19 @@
 package de.zalando.zmon;
 
+import android.content.Intent;
+import android.os.AsyncTask;
 import android.os.Bundle;
-import android.util.Log;
-import android.widget.Toast;
-
-import com.google.common.base.Function;
-import com.google.common.collect.Lists;
+import android.view.Menu;
+import android.view.MenuItem;
 
 import java.util.List;
 
 import de.zalando.zmon.fragment.TeamListFragment;
 import de.zalando.zmon.persistence.Team;
-import de.zalando.zmon.task.GetZmonTeamsTask;
 
-public class ObservedTeamsActivity extends BaseActivity implements TeamListFragment.Callback {
+public class ObservedTeamsActivity extends BaseActivity {
 
     private TeamListFragment teamListFragment;
-
-    @Override
-    protected int getLayoutId() {
-        return R.layout.activity_observed_teams;
-    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -30,49 +23,48 @@ public class ObservedTeamsActivity extends BaseActivity implements TeamListFragm
 
         getSupportFragmentManager()
                 .beginTransaction()
-                .replace(R.id.teams_fragment, teamListFragment)
+                .replace(R.id.content, teamListFragment)
                 .commit();
     }
 
     @Override
-    protected void onStart() {
-        super.onStart();
+    protected void onResume() {
+        super.onResume();
 
-        new GetZmonTeamsTask((ZmonApplication) getApplication(), new GetZmonTeamsTask.Callback() {
+        new AsyncTask<Void, Void, List<Team>>() {
             @Override
-            public void onSuccess(List<String> teams) {
-                Log.i("zmon", "Successfully fetched " + teams.size() + " teams");
-
-                List<Team> teamList = Lists.transform(teams, new Function<String, Team>() {
-                    @Override
-                    public Team apply(String name) {
-                        List<Team> teams = Team.find(Team.class, "name = ?", name);
-                        if (teams == null || teams.isEmpty()) {
-                            return Team.of(name);
-                        } else {
-                            return teams.get(0);
-                        }
-                    }
-                });
-                teamListFragment.setTeams(teamList);
+            protected List<Team> doInBackground(Void... voids) {
+                return Team.listAll(Team.class);
             }
 
             @Override
-            public void onError(Exception e) {
-                Toast.makeText(ObservedTeamsActivity.this, "Error while fetching teams!", Toast.LENGTH_SHORT).show();
+            protected void onPostExecute(List<Team> teams) {
+                teamListFragment.setTeams(teams);
             }
-        }).execute();
+        }.execute();
     }
 
     @Override
-    public void onObserveTeam(Team team) {
-        team.setObserved(true);
-        team.save();
+    public boolean onCreateOptionsMenu(Menu menu) {
+        super.onCreateOptionsMenu(menu);
+        getMenuInflater().inflate(R.menu.menu_team_list, menu);
+
+        return true;
     }
 
     @Override
-    public void onUnobserveTeam(Team team) {
-        team.setObserved(false);
-        team.save();
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case R.id.add_team:
+                startActivity(new Intent(this, RemoteTeamListSelectionActivity.class));
+                return true;
+            default:
+                return super.onOptionsItemSelected(item);
+        }
+    }
+
+    @Override
+    protected int getLayoutId() {
+        return R.layout.activity_observed_teams;
     }
 }
