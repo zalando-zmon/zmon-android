@@ -11,7 +11,7 @@ import de.zalando.zmon.fragment.ZmonDetailedAlertListFragment;
 import de.zalando.zmon.persistence.Team;
 import de.zalando.zmon.task.GetZmonAlertsTask;
 
-public class ZmonDashboardActivity extends SelfUpdatableActivity {
+public class ZmonDashboardActivity extends SelfUpdatableActivity implements ZmonDetailedAlertListFragment.Callback {
 
     private ZmonDetailedAlertListFragment alertListFragment;
 
@@ -54,6 +54,13 @@ public class ZmonDashboardActivity extends SelfUpdatableActivity {
         }).execute(teamNames.toArray(new String[teamNames.size()]));
     }
 
+    @Override
+    public void clickedAlert(ZmonAlertStatus alert) {
+        startActivity(new AlertDetailActivity.AlertDetailActivityIntent(
+                this,
+                alert.getAlertDefinition().getId()));
+    }
+
     private void displayError(final Exception e) {
         runOnUiThread(new Runnable() {
             @Override
@@ -65,5 +72,4 @@ public class ZmonDashboardActivity extends SelfUpdatableActivity {
             }
         });
     }
-
 }

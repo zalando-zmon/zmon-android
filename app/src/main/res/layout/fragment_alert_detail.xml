@@ -1,0 +1,179 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        style="@style/AppTheme.AlertDetail"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <LinearLayout
+            style="@style/AppTheme.AlertDetail.Row"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <TextView
+                style="@style/AppTheme.AlertDetail.Text.Label"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/alertdetail_label_description" />
+
+            <TextView
+                android:id="@+id/description"
+                style="@style/AppTheme.AlertDetail.Text.Value"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
+        </LinearLayout>
+
+        <View style="@style/AppTheme.AlertDetail.Divider"/>
+
+        <LinearLayout
+            style="@style/AppTheme.AlertDetail.Row"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <TextView
+                style="@style/AppTheme.AlertDetail.Text.Label"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/alertdetail_label_team" />
+
+            <TextView
+                android:id="@+id/team"
+                style="@style/AppTheme.AlertDetail.Text.Value"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
+        </LinearLayout>
+
+        <View style="@style/AppTheme.AlertDetail.Divider"/>
+
+        <LinearLayout
+            style="@style/AppTheme.AlertDetail.Row"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <TextView
+                style="@style/AppTheme.AlertDetail.Text.Label"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/alertdetail_label_responsibleteam" />
+
+            <TextView
+                android:id="@+id/responsible_team"
+                style="@style/AppTheme.AlertDetail.Text.Value"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
+        </LinearLayout>
+
+        <View style="@style/AppTheme.AlertDetail.Divider"/>
+
+        <LinearLayout
+            style="@style/AppTheme.AlertDetail.Row"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <TextView
+                style="@style/AppTheme.AlertDetail.Text.Label"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/alertdetail_label_technicaldetails" />
+
+            <TextView
+                android:id="@+id/technical_details"
+                style="@style/AppTheme.AlertDetail.Text.Value"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
+        </LinearLayout>
+
+        <View style="@style/AppTheme.AlertDetail.Divider"/>
+
+        <LinearLayout
+            style="@style/AppTheme.AlertDetail.Row"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <TextView
+                style="@style/AppTheme.AlertDetail.Text.Label"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/alertdetail_label_checkdetails" />
+
+            <TextView
+                android:id="@+id/check_details"
+                style="@style/AppTheme.AlertDetail.Text.Value"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
+        </LinearLayout>
+
+        <View style="@style/AppTheme.AlertDetail.Divider"/>
+
+        <LinearLayout
+            style="@style/AppTheme.AlertDetail.Row"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <TextView
+                style="@style/AppTheme.AlertDetail.Text.Label"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/alertdetail_label_checkteam" />
+
+            <TextView
+                android:id="@+id/check_team"
+                style="@style/AppTheme.AlertDetail.Text.Value"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
+        </LinearLayout>
+
+        <View style="@style/AppTheme.AlertDetail.Divider"/>
+
+        <LinearLayout
+            style="@style/AppTheme.AlertDetail.Row"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <TextView
+                style="@style/AppTheme.AlertDetail.Text.Label"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/alertdetail_label_checkinterval" />
+
+            <TextView
+                android:id="@+id/check_interval"
+                style="@style/AppTheme.AlertDetail.Text.Value"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
+        </LinearLayout>
+
+        <View style="@style/AppTheme.AlertDetail.Divider"/>
+
+        <LinearLayout
+            style="@style/AppTheme.AlertDetail.Row"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <TextView
+                style="@style/AppTheme.AlertDetail.Text.Label"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/alertdetail_label_checkentities" />
+
+            <TextView
+                android:id="@+id/check_entities"
+                style="@style/AppTheme.AlertDetail.Text.Value"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
+        </LinearLayout>
+
+    </LinearLayout>
+</ScrollView>

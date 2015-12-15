@@ -67,6 +67,11 @@
             android:label="@string/label_observe_alerts"
             android:theme="@style/AppTheme" />
 
+        <activity
+            android:name=".AlertDetailActivity"
+            android:label="@string/alertdetail_label_activity"
+            android:theme="@style/AppTheme" />
+
         <!-- list of receivers -->
         <receiver
             android:name=".receiver.AlertMessagesWakeupReceiver"
@@ -101,7 +106,7 @@
         </service>
 
         <service android:name=".service.SetupInstanceIDService" />
-        <service android:name=".service.RegisterAlertService" />
+        <service android:name=".task.RegisterAlertTask" />
     </application>
 
 </manifest>
