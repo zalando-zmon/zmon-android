@@ -1,6 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="label_observe_alerts">Monitor Alerts</string>
+    <string name="remotealertlist_activity_label">Remote Alerts</string>
+
+    <string name="observedalerts_activity_label">Observed Alerts</string>
+    <string name="observedalerts_menu_add_alert">Add Alert</string>
 
     <string name="dialog_title_really_observe_alert">Alarm wirklich monitoren?</string>
     <string name="dialog_text_really_observe_alert">Sind Sie sicher, dass sie diesen Alarm monitoren wollen? %s</string>

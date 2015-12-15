@@ -6,13 +6,13 @@ import android.util.Log;
 import java.util.List;
 
 import de.zalando.zmon.client.domain.ZmonAlertStatus;
-import de.zalando.zmon.fragment.AlertListFragment;
+import de.zalando.zmon.fragment.AlertStatusListFragment;
 import de.zalando.zmon.task.GetZmonAlertsTask;
 import de.zalando.zmon.task.RegisterAlertTask;
 
-public class ObserveAlertsActivity extends BaseActivity implements AlertListFragment.Callback {
+public class RemoteAlertListSelectionActivity extends BaseActivity implements AlertStatusListFragment.Callback {
 
-    private AlertListFragment alertListFragment;
+    private AlertStatusListFragment alertStatusListFragment;
 
     @Override
     protected int getLayoutId() {
@@ -23,11 +23,11 @@ public class ObserveAlertsActivity extends BaseActivity implements AlertListFrag
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        alertListFragment = new AlertListFragment();
+        alertStatusListFragment = new AlertStatusListFragment();
 
         getSupportFragmentManager()
                 .beginTransaction()
-                .replace(R.id.alert_list_fragment, alertListFragment)
+                .replace(R.id.alert_list_fragment, alertStatusListFragment)
                 .commit();
     }
 
@@ -45,7 +45,7 @@ public class ObserveAlertsActivity extends BaseActivity implements AlertListFrag
             @Override
             public void onResult(List<ZmonAlertStatus> alertStatusList) {
                 Log.i("[zmon]", "Received " + alertStatusList.size() + " alerts");
-                alertListFragment.setZmonAlertStatus(alertStatusList);
+                alertStatusListFragment.setZmonAlertStatus(alertStatusList);
             }
         }).execute();
     }

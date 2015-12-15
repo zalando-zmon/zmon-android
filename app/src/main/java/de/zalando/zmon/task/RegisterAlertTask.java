@@ -11,12 +11,14 @@ import com.google.android.gms.gcm.GcmPubSub;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import de.zalando.zmon.R;
 import de.zalando.zmon.client.ServiceFactory;
 import de.zalando.zmon.client.ZmonAlertsService;
 import de.zalando.zmon.client.domain.ZmonAlertStatus;
+import de.zalando.zmon.persistence.Alert;
 import de.zalando.zmon.util.InstanceIdTokenStore;
 
 public class RegisterAlertTask extends AsyncTask<Long, Void, List<Long>> {
@@ -49,8 +51,13 @@ public class RegisterAlertTask extends AsyncTask<Long, Void, List<Long>> {
         String token = new InstanceIdTokenStore(context).getToken();
 
         ZmonAlertsService zmonAlertService = ServiceFactory.createZmonAlertService();
-        List<ZmonAlertStatus> zmonAlertStatus = zmonAlertService.get(alertId);
-        // TODO store zmon alert in local storage so that users can unsubscribe later
+        ZmonAlertStatus zmonAlertStatus = zmonAlertService.get(alertId).get(0);
+
+        Alert alert = new Alert();
+        alert.setAlertDefinitionId(zmonAlertStatus.getAlertDefinition().getId());
+        alert.setName(zmonAlertStatus.getAlertDefinition().getName());
+        alert.setLastModified(new Date());
+        Alert.saveInTx(alert);
 
         try {
             GcmPubSub pubSub = GcmPubSub.getInstance(context);

@@ -91,7 +91,7 @@ public abstract class BaseActivity extends AppCompatActivity {
                 startActivity(new Intent(this, ZmonDashboardActivity.class));
                 break;
             case R.string.nav_observe_alerts:
-                startActivity(new Intent(this, ObserveAlertsActivity.class));
+                startActivity(new Intent(this, ObservedAlertsActivity.class));
                 break;
             case R.string.nav_observed_teams:
                 startActivity(new Intent(this, ObservedTeamsActivity.class));
