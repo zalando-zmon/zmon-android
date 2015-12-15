@@ -49,6 +49,13 @@
                 android:maxLines="1"
                 android:singleLine="true" />
 
+            <CheckBox
+                android:id="@+id/save_credentials"
+                android:checked="true"
+                android:text="@string/prompt_save_credentials"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
+
             <Button
                 android:id="@+id/email_sign_in_button"
                 style="@style/AppTheme.Login.Button"

@@ -16,8 +16,11 @@ import android.view.View.OnClickListener;
 import android.view.inputmethod.EditorInfo;
 import android.widget.AutoCompleteTextView;
 import android.widget.Button;
+import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.TextView;
+
+import com.google.common.base.Strings;
 
 import org.apache.commons.io.IOUtils;
 
@@ -25,8 +28,8 @@ import java.io.IOException;
 
 import de.zalando.zmon.auth.Credentials;
 import de.zalando.zmon.auth.CredentialsStore;
-import de.zalando.zmon.client.ServiceFactory;
 import de.zalando.zmon.client.OAuthAccessTokenService;
+import de.zalando.zmon.client.ServiceFactory;
 import retrofit.client.Response;
 
 /**
@@ -38,6 +41,7 @@ public class LoginActivity extends Activity {
 
     private AutoCompleteTextView mUsernameView;
     private EditText mPasswordView;
+    private CheckBox mSaveCredentials;
     private View mProgressView;
     private View mLoginFormView;
 
@@ -53,6 +57,7 @@ public class LoginActivity extends Activity {
 
         // Set up the login form.
         mUsernameView = (AutoCompleteTextView) findViewById(R.id.username);
+        mSaveCredentials = (CheckBox) findViewById(R.id.save_credentials);
 
         mPasswordView = (EditText) findViewById(R.id.password);
         mPasswordView.setOnEditorActionListener(new TextView.OnEditorActionListener() {
@@ -65,6 +70,14 @@ public class LoginActivity extends Activity {
                 return false;
             }
         });
+
+        CredentialsStore credentialsStore = new CredentialsStore(this);
+        Credentials credentials = credentialsStore.getCredentials();
+
+        if (!Strings.isNullOrEmpty(credentials.getUsername()) && !Strings.isNullOrEmpty(credentials.getPassword())) {
+            mUsernameView.setText(credentials.getUsername());
+            mPasswordView.setText(credentials.getPassword());
+        }
 
         Button mEmailSignInButton = (Button) findViewById(R.id.email_sign_in_button);
         mEmailSignInButton.setOnClickListener(new OnClickListener() {
@@ -93,6 +106,7 @@ public class LoginActivity extends Activity {
 
         String username = mUsernameView.getText().toString();
         String password = mPasswordView.getText().toString();
+        boolean saveCredentials = mSaveCredentials.isChecked();
 
         boolean cancel = false;
         View focusView = null;
@@ -113,7 +127,7 @@ public class LoginActivity extends Activity {
             focusView.requestFocus();
         } else {
             showProgress(true);
-            mAuthTask = new UserLoginTask(username, password);
+            mAuthTask = new UserLoginTask(username, password, saveCredentials);
             mAuthTask.execute((Void) null);
         }
     }
@@ -162,21 +176,28 @@ public class LoginActivity extends Activity {
 
         private final String mUsername;
         private final String mPassword;
+        private final boolean mSaveCredentials;
 
-        UserLoginTask(String username, String password) {
+        UserLoginTask(String username, String password, boolean saveCredentials) {
             mUsername = username;
             mPassword = password;
+            mSaveCredentials = saveCredentials;
         }
 
         @Override
         protected Boolean doInBackground(Void... params) {
-            CredentialsStore credentialsStore = new CredentialsStore(LoginActivity.this);
-            credentialsStore.setCredentials(new Credentials(mUsername, mPassword));
-
             final OAuthAccessTokenService OAuthAccessTokenService = ServiceFactory.createZmonLoginService(LoginActivity.this);
-            Response loginResponse = OAuthAccessTokenService.login();
+            final Response loginResponse = OAuthAccessTokenService.login();
 
             if (loginResponse.getStatus() >= 200 && loginResponse.getStatus() < 300) {
+                // TODO improve status code handling!
+
+                CredentialsStore credentialsStore = new CredentialsStore(LoginActivity.this);
+
+                if (mSaveCredentials) {
+                    credentialsStore.setCredentials(new Credentials(mUsername, mPassword));
+                }
+
                 try {
                     String accessToken = IOUtils.toString(loginResponse.getBody().in());
                     credentialsStore.setAccessToken(accessToken);
