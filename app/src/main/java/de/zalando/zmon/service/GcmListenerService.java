@@ -24,7 +24,7 @@ public class GcmListenerService extends com.google.android.gms.gcm.GcmListenerSe
         }
 
         int alertId = TopicAlertIdExtractor.extractId(from);
-        ZmonAlertsService zmonAlertService = ServiceFactory.createZmonAlertService();
+        ZmonAlertsService zmonAlertService = ServiceFactory.createZmonAlertService(getApplicationContext());
         List<ZmonAlertStatus> alertStatus = zmonAlertService.get(alertId);
 
         new NotificationHelper(getApplicationContext()).publishNewAlert(alertStatus.get(0));

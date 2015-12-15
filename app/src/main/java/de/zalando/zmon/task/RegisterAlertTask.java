@@ -50,7 +50,7 @@ public class RegisterAlertTask extends AsyncTask<Long, Void, List<Long>> {
 
         String token = new InstanceIdTokenStore(context).getToken();
 
-        ZmonAlertsService zmonAlertService = ServiceFactory.createZmonAlertService();
+        ZmonAlertsService zmonAlertService = ServiceFactory.createZmonAlertService(context);
         ZmonAlertStatus zmonAlertStatus = zmonAlertService.get(alertId).get(0);
 
         Alert alert = new Alert();

@@ -19,8 +19,14 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 
-import de.zalando.zmon.auth.Authorization;
-import de.zalando.zmon.client.ZmonLoginService;
+import org.apache.commons.io.IOUtils;
+
+import java.io.IOException;
+
+import de.zalando.zmon.auth.Credentials;
+import de.zalando.zmon.auth.CredentialsStore;
+import de.zalando.zmon.client.ServiceFactory;
+import de.zalando.zmon.client.OAuthAccessTokenService;
 import retrofit.client.Response;
 
 /**
@@ -82,56 +88,34 @@ public class LoginActivity extends Activity {
             return;
         }
 
-        // Reset errors.
         mUsernameView.setError(null);
         mPasswordView.setError(null);
 
-        // Store values at the time of the login attempt.
-        String email = mUsernameView.getText().toString();
+        String username = mUsernameView.getText().toString();
         String password = mPasswordView.getText().toString();
 
         boolean cancel = false;
         View focusView = null;
 
-        // Check for a valid password, if the user entered one.
-        if (!TextUtils.isEmpty(password) && !isPasswordValid(password)) {
-            mPasswordView.setError(getString(R.string.error_invalid_password));
+        if (TextUtils.isEmpty(username)) {
+            mUsernameView.setError(getString(R.string.error_field_required));
+            focusView = mUsernameView;
+            cancel = true;
+        }
+
+        if (TextUtils.isEmpty(password)) {
+            mPasswordView.setError(getString(R.string.error_field_required));
             focusView = mPasswordView;
             cancel = true;
         }
 
-        // Check for a valid email address.
-        if (TextUtils.isEmpty(email)) {
-            mUsernameView.setError(getString(R.string.error_field_required));
-            focusView = mUsernameView;
-            cancel = true;
-        } else if (!isEmailValid(email)) {
-            mUsernameView.setError(getString(R.string.error_invalid_username));
-            focusView = mUsernameView;
-            cancel = true;
-        }
-
         if (cancel) {
-            // There was an error; don't attempt login and focus the first
-            // form field with an error.
             focusView.requestFocus();
         } else {
-            // Show a progress spinner, and kick off a background task to
-            // perform the user login attempt.
             showProgress(true);
-            mAuthTask = new UserLoginTask(email, password);
+            mAuthTask = new UserLoginTask(username, password);
             mAuthTask.execute((Void) null);
         }
-    }
-
-    private boolean isEmailValid(String email) {
-        //TODO: Replace this with your own logic
-        return true;
-    }
-
-    private boolean isPasswordValid(String password) {
-        //TODO: Replace this with your own logic
-        return true;
     }
 
     /**
@@ -186,22 +170,21 @@ public class LoginActivity extends Activity {
 
         @Override
         protected Boolean doInBackground(Void... params) {
-            final ZmonLoginService zmonLoginService = ((ZmonApplication) getApplication()).getZmonLoginService();
+            CredentialsStore credentialsStore = new CredentialsStore(LoginActivity.this);
+            credentialsStore.setCredentials(new Credentials(mUsername, mPassword));
 
-            /* TODO Login to zmon2
-            try {
-                final Response response = zmonLoginService.login(mUsername, mPassword);
-                Log.d("[zmon]", "Login: " + mUsername + " / " + mPassword);
-                Log.d("[zmon]", "Received response code: " + response.getStatus());
-                Log.d("[zmon]", "Received response: " + response.getBody().toString());
-                return response.getStatus() == 302;
-            } catch (Exception e) {
-                Log.w("[zmon]", "Login failed: " + e.getMessage(), e);
-                return false;
+            final OAuthAccessTokenService OAuthAccessTokenService = ServiceFactory.createZmonLoginService(LoginActivity.this);
+            Response loginResponse = OAuthAccessTokenService.login();
+
+            if (loginResponse.getStatus() >= 200 && loginResponse.getStatus() < 300) {
+                try {
+                    String accessToken = IOUtils.toString(loginResponse.getBody().in());
+                    credentialsStore.setAccessToken(accessToken);
+                    Log.i("[login]", "Successfully logged in: " + accessToken);
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
             }
-            */
-
-            ((ZmonApplication) getApplication()).setAuthorization(new Authorization(mUsername, mPassword));
 
             return true;
         }
@@ -212,7 +195,6 @@ public class LoginActivity extends Activity {
             showProgress(false);
 
             if (success) {
-                // TODO start main activity
                 final Intent zmonStatusIntent = new Intent(LoginActivity.this, ZmonStatusActivity.class);
                 startActivity(zmonStatusIntent);
             } else {

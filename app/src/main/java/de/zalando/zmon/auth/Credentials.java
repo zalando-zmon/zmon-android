@@ -1,11 +1,11 @@
 package de.zalando.zmon.auth;
 
-public class Authorization {
+public class Credentials {
 
     private final String username;
     private final String password;
 
-    public Authorization(String username, String password) {
+    public Credentials(String username, String password) {
         this.username = username;
         this.password = password;
     }
