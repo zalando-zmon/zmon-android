@@ -1,5 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+    <color name="colorPrimary">#545454</color>
+    <color name="colorSecondary">#838383</color>
+
     <color name="zalando_orange">#f08532</color>
     <color name="undo">#f08532</color>
 
