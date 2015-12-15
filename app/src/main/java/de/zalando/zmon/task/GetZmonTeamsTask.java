@@ -1,11 +1,11 @@
 package de.zalando.zmon.task;
 
-import android.os.AsyncTask;
-
 import java.util.List;
 
 import de.zalando.zmon.ZmonApplication;
 import de.zalando.zmon.client.ZmonTeamService;
+
+import android.os.AsyncTask;
 
 public class GetZmonTeamsTask extends AsyncTask<Void, Void, List<String>> {
 
@@ -18,13 +18,13 @@ public class GetZmonTeamsTask extends AsyncTask<Void, Void, List<String>> {
     private final ZmonApplication zmonApplication;
     private final Callback callback;
 
-    public GetZmonTeamsTask(ZmonApplication zmonApplication, Callback callback) {
+    public GetZmonTeamsTask(final ZmonApplication zmonApplication, final Callback callback) {
         this.zmonApplication = zmonApplication;
         this.callback = callback;
     }
 
     @Override
-    protected List<String> doInBackground(Void... voids) {
+    protected List<String> doInBackground(final Void... voids) {
         try {
             ZmonTeamService zmonTeamService = zmonApplication.getZmonTeamService();
             return zmonTeamService.listTeams();
@@ -36,7 +36,7 @@ public class GetZmonTeamsTask extends AsyncTask<Void, Void, List<String>> {
     }
 
     @Override
-    protected void onPostExecute(List<String> zmonTeams) {
+    protected void onPostExecute(final List<String> zmonTeams) {
         super.onPostExecute(zmonTeams);
 
         if (zmonTeams != null) {
