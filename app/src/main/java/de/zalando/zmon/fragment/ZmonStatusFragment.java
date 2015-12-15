@@ -43,8 +43,8 @@ public class ZmonStatusFragment extends Fragment {
         if (savedInstanceState != null) {
             queueSize.setText(savedInstanceState.getString(EXTRA_QUEUE_SIZE));
 
-            float activeWorkersText = Float.valueOf(savedInstanceState.getString(EXTRA_ACTIVE_WORKERS));
-            float totalWorkersText = Float.valueOf(savedInstanceState.getString(EXTRA_TOTAL_WORKERS));
+            int activeWorkersText = Integer.valueOf(savedInstanceState.getString(EXTRA_ACTIVE_WORKERS));
+            int totalWorkersText = Integer.valueOf(savedInstanceState.getString(EXTRA_TOTAL_WORKERS));
             activeWorkers.setText(String.valueOf(Math.round(activeWorkersText)));
             totalWorkers.setText(String.valueOf(Math.round(totalWorkersText)));
             setWorkerProgressBarProgress(activeWorkersText, totalWorkersText);
@@ -64,7 +64,7 @@ public class ZmonStatusFragment extends Fragment {
         updateZmonStatusColors(status);
     }
 
-    private void setWorkerProgressBarProgress(final float active, final float total) {
+    private void setWorkerProgressBarProgress(final int active, final int total) {
 
         int result = Math.round((active / total) * 100);
 
@@ -74,8 +74,8 @@ public class ZmonStatusFragment extends Fragment {
     private void updateZmonStatusNumbers(final ZmonStatus status) {
         queueSize.setText(Integer.toString(status.getQueueSize()));
 
-        float workersActive = status.getWorkersActive();
-        float workersTotal = status.getWorkersTotal();
+        int workersActive = status.getWorkersActive();
+        int workersTotal = status.getWorkersTotal();
         activeWorkers.setText(String.valueOf(workersActive));
         totalWorkers.setText(String.valueOf(workersTotal));
         setWorkerProgressBarProgress(workersActive, workersTotal);
