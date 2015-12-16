@@ -1,17 +1,17 @@
 package de.zalando.zmon;
 
-import android.app.SearchManager;
-import android.content.Intent;
-import android.os.AsyncTask;
-import android.os.Bundle;
-import android.support.v7.widget.Toolbar;
-import android.util.Log;
-import android.view.Menu;
-import android.view.MenuItem;
+import java.util.List;
+
 import de.zalando.zmon.fragment.TeamListFragment;
 import de.zalando.zmon.persistence.Team;
 
-import java.util.List;
+import android.content.Intent;
+
+import android.os.AsyncTask;
+import android.os.Bundle;
+
+import android.view.Menu;
+import android.view.MenuItem;
 
 public class ObservedTeamsActivity extends BaseActivity {
 
@@ -22,9 +22,6 @@ public class ObservedTeamsActivity extends BaseActivity {
         super.onCreate(savedInstanceState);
 
         teamListFragment = new TeamListFragment();
-
-        Toolbar topToolbar = (Toolbar) findViewById(R.id.toolbar_top);
-        setSupportActionBar(topToolbar);
 
         getSupportFragmentManager().beginTransaction().replace(R.id.content, teamListFragment).commit();
     }
@@ -62,25 +59,8 @@ public class ObservedTeamsActivity extends BaseActivity {
                 startActivity(new Intent(this, RemoteTeamListSelectionActivity.class));
                 return true;
 
-            case R.id.search_team :
-
-                return true;
-
             default :
                 return super.onOptionsItemSelected(item);
-        }
-    }
-
-    @Override
-    protected void onNewIntent(final Intent intent) {
-        handleIntent(intent);
-    }
-
-    private void handleIntent(final Intent intent) {
-
-        if (Intent.ACTION_SEARCH.equals(intent.getAction())) {
-            String query = intent.getStringExtra(SearchManager.QUERY);
-            Log.i("[Search]", "Received Query" + query);
         }
     }
 
