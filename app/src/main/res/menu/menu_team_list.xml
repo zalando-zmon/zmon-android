@@ -2,17 +2,18 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
-    <item
-        android:id="@+id/add_team"
-        android:enabled="true"
-        android:icon="@drawable/ic_add_white_24dp"
-        android:title="@string/observedteams_menu_add_team"
-        app:showAsAction="ifRoom" />
-
-    <item android:id="@+id/team_search"
+    <item android:id="@+id/search_team"
+          android:enabled="true"
           android:title="@string/app_name"
           android:icon="@drawable/ic_menu_search"
           app:showAsAction="collapseActionView|ifRoom"
-          android:actionViewClass="android.widget.SearchView" />
+          app:actionViewClass="android.support.v7.widget.SearchView" />
+
+    <item
+            android:id="@+id/add_team"
+            android:enabled="true"
+            android:icon="@drawable/ic_add_white_24dp"
+            android:title="@string/observedteams_menu_add_team"
+            app:showAsAction="ifRoom" />
 
 </menu>
