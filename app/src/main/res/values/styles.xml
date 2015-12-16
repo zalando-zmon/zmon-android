@@ -122,11 +122,14 @@
     <style name="AppTheme.ZmonStatus"></style>
 
     <style name="AppTheme.ZmonStatus.Row">
-        <item name="android:padding">10dp</item>
+        <item name="android:paddingLeft">16dp</item>
+        <item name="android:paddingRight">16dp</item>
+        <item name="android:paddingTop">10dp</item>
+        <item name="android:paddingBottom">10dp</item>
     </style>
 
     <style name="AppTheme.ZmonStatus.Text">
-        <item name="android:textSize">30sp</item>
+        <item name="android:textSize">22sp</item>
     </style>
 
     <style name="AppTheme.ZmonStatus.Text.InQueue">
