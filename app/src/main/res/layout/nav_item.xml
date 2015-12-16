@@ -3,7 +3,14 @@
     style="@style/AppTheme.Navigation.Item"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical">
+    android:orientation="horizontal">
+
+    <ImageView
+        android:id="@+id/item_image"
+        style="@style/AppTheme.Navigation.Item.Image"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_vertical" />
 
     <TextView
         android:id="@+id/item_label"

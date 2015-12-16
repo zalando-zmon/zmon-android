@@ -28,6 +28,7 @@ public class NavigationAdapter extends RecyclerView.Adapter<NavigationAdapter.Vi
 
         protected TextView appLabel;
         protected TextView itemLabel;
+        protected TextView usernameLabel;
 
         public ViewHolder(View itemView, int viewType) {
             super(itemView);
@@ -35,12 +36,20 @@ public class NavigationAdapter extends RecyclerView.Adapter<NavigationAdapter.Vi
             if (viewType == TYPE_HEADER) {
                 imageView = (ImageView) itemView.findViewById(R.id.app_image);
                 appLabel = (TextView) itemView.findViewById(R.id.app_label);
+                usernameLabel = (TextView) itemView.findViewById(R.id.username);
                 holderId = 0;
             } else {
                 itemLabel = (TextView) itemView.findViewById(R.id.item_label);
+                imageView = (ImageView) itemView.findViewById(R.id.item_image);
                 holderId = 1;
             }
         }
+    }
+
+    private final String username;
+
+    public NavigationAdapter(String username) {
+        this.username = username;
     }
 
     @Override
@@ -57,10 +66,25 @@ public class NavigationAdapter extends RecyclerView.Adapter<NavigationAdapter.Vi
     @Override
     public void onBindViewHolder(ViewHolder holder, int position) {
         if (holder.holderId == TYPE_HEADER) {
-            // nothing to do yet
+            holder.usernameLabel.setText(username);
         } else {
             int item = navigationItems[position - 1];
             holder.itemLabel.setText(item);
+
+            switch (item) {
+                case R.string.nav_zmon_status:
+                    holder.imageView.setImageResource(R.drawable.ic_favorite_white_24dp);
+                    break;
+                case R.string.nav_dashboard:
+                    holder.imageView.setImageResource(R.drawable.ic_home_white_24dp);
+                    break;
+                case R.string.nav_observed_teams:
+                    holder.imageView.setImageResource(R.drawable.ic_group_white_24dp);
+                    break;
+                case R.string.nav_observe_alerts:
+                    holder.imageView.setImageResource(R.drawable.ic_notifications_active_white_24dp);
+                    break;
+            }
         }
     }
 

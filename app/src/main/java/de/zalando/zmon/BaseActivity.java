@@ -13,6 +13,7 @@ import android.view.Gravity;
 import android.view.MotionEvent;
 import android.view.View;
 
+import de.zalando.zmon.auth.CredentialsStore;
 import de.zalando.zmon.navigation.NavigationAdapter;
 
 public abstract class BaseActivity extends AppCompatActivity {
@@ -35,7 +36,7 @@ public abstract class BaseActivity extends AppCompatActivity {
 
         drawerLayout = (DrawerLayout) findViewById(R.id.navigation_drawer_layout);
         recyclerView = (RecyclerView) findViewById(R.id.navigation_drawer);
-        recyclerView.setAdapter(new NavigationAdapter());
+        recyclerView.setAdapter(new NavigationAdapter(getUsername()));
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
         recyclerView.setHasFixedSize(true);
         recyclerView.addOnItemTouchListener(new RecyclerView.OnItemTouchListener() {
@@ -97,6 +98,11 @@ public abstract class BaseActivity extends AppCompatActivity {
                 startActivity(new Intent(this, ObservedTeamsActivity.class));
                 break;
         }
+    }
+
+    private String getUsername() {
+        CredentialsStore credentialsStore = new CredentialsStore(this);
+        return credentialsStore.getCredentials().getUsername();
     }
 
     protected abstract int getLayoutId();
