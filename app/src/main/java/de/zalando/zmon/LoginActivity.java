@@ -20,8 +20,6 @@ import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.TextView;
 
-import com.google.common.base.Strings;
-
 import org.apache.commons.io.IOUtils;
 
 import java.io.IOException;
@@ -74,7 +72,7 @@ public class LoginActivity extends Activity {
         CredentialsStore credentialsStore = new CredentialsStore(this);
         Credentials credentials = credentialsStore.getCredentials();
 
-        if (!Strings.isNullOrEmpty(credentials.getUsername()) && !Strings.isNullOrEmpty(credentials.getPassword())) {
+        if (credentialsStore.getSaveCredentials()) {
             mUsernameView.setText(credentials.getUsername());
             mPasswordView.setText(credentials.getPassword());
         }
@@ -186,17 +184,15 @@ public class LoginActivity extends Activity {
 
         @Override
         protected Boolean doInBackground(Void... params) {
+            CredentialsStore credentialsStore = new CredentialsStore(LoginActivity.this);
+            credentialsStore.setCredentials(new Credentials(mUsername, mPassword));
+            credentialsStore.setSaveCredentials(mSaveCredentials);
+
             final OAuthAccessTokenService OAuthAccessTokenService = ServiceFactory.createZmonLoginService(LoginActivity.this);
             final Response loginResponse = OAuthAccessTokenService.login();
 
             if (loginResponse.getStatus() >= 200 && loginResponse.getStatus() < 300) {
                 // TODO improve status code handling!
-
-                CredentialsStore credentialsStore = new CredentialsStore(LoginActivity.this);
-
-                if (mSaveCredentials) {
-                    credentialsStore.setCredentials(new Credentials(mUsername, mPassword));
-                }
 
                 try {
                     String accessToken = IOUtils.toString(loginResponse.getBody().in());
