@@ -188,7 +188,7 @@ public class LoginActivity extends Activity {
             credentialsStore.setSaveCredentials(mSaveCredentials);
 
             try {
-                final OAuthAccessTokenService OAuthAccessTokenService = ServiceFactory.createZmonLoginService(LoginActivity.this);
+                final OAuthAccessTokenService OAuthAccessTokenService = ServiceFactory.createOAuthService(LoginActivity.this);
                 final Response loginResponse = OAuthAccessTokenService.login();
 
                 if (loginResponse.getStatus() >= 200 && loginResponse.getStatus() < 300) {

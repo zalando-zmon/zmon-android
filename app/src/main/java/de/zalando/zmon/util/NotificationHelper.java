@@ -11,6 +11,7 @@ import java.util.List;
 
 import de.zalando.zmon.R;
 import de.zalando.zmon.ZmonDashboardActivity;
+import de.zalando.zmon.client.domain.ZmonAlert;
 import de.zalando.zmon.client.domain.ZmonAlertStatus;
 
 public class NotificationHelper {

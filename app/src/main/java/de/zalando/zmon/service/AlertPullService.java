@@ -43,7 +43,7 @@ public class AlertPullService extends Service {
             public void onResult(List<ZmonAlertStatus> alertStatusList) {
                 checkForNewAlerts(alertStatusList);
             }
-        }).execute(getTeams());
+        }).execute(listTeams());
         */
 
         return START_CONTINUATION_MASK;

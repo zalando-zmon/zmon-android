@@ -1,6 +1,5 @@
 package de.zalando.zmon.client.domain;
 
-import java.util.List;
 import java.util.Set;
 
 public class ZmonStatus {

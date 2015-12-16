@@ -16,7 +16,6 @@ import java.util.List;
 
 import de.zalando.zmon.R;
 import de.zalando.zmon.client.ServiceFactory;
-import de.zalando.zmon.client.ZmonAlertsService;
 import de.zalando.zmon.client.domain.ZmonAlertStatus;
 import de.zalando.zmon.persistence.Alert;
 import de.zalando.zmon.util.InstanceIdTokenStore;
@@ -50,12 +49,11 @@ public class RegisterAlertTask extends AsyncTask<Long, Void, List<Long>> {
 
         String token = new InstanceIdTokenStore(context).getToken();
 
-        ZmonAlertsService zmonAlertService = ServiceFactory.createZmonAlertService(context);
-        ZmonAlertStatus zmonAlertStatus = zmonAlertService.get(alertId).get(0);
+        List<ZmonAlertStatus> zmonAlert = ServiceFactory.createZmonService(context).getAlert(alertId);
 
         Alert alert = new Alert();
-        alert.setAlertDefinitionId(zmonAlertStatus.getAlertDefinition().getId());
-        alert.setName(zmonAlertStatus.getAlertDefinition().getName());
+        alert.setAlertDefinitionId((int) zmonAlert.get(0).getAlertDefinition().getId());
+        alert.setName(zmonAlert.get(0).getAlertDefinition().getName());
         alert.setLastModified(new Date());
         Alert.saveInTx(alert);
 

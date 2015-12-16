@@ -5,7 +5,8 @@ import android.os.AsyncTask;
 import android.os.Bundle;
 import android.util.Log;
 
-import de.zalando.zmon.client.ZmonStatusService;
+import de.zalando.zmon.client.ServiceFactory;
+import de.zalando.zmon.client.ZmonService;
 import de.zalando.zmon.client.domain.ZmonStatus;
 import de.zalando.zmon.fragment.ZmonStatusFragment;
 
@@ -70,8 +71,8 @@ public class ZmonStatusActivity extends SelfUpdatableActivity {
         @Override
         protected ZmonStatus doInBackground(Void... voids) {
             try {
-                final ZmonStatusService statusService = ((ZmonApplication) getApplication()).getZmonStatusService();
-                return statusService.getStatus();
+                final ZmonService zmonService = ServiceFactory.createZmonService(ZmonStatusActivity.this);
+                return zmonService.getStatus();
             } catch (Exception e) {
                 Log.e("[zmon]", "Error while fetching zmon2 status", e);
                 displayError(e);

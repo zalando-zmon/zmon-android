@@ -8,6 +8,7 @@ import com.google.common.base.Joiner;
 import java.util.List;
 
 import de.zalando.zmon.ZmonApplication;
+import de.zalando.zmon.client.ServiceFactory;
 import de.zalando.zmon.client.domain.ZmonAlertStatus;
 
 public class GetZmonAlertsTask extends AsyncTask<String, Void, List<ZmonAlertStatus>> {
@@ -33,11 +34,10 @@ public class GetZmonAlertsTask extends AsyncTask<String, Void, List<ZmonAlertSta
                 String teamQueryString = makeTeamString(teams);
                 Log.d("zmon", "Query alerts for teams: " + teamQueryString);
 
-                return zmonApplication.getZmonAlertsService().listByTeam(teamQueryString);
-            }
-            else {
+                return ServiceFactory.createZmonService(zmonApplication).listAlerts(teamQueryString);
+            } else {
                 Log.d("zmon", "Query all alerts");
-                return zmonApplication.getZmonAlertsService().list();
+                return ServiceFactory.createZmonService(zmonApplication).listAlerts();
             }
         } catch (Exception e) {
             Log.e("[zmon]", "Error while fetching alerts", e);
