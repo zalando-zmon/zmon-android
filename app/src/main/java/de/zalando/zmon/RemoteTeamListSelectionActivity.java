@@ -24,6 +24,8 @@ public class RemoteTeamListSelectionActivity extends BaseActivity implements Tea
 
     private TeamListFragment teamListFragment;
 
+    final List<String> teamNameList = new ArrayList<>();
+
     @Override
     protected int getLayoutId() {
         return R.layout.activity_remote_teamlist;
@@ -45,19 +47,7 @@ public class RemoteTeamListSelectionActivity extends BaseActivity implements Tea
                 @Override
                 public void onSuccess(final List<String> teams) {
                     Log.i("zmon", "Successfully fetched " + teams.size() + " teams");
-
-                    List<Team> teamList = Lists.transform(teams, new Function<String, Team>() {
-                                @Override
-                                public Team apply(final String name) {
-                                    List<Team> teams = Team.find(Team.class, "name = ?", name);
-                                    if (teams == null || teams.isEmpty()) {
-                                        return Team.of(name);
-                                    } else {
-                                        return teams.get(0);
-                                    }
-                                }
-                            });
-                    teamListFragment.setTeams(teamList);
+                    teamNameList.addAll(teams);
                 }
 
                 @Override
@@ -66,6 +56,7 @@ public class RemoteTeamListSelectionActivity extends BaseActivity implements Tea
                         Toast.LENGTH_SHORT).show();
                 }
             }).execute();
+        transFormTeamListAndSetFragment(teamNameList);
     }
 
     @Override
@@ -117,7 +108,10 @@ public class RemoteTeamListSelectionActivity extends BaseActivity implements Tea
 
                 @Override
                 public boolean onQueryTextChange(final String newText) {
-                    return false;
+                    Log.i("[SEARCH]", "Searching for teams with name: " + newText);
+
+                    getAndFilterTeams(newText);
+                    return true;
                 }
             });
 
@@ -126,40 +120,30 @@ public class RemoteTeamListSelectionActivity extends BaseActivity implements Tea
 
     private void getAndFilterTeams(final String query) {
 
-        new GetZmonTeamsTask((ZmonApplication) getApplication(), new GetZmonTeamsTask.Callback() {
-                @Override
-                public void onSuccess(final List<String> teams) {
-                    Log.i("zmon", "Successfully fetched " + teams.size() + " teams");
-
-                    Predicate<String> teamFilter = new Predicate<String>() {
+        // Filter all teams
+        List<String> filteredTeams = new ArrayList<>(Collections2.filter(teamNameList, new Predicate<String>() {
                         @Override
                         public boolean apply(final String input) {
                             return input.toLowerCase().contains(query.toLowerCase());
                         }
-                    };
+                    }));
 
-                    List<String> filteredTeams = new ArrayList<String>(Collections2.filter(teams, teamFilter));
+        // Map to Team entities
+        transFormTeamListAndSetFragment(filteredTeams);
+    }
 
-                    List<Team> teamList = Lists.transform(filteredTeams, new Function<String, Team>() {
-                                @Override
-                                public Team apply(final String name) {
-                                    List<de.zalando.zmon.persistence.Team> teams = de.zalando.zmon.persistence.Team
-                                            .find(de.zalando.zmon.persistence.Team.class, "name = ?", name);
-                                    if (teams == null || teams.isEmpty()) {
-                                        return de.zalando.zmon.persistence.Team.of(name);
-                                    } else {
-                                        return teams.get(0);
-                                    }
-                                }
-                            });
-                    teamListFragment.setTeams(teamList);
-                }
-
-                @Override
-                public void onError(final Exception e) {
-                    Toast.makeText(RemoteTeamListSelectionActivity.this, "Error while fetching teams!",
-                        Toast.LENGTH_SHORT).show();
-                }
-            }).execute();
+    private void transFormTeamListAndSetFragment(final List<String> teams) {
+        List<Team> teamList = Lists.transform(teams, new Function<String, Team>() {
+                    @Override
+                    public Team apply(final String name) {
+                        List<Team> teams = Team.find(Team.class, "name = ?", name);
+                        if (teams == null || teams.isEmpty()) {
+                            return Team.of(name);
+                        } else {
+                            return teams.get(0);
+                        }
+                    }
+                });
+        teamListFragment.setTeams(teamList);
     }
 }
