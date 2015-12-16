@@ -1,17 +1,15 @@
 package de.zalando.zmon;
 
-import java.util.List;
-
+import android.content.Intent;
+import android.os.AsyncTask;
+import android.os.Bundle;
+import android.support.v7.widget.Toolbar;
+import android.view.Menu;
+import android.view.MenuItem;
 import de.zalando.zmon.fragment.TeamListFragment;
 import de.zalando.zmon.persistence.Team;
 
-import android.content.Intent;
-
-import android.os.AsyncTask;
-import android.os.Bundle;
-
-import android.view.Menu;
-import android.view.MenuItem;
+import java.util.List;
 
 public class ObservedTeamsActivity extends BaseActivity {
 
@@ -22,6 +20,9 @@ public class ObservedTeamsActivity extends BaseActivity {
         super.onCreate(savedInstanceState);
 
         teamListFragment = new TeamListFragment();
+
+        Toolbar topToolbar = (Toolbar) findViewById(R.id.toolbar_top);
+        setSupportActionBar(topToolbar);
 
         getSupportFragmentManager().beginTransaction().replace(R.id.content, teamListFragment).commit();
     }
@@ -48,6 +49,15 @@ public class ObservedTeamsActivity extends BaseActivity {
         super.onCreateOptionsMenu(menu);
         getMenuInflater().inflate(R.menu.menu_team_list, menu);
 
+        /*
+         * // Get the SearchView and set the searchable configuration
+         * SearchManager searchManager = (SearchManager) getSystemService(Context.SEARCH_SERVICE);
+         * SearchView searchView = (SearchView) menu.findItem(R.id.team_search).getActionView();
+         *
+         * // Assumes current activity is the searchable activity
+         * searchView.setSearchableInfo(searchManager.getSearchableInfo(getComponentName()));
+         * searchView.setIconifiedByDefault(false); // Do not iconify the widget; expand it by default
+         */
         return true;
     }
 

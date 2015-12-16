@@ -8,4 +8,11 @@
         android:icon="@drawable/ic_add_white_24dp"
         android:title="@string/observedteams_menu_add_team"
         app:showAsAction="ifRoom" />
+
+    <item android:id="@+id/team_search"
+          android:title="@string/app_name"
+          android:icon="@drawable/ic_menu_search"
+          app:showAsAction="collapseActionView|ifRoom"
+          android:actionViewClass="android.widget.SearchView" />
+
 </menu>

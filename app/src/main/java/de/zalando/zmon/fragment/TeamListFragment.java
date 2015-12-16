@@ -38,7 +38,6 @@ public class TeamListFragment extends Fragment {
         View view = inflater.inflate(R.layout.fragment_team_list, container, false);
 
         teamList = (ListView) view.findViewById(R.id.team_list);
-        teamSearch = (SearchView) view.findViewById(R.id.team_search);
         teamList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
                 @Override
                 public void onItemClick(final AdapterView<?> adapterView, final View view, final int i, final long l) {
