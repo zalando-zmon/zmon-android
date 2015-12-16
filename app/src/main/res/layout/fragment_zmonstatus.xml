@@ -3,32 +3,47 @@
     style="@style/AppTheme.ZmonStatus"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical">
+    android:orientation="vertical"
+    android:layout_gravity="center_horizontal">
 
     <RelativeLayout
         style="@style/AppTheme.ZmonStatus.Row"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal">
 
         <TextView
             android:id="@+id/queue_size"
             style="@style/AppTheme.ZmonStatus.Text.InQueue"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content" />
-
+            android:layout_height="wrap_content"/>
         <TextView
             style="@style/AppTheme.ZmonStatus.Text"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_toRightOf="@id/queue_size"
-            android:text="@string/in_queue" />
+            android:text="@string/in_queue"/>
+    </RelativeLayout>
 
+    <RelativeLayout
+            style="@style/AppTheme.ZmonStatus.Row"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal">
+
+
+        <TextView
+                style="@style/AppTheme.ZmonStatus.Text"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/active_workers"/>
     </RelativeLayout>
 
     <RelativeLayout
         style="@style/AppTheme.ZmonStatus.Row"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal">
 
         <TextView
             android:id="@+id/active_workers"
@@ -50,14 +65,21 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_toRightOf="@id/workers_separator" />
+    </RelativeLayout>
 
-        <TextView
-            style="@style/AppTheme.ZmonStatus.Text"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_toRightOf="@id/total_workers"
-            android:text="@string/active_workers" />
+    <RelativeLayout
+            style="@style/AppTheme.ZmonStatus.Row"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
 
+        <ProgressBar
+                android:id="@+id/workers_progress_bar"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                style="@android:style/Widget.ProgressBar.Horizontal"
+                android:layout_marginRight="5dp"
+                android:max="100"
+                android:progressBackgroundTint="@color/alert_medium"/>
     </RelativeLayout>
 
 </LinearLayout>

@@ -19,6 +19,14 @@ android {
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
     }
+
+    packagingOptions {
+        exclude 'META-INF/DEPENDENCIES'
+        exclude 'META-INF/NOTICE'
+        exclude 'META-INF/NOTICE.txt'
+        exclude 'META-INF/LICENSE'
+        exclude 'META-INF/LICENSE.txt'
+    }
 }
 
 dependencies {
@@ -28,7 +36,9 @@ dependencies {
     compile 'com.google.android.gms:play-services-gcm:8.3.0'
     compile 'com.squareup.retrofit:retrofit:1.9.0'
     compile 'commons-io:commons-io:2.4'
+    compile 'commons-codec:commons-codec:1.10'
     compile 'com.google.guava:guava:19.0-rc1'
+    compile 'com.google.code.gson:gson:2.5'
     compile 'com.github.satyan:sugar:1.3'
     compile 'com.hudomju:swipe-to-dismiss-undo:1.0'
 }

@@ -6,63 +6,58 @@ import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.ListView;
-import android.widget.SearchView;
+
+import java.util.List;
+
 import de.zalando.zmon.R;
 import de.zalando.zmon.adapter.TeamListAdapter;
 import de.zalando.zmon.persistence.Team;
 
-import java.util.List;
-
 public class TeamListFragment extends Fragment {
 
     public interface Callback {
-        void onObserveTeam(Team team);
-
-        void onUnobserveTeam(Team team);
+        void onTeamSelected(Team team);
     }
-
-    private SearchView teamSearch;
 
     private ListView teamList;
 
     private Callback callback;
 
     @Override
-    public View onCreateView(final LayoutInflater inflater, final ViewGroup container,
-            final Bundle savedInstanceState) {
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_team_list, container, false);
 
         teamList = (ListView) view.findViewById(R.id.team_list);
-        teamSearch = (SearchView) view.findViewById(R.id.team_search);
+        teamList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+                Team team = (Team) adapterView.getAdapter().getItem(i);
+
+                if (callback != null) {
+                    callback.onTeamSelected(team);
+                }
+            }
+        });
 
         return view;
     }
 
     @Override
-    public void onAttach(final Activity activity) {
-        super.onAttach(activity);
+    public void onStart() {
+        super.onStart();
+
+        Activity activity = getActivity();
 
         if (activity instanceof Callback) {
             callback = (Callback) activity;
         }
     }
 
-    public SearchView getTeamSearch() {
-        return this.teamSearch;
-    }
-
     public void setTeams(final List<Team> teams) {
-        final TeamListAdapter adapter = new TeamListAdapter(getActivity(), teams, new TeamListAdapter.Callback() {
-                    @Override
-                    public void onTeamClicked(final Team team) {
-                        if (team.isObserved()) {
-                            callback.onUnobserveTeam(team);
-                        } else {
-                            callback.onObserveTeam(team);
-                        }
-                    }
-                });
+        final TeamListAdapter adapter = new TeamListAdapter(getActivity(), teams);
+
         teamList.setAdapter(adapter);
     }
 }

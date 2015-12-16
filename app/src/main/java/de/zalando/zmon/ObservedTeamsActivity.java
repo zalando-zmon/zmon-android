@@ -2,29 +2,20 @@ package de.zalando.zmon;
 
 import java.util.List;
 
-import com.google.common.base.Function;
-import com.google.common.base.Predicate;
-import com.google.common.collect.Lists;
-
 import de.zalando.zmon.fragment.TeamListFragment;
 import de.zalando.zmon.persistence.Team;
-import de.zalando.zmon.task.GetZmonTeamsTask;
 
+import android.content.Intent;
+
+import android.os.AsyncTask;
 import android.os.Bundle;
 
-import android.util.Log;
+import android.view.Menu;
+import android.view.MenuItem;
 
-import android.widget.SearchView;
-import android.widget.Toast;
-
-public class ObservedTeamsActivity extends BaseActivity implements TeamListFragment.Callback {
+public class ObservedTeamsActivity extends BaseActivity {
 
     private TeamListFragment teamListFragment;
-
-    @Override
-    protected int getLayoutId() {
-        return R.layout.activity_observed_teams;
-    }
 
     @Override
     protected void onCreate(final Bundle savedInstanceState) {
@@ -32,95 +23,49 @@ public class ObservedTeamsActivity extends BaseActivity implements TeamListFragm
 
         teamListFragment = new TeamListFragment();
 
-        getSupportFragmentManager().beginTransaction().replace(R.id.teams_fragment, teamListFragment).commit();
-
-        teamListFragment.getTeamSearch().setOnQueryTextListener(new SearchView.OnQueryTextListener() {
-                @Override
-                public boolean onQueryTextSubmit(final String queryString) {
-                    final Predicate<String> teamNameFilter = new Predicate<String>() {
-                        @Override
-                        public boolean apply(final String input) {
-                            return input.contains(queryString);
-                        }
-                    };
-
-                    new GetZmonTeamsTask((ZmonApplication) getApplication(), new GetZmonTeamsTask.Callback() {
-                            @Override
-                            public void onSuccess(final List<String> teams) {
-                                Log.i("zmon", "Successfully fetched " + teams.size() + " teams");
-
-                                List<Team> teamList = Lists.transform(teams, new Function<String, Team>() {
-                                            @Override
-                                            public Team apply(final String name) {
-                                                List<Team> teams = Team.find(Team.class, "name = ?", name);
-                                                if (teams == null || teams.isEmpty()) {
-                                                    return Team.of(name);
-                                                } else {
-                                                    return teams.get(0);
-                                                }
-                                            }
-                                        });
-                                teamListFragment.setTeams(teamList);
-                            }
-
-                            @Override
-                            public void onError(final Exception e) {
-                                Toast.makeText(ObservedTeamsActivity.this, "Error while fetching teams!",
-                                    Toast.LENGTH_SHORT).show();
-                            }
-                        }).execute();
-
-                    return false;
-                }
-
-                @Override
-                public boolean onQueryTextChange(final String s) {
-                    return false;
-                }
-            });
-
+        getSupportFragmentManager().beginTransaction().replace(R.id.content, teamListFragment).commit();
     }
 
     @Override
-    protected void onStart() {
-        super.onStart();
+    protected void onResume() {
+        super.onResume();
 
-        new GetZmonTeamsTask((ZmonApplication) getApplication(), new GetZmonTeamsTask.Callback() {
-                @Override
-                public void onSuccess(final List<String> teams) {
-                    Log.i("zmon", "Successfully fetched " + teams.size() + " teams");
+        new AsyncTask<Void, Void, List<Team>>() {
+            @Override
+            protected List<Team> doInBackground(final Void... voids) {
+                return Team.listAll(Team.class);
+            }
 
-                    List<Team> teamList = Lists.transform(teams, new Function<String, Team>() {
-                                @Override
-                                public Team apply(final String name) {
-                                    List<Team> teams = Team.find(Team.class, "name = ?", name);
-                                    if (teams == null || teams.isEmpty()) {
-                                        return Team.of(name);
-                                    } else {
-                                        return teams.get(0);
-                                    }
-                                }
-                            });
-                    teamListFragment.setTeams(teamList);
-                }
-
-                @Override
-                public void onError(final Exception e) {
-                    Toast.makeText(ObservedTeamsActivity.this, "Error while fetching teams!", Toast.LENGTH_SHORT)
-                         .show();
-                }
-            }).execute();
+            @Override
+            protected void onPostExecute(final List<Team> teams) {
+                teamListFragment.setTeams(teams);
+            }
+        }.execute();
     }
 
     @Override
-    public void onObserveTeam(final Team team) {
-        team.setObserved(true);
-        team.save();
+    public boolean onCreateOptionsMenu(final Menu menu) {
+        super.onCreateOptionsMenu(menu);
+        getMenuInflater().inflate(R.menu.menu_team_list, menu);
+
+        return true;
     }
 
     @Override
-    public void onUnobserveTeam(final Team team) {
-        team.setObserved(false);
-        team.save();
+    public boolean onOptionsItemSelected(final MenuItem item) {
+        switch (item.getItemId()) {
+
+            case R.id.add_team :
+                startActivity(new Intent(this, RemoteTeamListSelectionActivity.class));
+                return true;
+
+            default :
+                return super.onOptionsItemSelected(item);
+        }
+    }
+
+    @Override
+    protected int getLayoutId() {
+        return R.layout.activity_observed_teams;
     }
 }

@@ -58,13 +58,28 @@
             android:theme="@style/AppTheme" />
 
         <activity
-            android:name=".ObservedTeamsActivity"
+            android:name=".RemoteTeamListSelectionActivity"
             android:label="@string/label_observed_teams"
             android:theme="@style/AppTheme" />
 
         <activity
-            android:name=".ObserveAlertsActivity"
-            android:label="@string/label_observe_alerts"
+            android:name=".RemoteAlertListSelectionActivity"
+            android:label="@string/remotealertlist_activity_label"
+            android:theme="@style/AppTheme" />
+
+        <activity
+            android:name=".AlertDetailActivity"
+            android:label="@string/alertdetail_label_activity"
+            android:theme="@style/AppTheme" />
+
+        <activity
+            android:name=".ObservedAlertsActivity"
+            android:label="@string/observedalerts_activity_label"
+            android:theme="@style/AppTheme" />
+
+        <activity
+            android:name=".ObservedTeamsActivity"
+            android:label="@string/observedteams_activity_label"
             android:theme="@style/AppTheme" />
 
         <!-- list of receivers -->
@@ -101,7 +116,6 @@
         </service>
 
         <service android:name=".service.SetupInstanceIDService" />
-        <service android:name=".service.RegisterAlertService" />
     </application>
 
 </manifest>

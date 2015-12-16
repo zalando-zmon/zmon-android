@@ -25,6 +25,7 @@
     </style>
 
     <style name="AppTheme.Toolbar">
+        <item name="android:background">?attr/colorPrimary</item>
         <item name="android:layout_width">match_parent</item>
         <item name="android:layout_height">56dp</item>
     </style>
@@ -40,8 +41,7 @@
         <item name="android:textSize">16dp</item>
     </style>
 
-    <style name="AppTheme.List">
-    </style>
+    <style name="AppTheme.List"></style>
 
     <style name="AppTheme.List.Item">
         <item name="android:paddingLeft">16dp</item>
@@ -109,6 +109,35 @@
 
     <style name="AppTheme.AddTeam.Button">
         <item name="android:textSize">16dp</item>
+    </style>
+
+    <!-- Alert Details -->
+    <style name="AppTheme.AlertDetail"></style>
+
+    <style name="AppTheme.AlertDetail.Row">
+        <item name="android:paddingTop">6dp</item>
+        <item name="android:paddingBottom">6dp</item>
+    </style>
+
+    <style name="AppTheme.AlertDetail.Divider">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">1dp</item>
+        <item name="android:background">@color/zalando_orange</item>
+    </style>
+
+    <style name="AppTheme.AlertDetail.Text">
+        <item name="android:paddingLeft">16dp</item>
+        <item name="android:paddingRight">16dp</item>
+    </style>
+
+    <style name="AppTheme.AlertDetail.Text.Label">
+        <item name="android:textColor">@color/list_item_subtitle</item>
+        <item name="android:textSize">12sp</item>
+    </style>
+
+    <style name="AppTheme.AlertDetail.Text.Value">
+        <item name="android:textColor">@color/list_item_title</item>
+        <item name="android:textSize">18sp</item>
     </style>
 
 </resources>
