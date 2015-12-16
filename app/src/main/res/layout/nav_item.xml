@@ -7,7 +7,7 @@
 
     <TextView
         android:id="@+id/item_label"
-        style="@style/AppTheme.Navigation.Text"
+        style="@style/AppTheme.Navigation.Item.Text"
         android:layout_width="match_parent"
         android:layout_height="wrap_content" />
 

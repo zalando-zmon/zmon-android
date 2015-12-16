@@ -5,13 +5,31 @@
         <!-- Customize your theme here. -->
         <item name="android:windowNoTitle">true</item>
         <item name="windowActionBar">false</item>
-    </style>
 
-    <style name="AppTheme.Drawer">
-        <item name="android:background">@color/zalando_orange</item>
+        <item name="android:colorPrimary">@color/colorPrimary</item>
+        <item name="android:colorPrimaryDark">@color/colorPrimaryDark</item>
+        <item name="android:colorBackground">@color/windowBackground</item>
+        <item name="android:statusBarColor">@color/colorPrimaryDark</item>
     </style>
 
     <style name="AppTheme.Navigation"></style>
+
+    <style name="AppTheme.Navigation.Drawer">
+        <item name="android:layout_width">240dp</item>
+        <item name="android:layout_height">match_parent</item>
+        <item name="android:background">@color/colorSecondary</item>
+    </style>
+
+    <style name="AppTheme.Navigation.Drawer.Header">
+        <item name="android:background">@color/colorPrimary</item>
+    </style>
+
+    <style name="AppTheme.Navigation.Drawer.Header.Image"></style>
+
+    <style name="AppTheme.Navigation.Drawer.Header.Text">
+        <item name="android:textSize">24sp</item>
+        <item name="android:textStyle">bold</item>
+    </style>
 
     <style name="AppTheme.Navigation.Item">
         <item name="android:paddingTop">5dp</item>
@@ -19,13 +37,13 @@
         <item name="android:paddingLeft">10dp</item>
     </style>
 
-    <style name="AppTheme.Navigation.Text">
+    <style name="AppTheme.Navigation.Item.Text">
         <item name="android:textSize">16sp</item>
         <item name="android:textStyle">bold</item>
     </style>
 
     <style name="AppTheme.Toolbar">
-        <item name="android:background">?attr/colorPrimary</item>
+        <item name="android:background">@color/colorPrimary</item>
         <item name="android:layout_width">match_parent</item>
         <item name="android:layout_height">56dp</item>
     </style>
@@ -71,7 +89,9 @@
     </style>
 
     <style name="AppTheme.Login.Button">
-        <item name="android:background">@color/zalando_orange</item>
+        <!--
+        <item name="android:background">@color/colorPrimary</item>
+        -->
     </style>
 
     <style name="AppTheme.ZmonStatus"></style>
@@ -122,7 +142,7 @@
     <style name="AppTheme.AlertDetail.Divider">
         <item name="android:layout_width">match_parent</item>
         <item name="android:layout_height">1dp</item>
-        <item name="android:background">@color/zalando_orange</item>
+        <item name="android:background">@color/dividerColor</item>
     </style>
 
     <style name="AppTheme.AlertDetail.Text">
