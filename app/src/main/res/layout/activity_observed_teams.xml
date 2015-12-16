@@ -12,7 +12,6 @@
         <android.support.v7.widget.Toolbar
             android:id="@+id/toolbar_top"
             style="@style/AppTheme.Toolbar">
-
         </android.support.v7.widget.Toolbar>
 
         <FrameLayout
@@ -28,5 +27,4 @@
         android:id="@+id/navigation_drawer"
         android:layout_gravity="start"
         android:scrollbars="vertical" />
-
 </android.support.v4.widget.DrawerLayout>

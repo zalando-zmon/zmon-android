@@ -10,4 +10,10 @@
     <string name="register_alert_success_message">Successfully registered Alert %s for Monitoring.</string>
 
     <string name="notification_new_alert">Alert raised: %s</string>
+
+    <string name="search_hint">Search Content</string>
+    <string name="title_activity_search">SearchActivity</string>
+
+    <string name="hello_world">Hello world!</string>
+    <string name="action_settings">Settings</string>
 </resources>
