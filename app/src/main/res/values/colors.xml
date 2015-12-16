@@ -5,6 +5,7 @@
     <color name="colorSecondary">#838383</color>
     <color name="textColorPrimary">#fff</color>
     <color name="textColorPrimaryDark">#939393</color>
+    <color name="textColorError">#dd3010</color>
     <color name="windowBackground">#545454</color>
     <color name="navigationBarColor">#000</color>
 

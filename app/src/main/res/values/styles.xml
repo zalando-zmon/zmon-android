@@ -97,12 +97,26 @@
     <style name="AppTheme.Login.TextView">
         <item name="android:layout_width">match_parent</item>
         <item name="android:layout_height">wrap_content</item>
+        <item name="android:textSize">16sp</item>
+    </style>
+
+    <style name="AppTheme.Login.TextView.Error">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:textColor">@color/textColorError</item>
+        <item name="android:textStyle">bold</item>
+        <item name="android:textSize">16sp</item>
+        <item name="android:paddingTop">5dp</item>
+        <item name="android:paddingBottom">5dp</item>
+    </style>
+
+    <style name="AppTheme.Login.Checkbox">
+        <item name="android:textSize">16sp</item>
     </style>
 
     <style name="AppTheme.Login.Button">
-        <!--
-        <item name="android:background">@color/colorPrimary</item>
-        -->
+        <item name="android:background">@color/colorPrimaryDark</item>
+        <item name="android:textSize">16sp</item>
     </style>
 
     <style name="AppTheme.ZmonStatus"></style>
