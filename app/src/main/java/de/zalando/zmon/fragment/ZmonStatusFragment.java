@@ -66,7 +66,7 @@ public class ZmonStatusFragment extends Fragment {
 
     private void setWorkerProgressBarProgress(final int active, final int total) {
 
-        int result = Math.round((active / total) * 100);
+        int result = Math.round(((float) active / (float) total) * 100);
 
         progressBar.setProgress(result);
     }

@@ -1,46 +1,33 @@
 package de.zalando.zmon;
 
-import java.io.IOException;
-
-import org.apache.commons.io.IOUtils;
-
-import com.google.common.base.Strings;
-
-import de.zalando.zmon.auth.Credentials;
-import de.zalando.zmon.auth.CredentialsStore;
-import de.zalando.zmon.client.OAuthAccessTokenService;
-import de.zalando.zmon.client.ServiceFactory;
-
 import android.animation.Animator;
 import android.animation.AnimatorListenerAdapter;
-
 import android.annotation.TargetApi;
-
 import android.app.Activity;
-
 import android.content.Intent;
-
 import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
-
 import android.text.TextUtils;
-
 import android.util.Log;
-
 import android.view.KeyEvent;
 import android.view.View;
-
 import android.view.View.OnClickListener;
-
 import android.view.inputmethod.EditorInfo;
-
 import android.widget.AutoCompleteTextView;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.TextView;
 
+import org.apache.commons.io.IOUtils;
+
+import java.io.IOException;
+
+import de.zalando.zmon.auth.Credentials;
+import de.zalando.zmon.auth.CredentialsStore;
+import de.zalando.zmon.client.OAuthAccessTokenService;
+import de.zalando.zmon.client.ServiceFactory;
 import retrofit.client.Response;
 
 /**
@@ -57,7 +44,7 @@ public class LoginActivity extends Activity {
     private View mLoginFormView;
 
     @Override
-    protected void onCreate(final Bundle savedInstanceState) {
+    protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
 
@@ -72,40 +59,40 @@ public class LoginActivity extends Activity {
 
         mPasswordView = (EditText) findViewById(R.id.password);
         mPasswordView.setOnEditorActionListener(new TextView.OnEditorActionListener() {
-                @Override
-                public boolean onEditorAction(final TextView textView, final int id, final KeyEvent keyEvent) {
-                    if (id == R.id.login || id == EditorInfo.IME_NULL) {
-                        attemptLogin();
-                        return true;
-                    }
-
-                    return false;
+            @Override
+            public boolean onEditorAction(TextView textView, int id, KeyEvent keyEvent) {
+                if (id == R.id.login || id == EditorInfo.IME_NULL) {
+                    attemptLogin();
+                    return true;
                 }
-            });
+                return false;
+            }
+        });
 
         CredentialsStore credentialsStore = new CredentialsStore(this);
         Credentials credentials = credentialsStore.getCredentials();
 
-        if (!Strings.isNullOrEmpty(credentials.getUsername()) && !Strings.isNullOrEmpty(credentials.getPassword())) {
+        if (credentialsStore.getSaveCredentials()) {
             mUsernameView.setText(credentials.getUsername());
             mPasswordView.setText(credentials.getPassword());
         }
 
         Button mEmailSignInButton = (Button) findViewById(R.id.email_sign_in_button);
         mEmailSignInButton.setOnClickListener(new OnClickListener() {
-                @Override
-                public void onClick(final View view) {
-                    attemptLogin();
-                }
-            });
+            @Override
+            public void onClick(View view) {
+                attemptLogin();
+            }
+        });
 
         mLoginFormView = findViewById(R.id.login_form);
         mProgressView = findViewById(R.id.login_progress);
     }
 
     /**
-     * Attempts to sign in or register the account specified by the login form. If there are form errors (invalid email,
-     * missing fields, etc.), the errors are presented and no actual login attempt is made.
+     * Attempts to sign in or register the account specified by the login form.
+     * If there are form errors (invalid email, missing fields, etc.), the
+     * errors are presented and no actual login attempt is made.
      */
     public void attemptLogin() {
         if (mAuthTask != null) {
@@ -148,7 +135,6 @@ public class LoginActivity extends Activity {
      */
     @TargetApi(Build.VERSION_CODES.HONEYCOMB_MR2)
     public void showProgress(final boolean show) {
-
         // On Honeycomb MR2 we have the ViewPropertyAnimator APIs, which allow
         // for very easy animations. If available, use these APIs to fade-in
         // the progress spinner.
@@ -156,24 +142,23 @@ public class LoginActivity extends Activity {
             int shortAnimTime = getResources().getInteger(android.R.integer.config_shortAnimTime);
 
             mLoginFormView.setVisibility(show ? View.GONE : View.VISIBLE);
-            mLoginFormView.animate().setDuration(shortAnimTime).alpha(show ? 0 : 1).setListener(
-                new AnimatorListenerAdapter() {
-                    @Override
-                    public void onAnimationEnd(final Animator animation) {
-                        mLoginFormView.setVisibility(show ? View.GONE : View.VISIBLE);
-                    }
-                });
+            mLoginFormView.animate().setDuration(shortAnimTime).alpha(
+                    show ? 0 : 1).setListener(new AnimatorListenerAdapter() {
+                @Override
+                public void onAnimationEnd(Animator animation) {
+                    mLoginFormView.setVisibility(show ? View.GONE : View.VISIBLE);
+                }
+            });
 
             mProgressView.setVisibility(show ? View.VISIBLE : View.GONE);
-            mProgressView.animate().setDuration(shortAnimTime).alpha(show ? 1 : 0).setListener(
-                new AnimatorListenerAdapter() {
-                    @Override
-                    public void onAnimationEnd(final Animator animation) {
-                        mProgressView.setVisibility(show ? View.VISIBLE : View.GONE);
-                    }
-                });
+            mProgressView.animate().setDuration(shortAnimTime).alpha(
+                    show ? 1 : 0).setListener(new AnimatorListenerAdapter() {
+                @Override
+                public void onAnimationEnd(Animator animation) {
+                    mProgressView.setVisibility(show ? View.VISIBLE : View.GONE);
+                }
+            });
         } else {
-
             // The ViewPropertyAnimator APIs are not available, so simply show
             // and hide the relevant UI components.
             mProgressView.setVisibility(show ? View.VISIBLE : View.GONE);
@@ -182,7 +167,8 @@ public class LoginActivity extends Activity {
     }
 
     /**
-     * Represents an asynchronous login/registration task used to authenticate the user.
+     * Represents an asynchronous login/registration task used to authenticate
+     * the user.
      */
     public class UserLoginTask extends AsyncTask<Void, Void, Boolean> {
 
@@ -190,26 +176,23 @@ public class LoginActivity extends Activity {
         private final String mPassword;
         private final boolean mSaveCredentials;
 
-        UserLoginTask(final String username, final String password, final boolean saveCredentials) {
+        UserLoginTask(String username, String password, boolean saveCredentials) {
             mUsername = username;
             mPassword = password;
             mSaveCredentials = saveCredentials;
         }
 
         @Override
-        protected Boolean doInBackground(final Void... params) {
-            final OAuthAccessTokenService OAuthAccessTokenService = ServiceFactory.createZmonLoginService(
-                    LoginActivity.this);
+        protected Boolean doInBackground(Void... params) {
+            CredentialsStore credentialsStore = new CredentialsStore(LoginActivity.this);
+            credentialsStore.setCredentials(new Credentials(mUsername, mPassword));
+            credentialsStore.setSaveCredentials(mSaveCredentials);
+
+            final OAuthAccessTokenService OAuthAccessTokenService = ServiceFactory.createZmonLoginService(LoginActivity.this);
             final Response loginResponse = OAuthAccessTokenService.login();
 
             if (loginResponse.getStatus() >= 200 && loginResponse.getStatus() < 300) {
                 // TODO improve status code handling!
-
-                CredentialsStore credentialsStore = new CredentialsStore(LoginActivity.this);
-
-                if (mSaveCredentials) {
-                    credentialsStore.setCredentials(new Credentials(mUsername, mPassword));
-                }
 
                 try {
                     String accessToken = IOUtils.toString(loginResponse.getBody().in());
@@ -244,3 +227,4 @@ public class LoginActivity extends Activity {
         }
     }
 }
+
