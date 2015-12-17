@@ -4,6 +4,8 @@ import android.content.Context;
 import android.widget.BaseAdapter;
 
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 
 public abstract class BaseListAdapter<T> extends BaseAdapter {
@@ -11,16 +13,18 @@ public abstract class BaseListAdapter<T> extends BaseAdapter {
     protected final Context context;
     protected List<T> items;
 
-    public BaseListAdapter(final Context context) {
-        super();
-        this.context = context;
-        this.items = new ArrayList<>();
-    }
-
     public BaseListAdapter(final Context context, final List<T> items) {
         super();
         this.context = context;
-        this.items = items;
+        this.items = new ArrayList<>(items);
+    }
+
+    public BaseListAdapter(final Context context, final List<T> items, Comparator<T> comparator) {
+        super();
+        this.context = context;
+        this.items = new ArrayList<>(items);
+
+        Collections.sort(this.items, comparator);
     }
 
     @Override
@@ -40,11 +44,5 @@ public abstract class BaseListAdapter<T> extends BaseAdapter {
     @Override
     public long getItemId(final int i) {
         return i;
-    }
-
-    public void setItems(final List<T> items) {
-        this.items = items;
-        notifyDataSetChanged();
-        notifyDataSetInvalidated();
     }
 }

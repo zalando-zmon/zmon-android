@@ -5,16 +5,13 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
-import de.zalando.zmon.R;
-import de.zalando.zmon.persistence.Team;
 
 import java.util.List;
 
-public class TeamListAdapter extends BaseListAdapter<Team> {
+import de.zalando.zmon.R;
+import de.zalando.zmon.persistence.Team;
 
-    public TeamListAdapter(final Context context) {
-        super(context);
-    }
+public class TeamListAdapter extends BaseListAdapter<Team> {
 
     public TeamListAdapter(final Context context, final List<Team> teams) {
         super(context, teams);

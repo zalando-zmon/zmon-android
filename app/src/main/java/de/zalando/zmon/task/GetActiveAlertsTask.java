@@ -60,6 +60,7 @@ public class GetActiveAlertsTask extends HttpSafeAsyncTask<String, Void, List<Al
                 alertDef.setDeletable(input.getAlertDefinition().isDeletable());
                 alertDef.setEditable(input.getAlertDefinition().isEditable());
                 alertDef.setTemplate(input.getAlertDefinition().isTemplate());
+                alertDef.setPriority(input.getAlertDefinition().getPriority());
 
                 AlertDetails details = new AlertDetails();
                 details.setMessage(input.getMessage());

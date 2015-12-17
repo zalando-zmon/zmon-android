@@ -10,7 +10,6 @@ import java.util.Comparator;
 import java.util.List;
 
 import de.zalando.zmon.R;
-import de.zalando.zmon.client.domain.ZmonAlertStatus;
 import de.zalando.zmon.persistence.AlertDetails;
 
 public class AlertDetailsListAdapter extends BaseListAdapter<AlertDetails> {
@@ -20,12 +19,12 @@ public class AlertDetailsListAdapter extends BaseListAdapter<AlertDetails> {
         TextView messageView;
     }
 
-    private static class AlertStatusPriorityComparator implements Comparator<ZmonAlertStatus> {
+    private static class AlertStatusPriorityComparator implements Comparator<AlertDetails> {
 
         @Override
-        public int compare(ZmonAlertStatus zmonAlertStatus, ZmonAlertStatus t1) {
-            int prio1 = zmonAlertStatus.getAlertDefinition().getPriority();
-            int prio2 = t1.getAlertDefinition().getPriority();
+        public int compare(AlertDetails a1, AlertDetails a2) {
+            int prio1 = a1.getAlertDefinition().getPriority();
+            int prio2 = a2.getAlertDefinition().getPriority();
 
             if (prio1 < prio2) {
                 return -1;
@@ -38,9 +37,7 @@ public class AlertDetailsListAdapter extends BaseListAdapter<AlertDetails> {
     }
 
     public AlertDetailsListAdapter(Context context, List<AlertDetails> alertDetails) {
-        super(context, alertDetails);
-        // TODO sort
-        //Collections.sort(this.alertStatus, new AlertStatusPriorityComparator());
+        super(context, alertDetails, new AlertStatusPriorityComparator());
     }
 
     @Override
