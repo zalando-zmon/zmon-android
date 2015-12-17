@@ -17,6 +17,7 @@ import android.support.v7.app.ActionBar;
 import android.preference.PreferenceFragment;
 import android.preference.PreferenceManager;
 import android.preference.RingtonePreference;
+import android.support.v7.app.AppCompatActivity;
 import android.text.TextUtils;
 import android.view.MenuItem;
 import android.support.v4.app.NavUtils;
@@ -34,7 +35,7 @@ import java.util.List;
  * href="http://developer.android.com/guide/topics/ui/settings.html">Settings
  * API Guide</a> for more information on developing a Settings UI.
  */
-public class ZmonSettingsActivity extends AppCompatPreferenceActivity {
+public class ZmonSettingsActivity extends PreferenceActivity {
     /**
      * A preference value change listener that updates the preference's summary
      * to reflect its new value.
@@ -120,19 +121,21 @@ public class ZmonSettingsActivity extends AppCompatPreferenceActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setupActionBar();
+        //setupActionBar();
     }
 
     /**
      * Set up the {@link android.app.ActionBar}, if the API is available.
      */
+    /*
     private void setupActionBar() {
-        ActionBar actionBar = getSupportActionBar();
+        ActionBar actionBar = getActionBar();
         if (actionBar != null) {
             // Show the Up button in the action bar.
             actionBar.setDisplayHomeAsUpEnabled(true);
         }
     }
+    */
 
     @Override
     public boolean onMenuItemSelected(int featureId, MenuItem item) {
@@ -188,8 +191,8 @@ public class ZmonSettingsActivity extends AppCompatPreferenceActivity {
             // to their values. When their values change, their summaries are
             // updated to reflect the new value, per the Android Design
             // guidelines.
-            bindPreferenceSummaryToValue(findPreference("zmon_rest_url"));
-            bindPreferenceSummaryToValue(findPreference("event_proxy_url"));
+            bindPreferenceSummaryToValue(findPreference("zmon_oauth_token_service_url"));
+            bindPreferenceSummaryToValue(findPreference("zmon_notification_service_url"));
         }
 
 
