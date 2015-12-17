@@ -7,8 +7,8 @@
     <!-- Example General settings -->
     <string name="pref_header_general">General</string>
 
-    <string name="pref_zmon_rest_url">Zmon Rest URL</string>
-    <string name="pref_zmon_event_proxy_url">Event Proxy URL</string>
+    <string name="pref_zmon_oauth_token_service_url">Token Service URL</string>
+    <string name="pref_zmon_notification_service_url">Notification Service URL</string>
 
 
     <!-- Example settings for Notifications -->

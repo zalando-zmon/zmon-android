@@ -5,24 +5,24 @@
     <!-- NOTE: EditTextPreference's summary should be set to its value by the activity code. -->
     <EditTextPreference
         android:capitalize="words"
-        android:defaultValue="https://zmon2.zalando.net"
+        android:defaultValue="https://token.auth.zalando.com"
         android:inputType="textUri"
-        android:key="zmon_rest_url"
+        android:key="zmon_oauth_token_service_url"
         android:maxLines="1"
         android:selectAllOnFocus="true"
         android:singleLine="true"
-        android:title="@string/pref_zmon_rest_url" />
+        android:title="@string/pref_zmon_oauth_token_service_url" />
 
     <!-- NOTE: EditTextPreference accepts EditText attributes. -->
     <!-- NOTE: EditTextPreference's summary should be set to its value by the activity code. -->
     <EditTextPreference
         android:capitalize="words"
-        android:defaultValue="https://zmon-notification-service.stups.zalan.do/api/v1/mobile/alert"
+        android:defaultValue="https://zmon-notification-service.stups.zalan.do"
         android:inputType="textUri"
-        android:key="event_proxy_url"
+        android:key="zmon_notification_service_url"
         android:maxLines="1"
         android:selectAllOnFocus="true"
         android:singleLine="true"
-        android:title="@string/pref_zmon_event_proxy_url" />
+        android:title="@string/pref_zmon_notification_service_url" />
 
 </PreferenceScreen>
