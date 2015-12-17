@@ -3,13 +3,14 @@ package de.zalando.zmon.service;
 import android.os.Bundle;
 import android.util.Log;
 
-import de.zalando.zmon.client.ServiceFactory;
-import de.zalando.zmon.client.ZmonService;
-import de.zalando.zmon.client.domain.AlertDetails;
 import de.zalando.zmon.util.NotificationHelper;
-import de.zalando.zmon.util.TopicAlertIdExtractor;
 
 public class GcmListenerService extends com.google.android.gms.gcm.GcmListenerService {
+
+    private static final String NOTIFICATION_TITLE = "gcm.notification.title";
+    private static final String NOTIFICATION_BODY = "gcm.notification.body";
+    private static final String NOTIFICATION_ALERT_ID = "alert_id";
+    private static final String NOTIFICATION_ENTITY_ID = "entity_id";
 
     @Override
     public void onMessageReceived(String from, Bundle data) {
@@ -21,12 +22,13 @@ public class GcmListenerService extends com.google.android.gms.gcm.GcmListenerSe
             Log.i("[gcm]", "  --> " + key + ": " + data.getString(key));
         }
 
-        String alertId = TopicAlertIdExtractor.extractId(from);
+        String title = data.getString(NOTIFICATION_TITLE);
+        String message = data.getString(NOTIFICATION_BODY);
+        String entity = data.getString(NOTIFICATION_ENTITY_ID);
+        String alertId = data.getString(NOTIFICATION_ALERT_ID);
 
-        ZmonService zmonService = ServiceFactory.createZmonService(getApplicationContext());
-        AlertDetails alert = zmonService.getAlertDetails(alertId);
-
-        new NotificationHelper(getApplicationContext()).publishNewAlert(alert);
+        new NotificationHelper(getApplicationContext())
+                .publishNewAlert(title, message + " / " + entity + " (" + alertId + ")");
     }
 
     @Override

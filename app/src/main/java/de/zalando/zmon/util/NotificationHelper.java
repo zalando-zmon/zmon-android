@@ -9,7 +9,6 @@ import android.content.Intent;
 
 import de.zalando.zmon.R;
 import de.zalando.zmon.ZmonDashboardActivity;
-import de.zalando.zmon.client.domain.AlertDetails;
 
 public class NotificationHelper {
 
@@ -19,7 +18,7 @@ public class NotificationHelper {
         this.context = context;
     }
 
-    public void publishNewAlert(AlertDetails alert) {
+    public void publishNewAlert(String title, String message) {
         Intent startApplicationIntent = new Intent(context, ZmonDashboardActivity.class);
         TaskStackBuilder stackBuilder = TaskStackBuilder.create(context);
         stackBuilder.addParentStack(ZmonDashboardActivity.class);
@@ -27,8 +26,8 @@ public class NotificationHelper {
         PendingIntent resultPendingIntent = stackBuilder.getPendingIntent(0, PendingIntent.FLAG_UPDATE_CURRENT);
 
         Notification notification = new Notification.Builder(context)
-                .setContentTitle(context.getResources().getString(R.string.app_name))
-                .setContentText(String.format(context.getResources().getString(R.string.notification_new_alert), alert.getAlertDefinition().getName()))
+                .setContentTitle(title)
+                .setContentText(message)
                 .setSmallIcon(R.drawable.zmon_logo)
                 .setContentIntent(resultPendingIntent)
                 .build();
