@@ -10,7 +10,6 @@ import java.util.List;
 
 import de.zalando.zmon.client.ServiceFactory;
 import de.zalando.zmon.persistence.AlertHeader;
-import de.zalando.zmon.util.HttpSafeAsyncTask;
 
 public class GetAlertHeadersTask extends HttpSafeAsyncTask<Void, Void, List<AlertHeader>> {
 

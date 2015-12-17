@@ -6,7 +6,6 @@ import android.util.Log;
 import java.util.List;
 
 import de.zalando.zmon.client.ServiceFactory;
-import de.zalando.zmon.util.HttpSafeAsyncTask;
 
 public class GetTeamsTask extends HttpSafeAsyncTask<Void, Void, List<String>> {
 

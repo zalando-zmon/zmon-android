@@ -8,7 +8,7 @@ import de.zalando.zmon.client.ServiceFactory;
 import de.zalando.zmon.client.ZmonService;
 import de.zalando.zmon.client.domain.ZmonStatus;
 import de.zalando.zmon.fragment.ZmonStatusFragment;
-import de.zalando.zmon.util.HttpSafeAsyncTask;
+import de.zalando.zmon.task.HttpSafeAsyncTask;
 
 public class ZmonStatusActivity extends SelfUpdatableActivity {
 

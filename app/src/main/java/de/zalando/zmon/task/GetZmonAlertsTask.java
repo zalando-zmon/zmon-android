@@ -9,7 +9,6 @@ import java.util.List;
 
 import de.zalando.zmon.client.ServiceFactory;
 import de.zalando.zmon.client.domain.ZmonAlertStatus;
-import de.zalando.zmon.util.HttpSafeAsyncTask;
 
 public class GetZmonAlertsTask extends HttpSafeAsyncTask<String, Void, List<ZmonAlertStatus>> {
 

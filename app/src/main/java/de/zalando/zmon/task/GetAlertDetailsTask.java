@@ -6,7 +6,6 @@ import android.util.Log;
 import de.zalando.zmon.client.ServiceFactory;
 import de.zalando.zmon.persistence.AlertDefinition;
 import de.zalando.zmon.persistence.AlertDetails;
-import de.zalando.zmon.util.HttpSafeAsyncTask;
 
 public class GetAlertDetailsTask extends HttpSafeAsyncTask<String, Void, AlertDetails> {
 

@@ -1,4 +1,4 @@
-package de.zalando.zmon.util;
+package de.zalando.zmon.task;
 
 import android.content.Context;
 import android.os.AsyncTask;
