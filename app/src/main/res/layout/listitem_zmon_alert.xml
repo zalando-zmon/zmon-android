@@ -14,7 +14,7 @@
 
     <TextView
         android:id="@+id/team"
-        style="@style/AppTheme.List.Item.SmallText"
+        style="@style/AppTheme.List.Item.Text.Small"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_gravity="center_vertical"
