@@ -18,7 +18,8 @@ public class NavigationAdapter extends RecyclerView.Adapter<NavigationAdapter.Vi
             R.string.nav_zmon_status,
             R.string.nav_dashboard,
             R.string.nav_observe_alerts,
-            R.string.nav_observed_teams
+            R.string.nav_observed_teams,
+            R.string.title_activity_zmon_settings
     };
 
     public static class ViewHolder extends RecyclerView.ViewHolder {
