@@ -74,8 +74,6 @@ public abstract class BaseActivity extends AppCompatActivity {
                 }
             });
         }
-
-        // read
     }
 
     private void startActivity(int pos) {
@@ -102,10 +100,7 @@ public abstract class BaseActivity extends AppCompatActivity {
             case R.string.title_activity_zmon_settings:
                 startActivity(new Intent(this, ZmonSettingsActivity.class));
                 break;
-
-    private String getUsername() {
-        CredentialsStore credentialsStore = new CredentialsStore(this);
-        return credentialsStore.getCredentials().getUsername();
+        }
     }
 
     private String getUsername() {
