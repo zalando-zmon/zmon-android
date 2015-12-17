@@ -9,6 +9,9 @@
     <string name="register_alert_error_text">Could not register Alert %s for Monitoring!</string>
     <string name="register_alert_success_message">Successfully registered Alert %s for Monitoring.</string>
 
+    <string name="register_device_success_message">Successfully registered Device for Push Notifications</string>
+    <string name="register_device_error_message">Device Registration for Push Notifications failed!</string>
+
     <string name="notification_new_alert">Alert raised: %s</string>
 
     <string name="search_hint">Search Content</string>

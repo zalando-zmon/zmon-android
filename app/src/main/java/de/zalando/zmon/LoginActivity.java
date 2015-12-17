@@ -224,6 +224,7 @@ public class LoginActivity extends Activity {
 
             if (success) {
                 final Intent zmonStatusIntent = new Intent(LoginActivity.this, ZmonStatusActivity.class);
+                ((ZmonApplication) getApplication()).registerForPushNotifications();
                 startActivity(zmonStatusIntent);
             }
         }
