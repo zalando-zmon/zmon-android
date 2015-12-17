@@ -24,7 +24,6 @@ import retrofit.converter.GsonConverter;
 public class ServiceFactory {
 
     private static final String ZMON_BASE_URL = "https://zmon-notification-service.stups.zalan.do";
-    //private static final String ZMON_BASE_URL = "https://zmon2.zalando.net";
 
     public static OAuthAccessTokenService createOAuthService(Context context) {
         return new RestAdapter.Builder()

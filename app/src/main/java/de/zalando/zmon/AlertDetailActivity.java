@@ -7,11 +7,11 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.Toast;
 
-import java.util.List;
+import com.google.common.base.Strings;
 
-import de.zalando.zmon.client.domain.ZmonAlertStatus;
 import de.zalando.zmon.fragment.AlertDetailFragment;
-import de.zalando.zmon.task.GetZmonAlertTask;
+import de.zalando.zmon.persistence.AlertDetails;
+import de.zalando.zmon.task.GetAlertDetailsTask;
 import de.zalando.zmon.task.RegisterAlertTask;
 
 public class AlertDetailActivity extends BaseActivity {
@@ -19,14 +19,14 @@ public class AlertDetailActivity extends BaseActivity {
     private static final String EXTRA_ALERT_ID = "extra.alert.id";
 
     public static class AlertDetailActivityIntent extends Intent {
-        public AlertDetailActivityIntent(Context context, int alertId) {
+        public AlertDetailActivityIntent(Context context, String alertId) {
             super(context, AlertDetailActivity.class);
             putExtra(EXTRA_ALERT_ID, alertId);
         }
     }
 
     private AlertDetailFragment alertDetailFragment;
-    private int alertId;
+    private String alertId;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -46,24 +46,12 @@ public class AlertDetailActivity extends BaseActivity {
     protected void onStart() {
         super.onStart();
 
-        ZmonApplication app = (ZmonApplication) getApplication();
-        new GetZmonAlertTask(app, new GetZmonAlertTask.Callback() {
+        new GetAlertDetailsTask(this) {
             @Override
-            public void onError(Exception e) {
-                Toast.makeText(
-                        AlertDetailActivity.this,
-                        getString(R.string.alertdetail_error_load_alert_failed, e.getMessage()),
-                        Toast.LENGTH_LONG)
-                        .show();
-
-                finish();
+            public void onPostExecute(AlertDetails alertDetails) {
+                alertDetailFragment.setAlertDetails(alertDetails);
             }
-
-            @Override
-            public void onResult(List<ZmonAlertStatus> alertStatus) {
-                alertDetailFragment.setAlertDetails(alertStatus.get(0));
-            }
-        }).execute((long) alertId);
+        }.execute(alertId);
     }
 
     @Override
@@ -90,12 +78,12 @@ public class AlertDetailActivity extends BaseActivity {
     }
 
     private void extractAndSetAlertId() {
-        int alertId = getIntent().getIntExtra(EXTRA_ALERT_ID, -1);
+        String alertId = getIntent().getStringExtra(EXTRA_ALERT_ID);
 
-        if (alertId <= 0) {
+        if (Strings.isNullOrEmpty(alertId)) {
             Toast.makeText(
                     this,
-                    getString(R.string.alertdetail_error_invalid_alert_id, String.valueOf(alertId)),
+                    getString(R.string.alertdetail_error_invalid_alert_id, alertId),
                     Toast.LENGTH_LONG)
                     .show();
 
@@ -106,6 +94,7 @@ public class AlertDetailActivity extends BaseActivity {
     }
 
     private void startMonitoring() {
-        new RegisterAlertTask(this).execute((long) alertId);
+        // TODO change type of id!
+        new RegisterAlertTask(this).execute(Long.valueOf(alertId));
     }
 }

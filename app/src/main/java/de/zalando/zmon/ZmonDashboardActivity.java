@@ -1,7 +1,6 @@
 package de.zalando.zmon;
 
 import android.os.Bundle;
-import android.support.v7.app.AlertDialog;
 
 import java.util.Collection;
 import java.util.List;
@@ -34,16 +33,11 @@ public class ZmonDashboardActivity extends SelfUpdatableActivity implements Zmon
 
     @Override
     protected void runJob() {
-        Collection<String> teamNames = Team.getAllObservedTeamNames();
+        final Collection<String> teamNames = Team.getAllObservedTeamNames();
 
-        new GetZmonAlertsTask((ZmonApplication) getApplication(), new GetZmonAlertsTask.Callback() {
+        new GetZmonAlertsTask(this) {
             @Override
-            public void onError(Exception e) {
-                ZmonDashboardActivity.this.displayError(e);
-            }
-
-            @Override
-            public void onResult(final List<ZmonAlertStatus> alertStatusList) {
+            public void onPostExecute(final List<ZmonAlertStatus> alertStatusList) {
                 runOnUiThread(new Runnable() {
                     @Override
                     public void run() {
@@ -51,25 +45,14 @@ public class ZmonDashboardActivity extends SelfUpdatableActivity implements Zmon
                     }
                 });
             }
-        }).execute(teamNames.toArray(new String[teamNames.size()]));
+        }.execute(teamNames.toArray(new String[teamNames.size()]));
     }
 
     @Override
     public void clickedAlert(ZmonAlertStatus alert) {
         startActivity(new AlertDetailActivity.AlertDetailActivityIntent(
                 this,
-                alert.getAlertDefinition().getId()));
-    }
-
-    private void displayError(final Exception e) {
-        runOnUiThread(new Runnable() {
-            @Override
-            public void run() {
-                new AlertDialog.Builder(getParent())
-                        .setTitle(R.string.error_network)
-                        .setMessage(e.getMessage())
-                        .show();
-            }
-        });
+                // TODO change types here
+                String.valueOf(alert.getAlertDefinition().getId())));
     }
 }

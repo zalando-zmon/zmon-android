@@ -43,7 +43,7 @@ public class RegisterAlertTask extends AsyncTask<Long, Void, List<Long>> {
 
     private boolean registerAlert(long alertId) {
         if (alertId < 0) {
-            Log.w("[zmon]", "Did not receive a valid alert id: " + alertId);
+            Log.w("[rest]", "Did not receive a valid alert id: " + alertId);
             return false;
         }
 

@@ -5,14 +5,13 @@ import android.util.Log;
 
 import java.util.List;
 
-import de.zalando.zmon.client.domain.ZmonAlertStatus;
-import de.zalando.zmon.fragment.AlertStatusListFragment;
-import de.zalando.zmon.task.GetZmonAlertsTask;
-import de.zalando.zmon.task.RegisterAlertTask;
+import de.zalando.zmon.fragment.AlertHeadersListFragment;
+import de.zalando.zmon.persistence.AlertHeader;
+import de.zalando.zmon.task.GetAlertHeadersTask;
 
-public class RemoteAlertListSelectionActivity extends BaseActivity implements AlertStatusListFragment.Callback {
+public class RemoteAlertListSelectionActivity extends BaseActivity implements AlertHeadersListFragment.Callback {
 
-    private AlertStatusListFragment alertStatusListFragment;
+    private AlertHeadersListFragment alertHeadersListFragment;
 
     @Override
     protected int getLayoutId() {
@@ -23,11 +22,11 @@ public class RemoteAlertListSelectionActivity extends BaseActivity implements Al
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        alertStatusListFragment = new AlertStatusListFragment();
+        alertHeadersListFragment = new AlertHeadersListFragment();
 
         getSupportFragmentManager()
                 .beginTransaction()
-                .replace(R.id.alert_list_fragment, alertStatusListFragment)
+                .replace(R.id.alert_list_fragment, alertHeadersListFragment)
                 .commit();
     }
 
@@ -36,23 +35,17 @@ public class RemoteAlertListSelectionActivity extends BaseActivity implements Al
         super.onStart();
 
         final ZmonApplication app = (ZmonApplication) getApplication();
-        new GetZmonAlertsTask(app, new GetZmonAlertsTask.Callback() {
+        new GetAlertHeadersTask(app) {
             @Override
-            public void onError(Exception e) {
-                Log.e("[zmon]", "Exception while fetching all alerts", e);
+            protected void onPostExecute(List<AlertHeader> alertHeaders) {
+                Log.i("[zmon]", "Received " + alertHeaders.size() + " alerts");
+                alertHeadersListFragment.setAlertHeaders(alertHeaders);
             }
-
-            @Override
-            public void onResult(List<ZmonAlertStatus> alertStatusList) {
-                Log.i("[zmon]", "Received " + alertStatusList.size() + " alerts");
-                alertStatusListFragment.setZmonAlertStatus(alertStatusList);
-            }
-        }).execute();
+        }.execute();
     }
 
     @Override
-    public void onAlertSelected(ZmonAlertStatus alert) {
-        Log.d("[zmon]", "Selected alert " + alert.getAlertDefinition().getName() + " for monitoring");
-        new RegisterAlertTask(this).execute((long) alert.getAlertDefinition().getId());
+    public void onAlertSelected(AlertHeader alertHeader) {
+        startActivity(new AlertDetailActivity.AlertDetailActivityIntent(this, alertHeader.getAlertId()));
     }
 }

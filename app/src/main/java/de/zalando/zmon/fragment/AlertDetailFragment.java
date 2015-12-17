@@ -9,7 +9,7 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import de.zalando.zmon.R;
-import de.zalando.zmon.client.domain.ZmonAlertStatus;
+import de.zalando.zmon.persistence.AlertDetails;
 
 public class AlertDetailFragment extends Fragment {
 
@@ -42,7 +42,7 @@ public class AlertDetailFragment extends Fragment {
         checkEntities = (TextView) view.findViewById(R.id.check_entities);
     }
 
-    public void setAlertDetails(ZmonAlertStatus alert) {
+    public void setAlertDetails(AlertDetails alert) {
         description.setText(alert.getAlertDefinition().getDescription());
         team.setText(alert.getAlertDefinition().getTeam());
         responsibleTeam.setText(alert.getAlertDefinition().getResponsibleTeam());
