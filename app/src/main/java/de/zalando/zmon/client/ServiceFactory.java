@@ -1,6 +1,8 @@
 package de.zalando.zmon.client;
 
 import android.content.Context;
+import android.content.SharedPreferences;
+import android.preference.PreferenceManager;
 
 import com.google.gson.FieldNamingPolicy;
 import com.google.gson.Gson;
@@ -26,8 +28,9 @@ public class ServiceFactory {
     private static final String ZMON_BASE_URL = "https://zmon-notification-service.stups.zalan.do";
 
     public static OAuthAccessTokenService createOAuthService(Context context) {
+        SharedPreferences settings = PreferenceManager.getDefaultSharedPreferences(context);
         return new RestAdapter.Builder()
-                .setEndpoint("https://token.auth.zalando.com")
+                .setEndpoint(settings.getString("zmon_oauth_token_service_url","https://token.auth.zalando.com"))
                 .setRequestInterceptor(new BasicAuthRequestInterceptor(context))
                 .setErrorHandler(new ZmonErrorHandler())
                 .setLogLevel(RestAdapter.LogLevel.BASIC)
@@ -37,8 +40,9 @@ public class ServiceFactory {
     }
 
     public static ZmonService createZmonService(Context context) {
+        SharedPreferences settings = PreferenceManager.getDefaultSharedPreferences(context);
         return new RestAdapter.Builder()
-                .setEndpoint(ZMON_BASE_URL)
+                .setEndpoint(settings.getString("zmon_notification_service_url",ZMON_BASE_URL))
                 .setRequestInterceptor(new OAuthTokenInterceptor(context))
                 .setErrorHandler(new ZmonErrorHandler())
                 .setLogLevel(RestAdapter.LogLevel.BASIC)
