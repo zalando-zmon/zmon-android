@@ -28,6 +28,7 @@ import de.zalando.zmon.auth.Credentials;
 import de.zalando.zmon.auth.CredentialsStore;
 import de.zalando.zmon.client.OAuthAccessTokenService;
 import de.zalando.zmon.client.ServiceFactory;
+import de.zalando.zmon.client.exception.HttpException;
 import retrofit.client.Response;
 
 /**
@@ -40,6 +41,7 @@ public class LoginActivity extends Activity {
     private AutoCompleteTextView mUsernameView;
     private EditText mPasswordView;
     private CheckBox mSaveCredentials;
+    private TextView mErrorMessageView;
     private View mProgressView;
     private View mLoginFormView;
 
@@ -56,6 +58,7 @@ public class LoginActivity extends Activity {
         // Set up the login form.
         mUsernameView = (AutoCompleteTextView) findViewById(R.id.username);
         mSaveCredentials = (CheckBox) findViewById(R.id.save_credentials);
+        mErrorMessageView = (TextView) findViewById(R.id.error_message);
 
         mPasswordView = (EditText) findViewById(R.id.password);
         mPasswordView.setOnEditorActionListener(new TextView.OnEditorActionListener() {
@@ -101,6 +104,7 @@ public class LoginActivity extends Activity {
 
         mUsernameView.setError(null);
         mPasswordView.setError(null);
+        mErrorMessageView.setText("");
 
         String username = mUsernameView.getText().toString();
         String password = mPasswordView.getText().toString();
@@ -135,9 +139,6 @@ public class LoginActivity extends Activity {
      */
     @TargetApi(Build.VERSION_CODES.HONEYCOMB_MR2)
     public void showProgress(final boolean show) {
-        // On Honeycomb MR2 we have the ViewPropertyAnimator APIs, which allow
-        // for very easy animations. If available, use these APIs to fade-in
-        // the progress spinner.
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.HONEYCOMB_MR2) {
             int shortAnimTime = getResources().getInteger(android.R.integer.config_shortAnimTime);
 
@@ -159,8 +160,6 @@ public class LoginActivity extends Activity {
                 }
             });
         } else {
-            // The ViewPropertyAnimator APIs are not available, so simply show
-            // and hide the relevant UI components.
             mProgressView.setVisibility(show ? View.VISIBLE : View.GONE);
             mLoginFormView.setVisibility(show ? View.GONE : View.VISIBLE);
         }
@@ -188,22 +187,34 @@ public class LoginActivity extends Activity {
             credentialsStore.setCredentials(new Credentials(mUsername, mPassword));
             credentialsStore.setSaveCredentials(mSaveCredentials);
 
-            final OAuthAccessTokenService OAuthAccessTokenService = ServiceFactory.createZmonLoginService(LoginActivity.this);
-            final Response loginResponse = OAuthAccessTokenService.login();
+            try {
+                final OAuthAccessTokenService OAuthAccessTokenService = ServiceFactory.createOAuthService(LoginActivity.this);
+                final Response loginResponse = OAuthAccessTokenService.login();
 
-            if (loginResponse.getStatus() >= 200 && loginResponse.getStatus() < 300) {
-                // TODO improve status code handling!
-
-                try {
-                    String accessToken = IOUtils.toString(loginResponse.getBody().in());
-                    credentialsStore.setAccessToken(accessToken);
-                    Log.i("[login]", "Successfully logged in: " + accessToken);
-                } catch (IOException e) {
-                    e.printStackTrace();
+                if (loginResponse.getStatus() >= 200 && loginResponse.getStatus() < 300) {
+                    try {
+                        String accessToken = IOUtils.toString(loginResponse.getBody().in());
+                        credentialsStore.setAccessToken(accessToken);
+                        Log.i("[login]", "Successfully logged in: " + accessToken);
+                        return true;
+                    } catch (IOException e) {
+                        displayError(getString(R.string.error_stacktrace, e.getMessage()));
+                        return false;
+                    }
+                } else {
+                    displayHttpError(loginResponse.getStatus(), loginResponse.getReason());
+                    return false;
                 }
-            }
+            } catch (Exception e) {
+                if (e.getCause() instanceof HttpException) {
+                    HttpException ex = (HttpException) e.getCause();
+                    displayHttpError(ex.getCode(), ex.getReason());
+                } else {
+                    displayError(getString(R.string.error_stacktrace, e.getMessage()));
+                }
 
-            return true;
+                return false;
+            }
         }
 
         @Override
@@ -214,9 +225,6 @@ public class LoginActivity extends Activity {
             if (success) {
                 final Intent zmonStatusIntent = new Intent(LoginActivity.this, ZmonStatusActivity.class);
                 startActivity(zmonStatusIntent);
-            } else {
-                mPasswordView.setError(getString(R.string.error_incorrect_password));
-                mPasswordView.requestFocus();
             }
         }
 
@@ -225,6 +233,41 @@ public class LoginActivity extends Activity {
             mAuthTask = null;
             showProgress(false);
         }
+    }
+
+    private void displayHttpError(int status, String reason) {
+        switch (status) {
+            case 400:
+                displayError(getString(R.string.error_400));
+                break;
+            case 401:
+                displayError(getString(R.string.error_401));
+                break;
+            case 403:
+                displayError(getString(R.string.error_403));
+                break;
+            case 404:
+                displayError(getString(R.string.error_404));
+                break;
+            case 408:
+                displayError(getString(R.string.error_408));
+                break;
+            case 500:
+                displayError(getString(R.string.error_500, reason));
+                break;
+            case 503:
+                displayError(getString(R.string.error_503));
+                break;
+        }
+    }
+
+    private void displayError(final String message) {
+        runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                mErrorMessageView.setText(message);
+            }
+        });
     }
 }
 

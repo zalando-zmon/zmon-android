@@ -49,7 +49,14 @@
                 android:maxLines="1"
                 android:singleLine="true" />
 
+            <TextView
+                style="@style/AppTheme.Login.TextView.Error"
+                android:id="@+id/error_message"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
+
             <CheckBox
+                style="@style/AppTheme.Login.Checkbox"
                 android:id="@+id/save_credentials"
                 android:checked="true"
                 android:text="@string/prompt_save_credentials"

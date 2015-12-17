@@ -23,7 +23,9 @@ import retrofit.converter.GsonConverter;
 
 public class ServiceFactory {
 
-    public static OAuthAccessTokenService createZmonLoginService(Context context) {
+    private static final String ZMON_BASE_URL = "https://zmon-notification-service.stups.zalan.do";
+
+    public static OAuthAccessTokenService createOAuthService(Context context) {
         return new RestAdapter.Builder()
                 .setEndpoint("https://token.auth.zalando.com")
                 .setRequestInterceptor(new BasicAuthRequestInterceptor(context))
@@ -34,40 +36,16 @@ public class ServiceFactory {
                 .create(OAuthAccessTokenService.class);
     }
 
-    public static ZmonStatusService createZmonStatusService(Context context) {
+    public static ZmonService createZmonService(Context context) {
         return new RestAdapter.Builder()
-                .setEndpoint("https://zmon2.zalando.net")
+                .setEndpoint(ZMON_BASE_URL)
                 .setRequestInterceptor(new OAuthTokenInterceptor(context))
                 .setErrorHandler(new ZmonErrorHandler())
                 .setLogLevel(RestAdapter.LogLevel.BASIC)
                 .setProfiler(new LoggingProfiler())
                 .setConverter(new GsonConverter(createGson()))
                 .build()
-                .create(ZmonStatusService.class);
-    }
-
-    public static ZmonAlertsService createZmonAlertService(Context context) {
-        return new RestAdapter.Builder()
-                .setEndpoint("https://zmon2.zalando.net")
-                .setRequestInterceptor(new OAuthTokenInterceptor(context))
-                .setErrorHandler(new ZmonErrorHandler())
-                .setLogLevel(RestAdapter.LogLevel.BASIC)
-                .setProfiler(new LoggingProfiler())
-                .setConverter(new GsonConverter(createGson()))
-                .build()
-                .create(ZmonAlertsService.class);
-    }
-
-    public static ZmonTeamService createZmonTeamService(Context context) {
-        return new RestAdapter.Builder()
-                .setEndpoint("https://zmon2.zalando.net")
-                .setRequestInterceptor(new OAuthTokenInterceptor(context))
-                .setErrorHandler(new ZmonErrorHandler())
-                .setLogLevel(RestAdapter.LogLevel.BASIC)
-                .setProfiler(new LoggingProfiler())
-                .setConverter(new GsonConverter(createGson()))
-                .build()
-                .create(ZmonTeamService.class);
+                .create(ZmonService.class);
     }
 
     private static Gson createGson() {

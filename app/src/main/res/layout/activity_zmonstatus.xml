@@ -22,11 +22,9 @@
     </LinearLayout>
 
     <android.support.v7.widget.RecyclerView
+        style="@style/AppTheme.Navigation.Drawer"
         android:id="@+id/navigation_drawer"
-        android:layout_width="240dp"
-        android:layout_height="match_parent"
         android:layout_gravity="start"
-        android:background="@color/zalando_orange"
         android:scrollbars="vertical"/>
 
 </android.support.v4.widget.DrawerLayout>

@@ -11,4 +11,14 @@
     <string name="error_invalid_password">This password is too short</string>
     <string name="error_incorrect_password">This password is incorrect</string>
     <string name="error_field_required">This field is required</string>
+
+    <string name="error_stacktrace">Unexpected Error: %s</string>
+
+    <string name="error_400">Bad Request: Something went wrong.</string>
+    <string name="error_401">Unauthorized: Username/Password credentials are wrong.</string>
+    <string name="error_403">Forbidden: Not allowed to login.</string>
+    <string name="error_404">Not Found: Login resource was not found.</string>
+    <string name="error_408">Request Timeout: Login request timed out.</string>
+    <string name="error_500">Internal server error: %s</string>
+    <string name="error_503">Service Unavailable</string>
 </resources>

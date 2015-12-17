@@ -1,13 +1,14 @@
 package de.zalando.zmon;
 
-import android.app.AlertDialog;
-import android.os.AsyncTask;
+import android.content.Context;
 import android.os.Bundle;
 import android.util.Log;
 
-import de.zalando.zmon.client.ZmonStatusService;
+import de.zalando.zmon.client.ServiceFactory;
+import de.zalando.zmon.client.ZmonService;
 import de.zalando.zmon.client.domain.ZmonStatus;
 import de.zalando.zmon.fragment.ZmonStatusFragment;
+import de.zalando.zmon.task.HttpSafeAsyncTask;
 
 public class ZmonStatusActivity extends SelfUpdatableActivity {
 
@@ -34,7 +35,7 @@ public class ZmonStatusActivity extends SelfUpdatableActivity {
     protected void runJob() {
         Log.d("[zmon]", "Start process to update zmon2 status");
 
-        new GetZmonStatusTask() {
+        new GetZmonStatusTask(this) {
             @Override
             protected void onPostExecute(ZmonStatus status) {
                 super.onPostExecute(status);
@@ -54,30 +55,15 @@ public class ZmonStatusActivity extends SelfUpdatableActivity {
         }.execute();
     }
 
-    private void displayError(final Exception e) {
-        runOnUiThread(new Runnable() {
-            @Override
-            public void run() {
-                new AlertDialog.Builder(getParent())
-                        .setTitle(R.string.error_network)
-                        .setMessage(e.getMessage())
-                        .show();
-            }
-        });
-    }
+    public class GetZmonStatusTask extends HttpSafeAsyncTask<Void, Void, ZmonStatus> {
+        protected GetZmonStatusTask(Context context) {
+            super(context);
+        }
 
-    public class GetZmonStatusTask extends AsyncTask<Void, Void, ZmonStatus> {
         @Override
-        protected ZmonStatus doInBackground(Void... voids) {
-            try {
-                final ZmonStatusService statusService = ((ZmonApplication) getApplication()).getZmonStatusService();
-                return statusService.getStatus();
-            } catch (Exception e) {
-                Log.e("[zmon]", "Error while fetching zmon2 status", e);
-                displayError(e);
-            }
-
-            return null;
+        protected ZmonStatus callSafe(Void... voids) {
+            final ZmonService zmonService = ServiceFactory.createZmonService(ZmonStatusActivity.this);
+            return zmonService.getStatus();
         }
     }
 }

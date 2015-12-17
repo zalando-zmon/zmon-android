@@ -1,15 +1,14 @@
 package de.zalando.zmon;
 
 import android.os.Bundle;
-import android.support.v7.app.AlertDialog;
 
 import java.util.Collection;
 import java.util.List;
 
-import de.zalando.zmon.client.domain.ZmonAlertStatus;
 import de.zalando.zmon.fragment.ZmonDetailedAlertListFragment;
+import de.zalando.zmon.persistence.AlertDetails;
 import de.zalando.zmon.persistence.Team;
-import de.zalando.zmon.task.GetZmonAlertsTask;
+import de.zalando.zmon.task.GetActiveAlertsTask;
 
 public class ZmonDashboardActivity extends SelfUpdatableActivity implements ZmonDetailedAlertListFragment.Callback {
 
@@ -34,42 +33,25 @@ public class ZmonDashboardActivity extends SelfUpdatableActivity implements Zmon
 
     @Override
     protected void runJob() {
-        Collection<String> teamNames = Team.getAllObservedTeamNames();
+        final Collection<String> teamNames = Team.getAllObservedTeamNames();
 
-        new GetZmonAlertsTask((ZmonApplication) getApplication(), new GetZmonAlertsTask.Callback() {
+        new GetActiveAlertsTask(this) {
             @Override
-            public void onError(Exception e) {
-                ZmonDashboardActivity.this.displayError(e);
-            }
-
-            @Override
-            public void onResult(final List<ZmonAlertStatus> alertStatusList) {
+            protected void onPostExecute(final List<AlertDetails> activeAlerts) {
                 runOnUiThread(new Runnable() {
                     @Override
                     public void run() {
-                        alertListFragment.setZmonAlertStatus(alertStatusList);
+                        alertListFragment.setAlertDetails(activeAlerts);
                     }
                 });
             }
-        }).execute(teamNames.toArray(new String[teamNames.size()]));
+        }.execute(teamNames.toArray(new String[teamNames.size()]));
     }
 
     @Override
-    public void clickedAlert(ZmonAlertStatus alert) {
+    public void clickedAlert(AlertDetails alert) {
         startActivity(new AlertDetailActivity.AlertDetailActivityIntent(
                 this,
-                alert.getAlertDefinition().getId()));
-    }
-
-    private void displayError(final Exception e) {
-        runOnUiThread(new Runnable() {
-            @Override
-            public void run() {
-                new AlertDialog.Builder(getParent())
-                        .setTitle(R.string.error_network)
-                        .setMessage(e.getMessage())
-                        .show();
-            }
-        });
+                alert.getAlertDefinition().getAlertId()));
     }
 }

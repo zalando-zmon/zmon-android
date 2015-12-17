@@ -13,13 +13,13 @@ import android.widget.ListView;
 import java.util.List;
 
 import de.zalando.zmon.R;
-import de.zalando.zmon.adapter.AlertStatusDetailListAdapter;
-import de.zalando.zmon.client.domain.ZmonAlertStatus;
+import de.zalando.zmon.adapter.AlertDetailsListAdapter;
+import de.zalando.zmon.persistence.AlertDetails;
 
 public class ZmonDetailedAlertListFragment extends Fragment {
 
     public interface Callback {
-        void clickedAlert(ZmonAlertStatus alert);
+        void clickedAlert(AlertDetails alert);
     }
 
     private ListView alertList;
@@ -38,7 +38,7 @@ public class ZmonDetailedAlertListFragment extends Fragment {
         alertList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-                ZmonAlertStatus alert = (ZmonAlertStatus) adapterView.getAdapter().getItem(i);
+                AlertDetails alert = (AlertDetails) adapterView.getAdapter().getItem(i);
                 if (callback != null) {
                     callback.clickedAlert(alert);
                 }
@@ -57,7 +57,7 @@ public class ZmonDetailedAlertListFragment extends Fragment {
         }
     }
 
-    public void setZmonAlertStatus(List<ZmonAlertStatus> alertStatusList) {
-        alertList.setAdapter(new AlertStatusDetailListAdapter(getActivity(), alertStatusList));
+    public void setAlertDetails(List<AlertDetails> alertDetails) {
+        alertList.setAdapter(new AlertDetailsListAdapter(getActivity(), alertDetails));
     }
 }

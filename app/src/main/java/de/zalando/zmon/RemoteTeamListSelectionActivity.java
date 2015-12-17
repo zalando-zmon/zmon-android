@@ -8,14 +8,13 @@ import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.SearchView;
 import android.util.Log;
 import android.view.Menu;
-import android.widget.Toast;
 import com.google.common.base.Function;
 import com.google.common.base.Predicate;
 import com.google.common.collect.Collections2;
 import com.google.common.collect.Lists;
 import de.zalando.zmon.fragment.TeamListFragment;
 import de.zalando.zmon.persistence.Team;
-import de.zalando.zmon.task.GetZmonTeamsTask;
+import de.zalando.zmon.task.GetTeamsTask;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -43,20 +42,14 @@ public class RemoteTeamListSelectionActivity extends BaseActivity implements Tea
     protected void onStart() {
         super.onStart();
 
-        new GetZmonTeamsTask((ZmonApplication) getApplication(), new GetZmonTeamsTask.Callback() {
-                @Override
-                public void onSuccess(final List<String> teams) {
-                    Log.i("zmon", "Successfully fetched " + teams.size() + " teams");
-                    teamNameList.addAll(teams);
-                    transFormTeamListAndSetFragment(teamNameList);
-                }
-
-                @Override
-                public void onError(final Exception e) {
-                    Toast.makeText(RemoteTeamListSelectionActivity.this, "Error while fetching teams!",
-                        Toast.LENGTH_SHORT).show();
-                }
-            }).execute();
+        new GetTeamsTask(this) {
+            @Override
+            public void onPostExecute(final List<String> teams) {
+                Log.i("zmon", "Successfully fetched " + teams.size() + " teams");
+                teamNameList.addAll(teams);
+                transFormTeamListAndSetFragment(teamNameList);
+            }
+        }.execute();
     }
 
     @Override
@@ -144,7 +137,6 @@ public class RemoteTeamListSelectionActivity extends BaseActivity implements Tea
                         }
                     }
                 });
-        Log.i("[RemoteTeam]", "Setting " + teamList.size() + " Teams");
         teamListFragment.setTeams(teamList);
     }
 }

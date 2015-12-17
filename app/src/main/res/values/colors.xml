@@ -1,12 +1,17 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="colorPrimary">#545454</color>
+    <color name="colorPrimary">#f08532</color>
+    <color name="colorPrimaryDark">#c7681f</color>
     <color name="colorSecondary">#838383</color>
+    <color name="textColorPrimary">#fff</color>
+    <color name="textColorPrimaryDark">#939393</color>
+    <color name="textColorError">#dd3010</color>
+    <color name="windowBackground">#545454</color>
+    <color name="navigationBarColor">#000</color>
 
-    <color name="zalando_orange">#f08532</color>
+    <color name="dividerColor">#50000000</color>
+
     <color name="undo">#f08532</color>
-
-    <color name="drawer_header">#838383</color>
 
     <color name="alert_critical">#dd3010</color>
     <color name="alert_medium">#e77a1d</color>
@@ -16,5 +21,5 @@
     <color name="status_warning">#EF5157</color>
 
     <color name="list_item_title">#FFF</color>
-    <color name="list_item_subtitle">#939393</color>
+    <color name="list_item_subtitle">#c4c4c4</color>
 </resources>

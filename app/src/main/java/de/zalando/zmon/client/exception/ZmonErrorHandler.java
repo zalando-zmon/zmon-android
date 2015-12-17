@@ -13,14 +13,7 @@ public class ZmonErrorHandler implements ErrorHandler {
         Response response = cause.getResponse();
         if (response != null) {
             Log.d("[zmon]", "Received response code: " + response.getStatus());
-
-            switch (response.getStatus()) {
-                case 401:
-                    return new UnauthorizedException(cause);
-
-                default:
-                    return new Exception(cause);
-            }
+            return new HttpException(response.getStatus(), response.getReason());
         }
 
         return cause;

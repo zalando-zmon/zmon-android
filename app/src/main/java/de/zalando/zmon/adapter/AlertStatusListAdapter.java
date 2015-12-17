@@ -4,49 +4,29 @@ import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.BaseAdapter;
 import android.widget.TextView;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import de.zalando.zmon.R;
-import de.zalando.zmon.client.domain.ZmonAlertStatus;
+import de.zalando.zmon.persistence.AlertHeader;
 
-public class AlertStatusListAdapter extends BaseAdapter {
+public class AlertStatusListAdapter extends BaseListAdapter<AlertHeader> {
 
     private static class ViewHolder {
+
         View itemView;
         TextView alertName;
         TextView teamName;
     }
 
-    private Context context;
-    private final List<ZmonAlertStatus> alertStatus;
-
-    public AlertStatusListAdapter(Context context, List<ZmonAlertStatus> alertStatus) {
-        this.context = context;
-        this.alertStatus = new ArrayList<>(alertStatus);
-    }
-
-    @Override
-    public int getCount() {
-        return alertStatus.size();
-    }
-
-    @Override
-    public Object getItem(int i) {
-        return alertStatus.get(i);
-    }
-
-    @Override
-    public long getItemId(int i) {
-        return i;
+    public AlertStatusListAdapter(Context context, List<AlertHeader> items) {
+        super(context, items);
     }
 
     @Override
     public View getView(int i, View view, ViewGroup viewGroup) {
-        ZmonAlertStatus alertStatus = (ZmonAlertStatus) getItem(i);
+        AlertHeader alertHeader = getTypedItem(i);
 
         if (view == null) {
             LayoutInflater layoutInflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
@@ -54,10 +34,10 @@ public class AlertStatusListAdapter extends BaseAdapter {
             view = layoutInflater.inflate(R.layout.listitem_zmon_alert, viewGroup, false);
 
             TextView alertName = (TextView) view.findViewById(R.id.name);
-            alertName.setText(alertStatus.getAlertDefinition().getName());
+            alertName.setText(alertHeader.getName());
 
             TextView teamView = (TextView) view.findViewById(R.id.team);
-            teamView.setText(alertStatus.getAlertDefinition().getTeam());
+            teamView.setText(alertHeader.getTeam());
 
             ViewHolder holder = new ViewHolder();
             holder.itemView = view;
@@ -67,8 +47,8 @@ public class AlertStatusListAdapter extends BaseAdapter {
             view.setTag(holder);
         } else {
             ViewHolder holder = (ViewHolder) view.getTag();
-            holder.alertName.setText(alertStatus.getAlertDefinition().getName());
-            holder.teamName.setText(alertStatus.getAlertDefinition().getTeam());
+            holder.alertName.setText(alertHeader.getName());
+            holder.teamName.setText(alertHeader.getTeam());
         }
 
         return view;

@@ -2,7 +2,7 @@
 <resources>
     <string name="label_zmonstatus">ZMON Status</string>
 
-    <string name="in_queue">in queue</string>
+    <string name="in_queue">checks in queue</string>
     <string name="active_workers">active workers</string>
     <string name="workers_separator">/</string>
 
