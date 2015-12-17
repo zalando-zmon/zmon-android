@@ -1,8 +1,14 @@
 package de.zalando.zmon.util;
 
+import com.google.common.base.Function;
+import com.google.common.collect.Collections2;
+
+import java.util.ArrayList;
+
 import de.zalando.zmon.persistence.AlertDefinition;
 import de.zalando.zmon.persistence.AlertDetails;
 import de.zalando.zmon.persistence.AlertParameters;
+import de.zalando.zmon.persistence.Entity;
 import de.zalando.zmon.persistence.NotificationThreshold;
 
 public class EntityTransformator {
@@ -43,6 +49,22 @@ public class EntityTransformator {
         details.setMessage(input.getMessage());
         details.setAlertDefinition(alertDef);
 
+        if (input.getEntities() != null) {
+            details.setEntities(new ArrayList<>(Collections2.transform(input.getEntities(), new Function<de.zalando.zmon.client.domain.Entity, Entity>() {
+                @Override
+                public Entity apply(de.zalando.zmon.client.domain.Entity input) {
+                    return transform(input);
+                }
+            })));
+        }
+
         return details;
+    }
+
+    private static Entity transform(de.zalando.zmon.client.domain.Entity input) {
+        return new Entity(
+                input.getEntity(),
+                input.getResult().getWorker(),
+                input.getResult().getStartTime());
     }
 }
