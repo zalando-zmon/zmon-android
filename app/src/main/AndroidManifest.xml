@@ -86,6 +86,11 @@
                        android:resource="@xml/searchable"/>
         </activity>
 
+        <activity
+            android:name=".ZmonSettingsActivity"
+            android:label="@string/title_activity_zmon_settings"
+            android:theme="@style/AppTheme" />
+
         <!-- list of receivers -->
         <receiver
             android:name=".receiver.AlertMessagesWakeupReceiver"
