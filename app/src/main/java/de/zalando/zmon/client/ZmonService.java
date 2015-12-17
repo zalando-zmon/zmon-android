@@ -4,7 +4,6 @@ import java.util.List;
 
 import de.zalando.zmon.client.domain.AlertDetails;
 import de.zalando.zmon.client.domain.AlertHeader;
-import de.zalando.zmon.client.domain.ZmonAlertStatus;
 import de.zalando.zmon.client.domain.ZmonStatus;
 import retrofit.http.GET;
 import retrofit.http.Path;
@@ -18,17 +17,11 @@ public interface ZmonService {
     @GET("/api/v1/mobile/alert/{id}")
     AlertDetails getAlertDetails(@Path("id") String alertId);
 
-    @Deprecated
-    @GET("/api/v1/mobile/alert")
-    List<ZmonAlertStatus> listAlerts();
+    @GET("/api/v1/mobile/active-alerts")
+    List<AlertDetails> getActiveAlerts();
 
-    @Deprecated
-    @GET("/api/v1/mobile/alert")
-    List<ZmonAlertStatus> listAlerts(@Query("teams") String teams);
-
-    @Deprecated
-    @GET("/api/v1/mobile/alert/{id}")
-    List<ZmonAlertStatus> getAlert(@Path("id") long alertId);
+    @GET("/api/v1/mobile/active-alerts")
+    List<AlertDetails> getActiveAlerts(@Query("team") String team);
 
     @GET("/api/v1/mobile/all-teams")
     List<String> listTeams();

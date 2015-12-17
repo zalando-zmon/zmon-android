@@ -2,8 +2,8 @@ package de.zalando.zmon.util;
 
 public class TopicAlertIdExtractor {
 
-    public static int extractId(String topic) {
+    public static String extractId(String topic) {
         String[] split = topic.split("-");
-        return Integer.valueOf(split[split.length-1]);
+        return split[split.length - 1];
     }
 }

@@ -6,17 +6,17 @@ import java.util.Date;
 
 public class Alert extends SugarRecord<Alert> {
 
-    private int alertDefinitionId;
+    private String alertDefinitionId;
 
     private String name;
 
     private Date lastModified;
 
-    public int getAlertDefinitionId() {
+    public String getAlertDefinitionId() {
         return alertDefinitionId;
     }
 
-    public void setAlertDefinitionId(int alertDefinitionId) {
+    public void setAlertDefinitionId(String alertDefinitionId) {
         this.alertDefinitionId = alertDefinitionId;
     }
 
@@ -36,7 +36,7 @@ public class Alert extends SugarRecord<Alert> {
         this.lastModified = lastModified;
     }
 
-    public static Alert of(int alertId, String name) {
+    public static Alert of(String alertId, String name) {
         Alert alert = new Alert();
         alert.setAlertDefinitionId(alertId);
         alert.setName(name);

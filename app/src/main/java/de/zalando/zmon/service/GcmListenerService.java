@@ -3,11 +3,9 @@ package de.zalando.zmon.service;
 import android.os.Bundle;
 import android.util.Log;
 
-import java.util.List;
-
 import de.zalando.zmon.client.ServiceFactory;
 import de.zalando.zmon.client.ZmonService;
-import de.zalando.zmon.client.domain.ZmonAlertStatus;
+import de.zalando.zmon.client.domain.AlertDetails;
 import de.zalando.zmon.util.NotificationHelper;
 import de.zalando.zmon.util.TopicAlertIdExtractor;
 
@@ -23,12 +21,12 @@ public class GcmListenerService extends com.google.android.gms.gcm.GcmListenerSe
             Log.i("[gcm]", "  --> " + key + ": " + data.getString(key));
         }
 
-        int alertId = TopicAlertIdExtractor.extractId(from);
+        String alertId = TopicAlertIdExtractor.extractId(from);
 
         ZmonService zmonService = ServiceFactory.createZmonService(getApplicationContext());
-        List<ZmonAlertStatus> zmonAlert = zmonService.getAlert(alertId);
+        AlertDetails alert = zmonService.getAlertDetails(alertId);
 
-        new NotificationHelper(getApplicationContext()).publishNewAlert(zmonAlert.get(0));
+        new NotificationHelper(getApplicationContext()).publishNewAlert(alert);
     }
 
     @Override
