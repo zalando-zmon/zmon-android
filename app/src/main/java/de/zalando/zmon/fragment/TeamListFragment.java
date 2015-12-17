@@ -1,23 +1,18 @@
 package de.zalando.zmon.fragment;
 
-import java.util.List;
-
+import android.app.Activity;
+import android.os.Bundle;
+import android.support.v4.app.Fragment;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
+import android.widget.AdapterView;
+import android.widget.ListView;
 import de.zalando.zmon.R;
 import de.zalando.zmon.adapter.TeamListAdapter;
 import de.zalando.zmon.persistence.Team;
 
-import android.app.Activity;
-
-import android.os.Bundle;
-
-import android.support.v4.app.Fragment;
-
-import android.view.LayoutInflater;
-import android.view.View;
-import android.view.ViewGroup;
-
-import android.widget.AdapterView;
-import android.widget.ListView;
+import java.util.List;
 
 public class TeamListFragment extends Fragment {
 
@@ -62,7 +57,6 @@ public class TeamListFragment extends Fragment {
 
     public void setTeams(final List<Team> teams) {
         final TeamListAdapter adapter = new TeamListAdapter(getActivity(), teams);
-
         teamList.setAdapter(adapter);
     }
 
