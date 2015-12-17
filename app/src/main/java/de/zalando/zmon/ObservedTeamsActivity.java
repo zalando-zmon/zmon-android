@@ -1,27 +1,24 @@
 package de.zalando.zmon;
 
-import java.util.List;
-
-import de.zalando.zmon.fragment.TeamListFragment;
-import de.zalando.zmon.persistence.Team;
-
 import android.content.Intent;
-
 import android.os.AsyncTask;
 import android.os.Bundle;
-
 import android.view.Menu;
 import android.view.MenuItem;
+import de.zalando.zmon.fragment.RemovableTeamListFragment;
+import de.zalando.zmon.persistence.Team;
+
+import java.util.List;
 
 public class ObservedTeamsActivity extends BaseActivity {
 
-    private TeamListFragment teamListFragment;
+    private RemovableTeamListFragment teamListFragment;
 
     @Override
     protected void onCreate(final Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        teamListFragment = new TeamListFragment();
+        teamListFragment = new RemovableTeamListFragment();
 
         getSupportFragmentManager().beginTransaction().replace(R.id.content, teamListFragment).commit();
     }

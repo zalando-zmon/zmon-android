@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                style="@style/AppTheme.List.Item">
+
+    <TextView
+            android:id="@+id/name"
+            style="@style/AppTheme.List.Item.Text"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+
+    <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="horizontal"
+            android:visibility="gone"
+            android:weightSum="3"
+            android:height="@dimen/list_item_height"
+            android:paddingLeft="@dimen/list_item_padding_sides"
+            android:paddingRight="@dimen/list_item_padding_sides">
+
+        <TextView
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:id="@+id/txt_delete"
+                android:gravity="center_vertical"
+                android:text="@string/deleted"
+                android:clickable="false"
+                android:layout_weight="2"
+                android:hapticFeedbackEnabled="true"
+                android:textColor="@color/status_warning"/>
+
+        <TextView
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:gravity="center"
+                android:id="@+id/txt_undo"
+                android:text="@string/undo"
+                android:clickable="false"
+                android:layout_weight="1"
+                android:textColor="@color/status_ok"/>
+
+    </LinearLayout>
+
+</RelativeLayout>

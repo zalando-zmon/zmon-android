@@ -48,6 +48,7 @@ public class RemoteTeamListSelectionActivity extends BaseActivity implements Tea
                 public void onSuccess(final List<String> teams) {
                     Log.i("zmon", "Successfully fetched " + teams.size() + " teams");
                     teamNameList.addAll(teams);
+                    transFormTeamListAndSetFragment(teamNameList);
                 }
 
                 @Override
@@ -56,7 +57,6 @@ public class RemoteTeamListSelectionActivity extends BaseActivity implements Tea
                         Toast.LENGTH_SHORT).show();
                 }
             }).execute();
-        transFormTeamListAndSetFragment(teamNameList);
     }
 
     @Override
@@ -144,6 +144,7 @@ public class RemoteTeamListSelectionActivity extends BaseActivity implements Tea
                         }
                     }
                 });
+        Log.i("[RemoteTeam]", "Setting " + teamList.size() + " Teams");
         teamListFragment.setTeams(teamList);
     }
 }
