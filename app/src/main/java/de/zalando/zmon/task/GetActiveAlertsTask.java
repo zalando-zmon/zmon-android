@@ -1,6 +1,7 @@
 package de.zalando.zmon.task;
 
 import android.content.Context;
+import android.support.annotation.NonNull;
 import android.util.Log;
 
 import com.google.common.base.Function;
@@ -21,16 +22,21 @@ public class GetActiveAlertsTask extends HttpSafeAsyncTask<String, Void, List<Al
 
     @Override
     protected List<AlertDetails> callSafe(String... teams) {
+        List<de.zalando.zmon.client.domain.AlertDetails> alertDetails;
+
         if (teams != null && teams.length != 0) {
             String teamQueryString = makeTeamString(teams);
             Log.d("[rest]", "list active alerts by teams: " + teamQueryString);
-            return map(ServiceFactory.createZmonService(context).getActiveAlerts(teamQueryString));
+            alertDetails = ServiceFactory.createZmonService(context).getActiveAlerts(teamQueryString);
         } else {
             Log.d("[rest]", "list all active alerts");
-            return map(ServiceFactory.createZmonService(context).getActiveAlerts());
+            alertDetails = ServiceFactory.createZmonService(context).getActiveAlerts();
         }
+
+        return map(alertDetails);
     }
 
+    @NonNull
     private List<AlertDetails> map(List<de.zalando.zmon.client.domain.AlertDetails> activeAlerts) {
         return Lists.transform(activeAlerts, new Function<de.zalando.zmon.client.domain.AlertDetails, AlertDetails>() {
             @Override
