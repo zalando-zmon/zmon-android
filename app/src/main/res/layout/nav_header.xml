@@ -32,10 +32,24 @@
 
     </LinearLayout>
 
-    <TextView
-        style="@style/AppTheme.Navigation.Drawer.Header.Text.Username"
-        android:id="@+id/username"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content" />
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+        <ImageView
+            style="@style/AppTheme.Navigation.Drawer.Header.Image.User"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:src="@drawable/ic_person_white_24dp" />
+
+        <TextView
+            android:id="@+id/username"
+            style="@style/AppTheme.Navigation.Drawer.Header.Text.Username"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+
+    </LinearLayout>
 
 </LinearLayout>
