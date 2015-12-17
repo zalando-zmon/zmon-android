@@ -13,6 +13,8 @@ public abstract class BaseListAdapter<T> extends BaseAdapter {
     protected final Context context;
     protected List<T> items;
 
+    protected Comparator<T> comparator;
+
     @SuppressWarnings("unchecked")
     public BaseListAdapter(final Context context, final List<T> items) {
         super();
@@ -25,8 +27,20 @@ public abstract class BaseListAdapter<T> extends BaseAdapter {
         super();
         this.context = context;
         this.items = items != null ? new ArrayList<>(items) : (List<T>) Collections.EMPTY_LIST;
+        this.comparator = comparator;
 
         Collections.sort(this.items, comparator);
+    }
+
+    @SuppressWarnings("unchecked")
+    public void setItems(List<T> items) {
+        this.items = items != null ? new ArrayList<>(items) : (List<T>) Collections.EMPTY_LIST;
+
+        if (comparator != null) {
+            Collections.sort(this.items, comparator);
+        }
+
+        notifyDataSetChanged();
     }
 
     @Override
@@ -46,5 +60,12 @@ public abstract class BaseListAdapter<T> extends BaseAdapter {
     @Override
     public long getItemId(final int i) {
         return i;
+    }
+
+    public void remove(final int i) {
+        if (i < getCount()) {
+            items.remove(i);
+            notifyDataSetChanged();
+        }
     }
 }
