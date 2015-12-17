@@ -7,20 +7,21 @@ import android.os.Looper;
 import android.util.Log;
 import android.widget.Toast;
 
-import com.google.android.gms.gcm.GcmPubSub;
+import com.google.common.base.Strings;
 
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
 import de.zalando.zmon.R;
 import de.zalando.zmon.client.ServiceFactory;
+import de.zalando.zmon.client.ZmonService;
 import de.zalando.zmon.client.domain.AlertDetails;
+import de.zalando.zmon.client.domain.AlertSubscription;
 import de.zalando.zmon.persistence.Alert;
-import de.zalando.zmon.util.InstanceIdTokenStore;
+import retrofit.client.Response;
 
-public class RegisterAlertTask extends AsyncTask<Long, Void, List<Long>> {
+public class RegisterAlertTask extends AsyncTask<String, Void, List<String>> {
 
     private final Context context;
 
@@ -29,10 +30,10 @@ public class RegisterAlertTask extends AsyncTask<Long, Void, List<Long>> {
     }
 
     @Override
-    protected List<Long> doInBackground(Long... alertIds) {
-        List<Long> registeredAlerts = new ArrayList<>();
+    protected List<String> doInBackground(String... alertIds) {
+        List<String> registeredAlerts = new ArrayList<>();
 
-        for (Long alertId : alertIds) {
+        for (String alertId : alertIds) {
             if (registerAlert(alertId)) {
                 registeredAlerts.add(alertId);
             }
@@ -41,15 +42,14 @@ public class RegisterAlertTask extends AsyncTask<Long, Void, List<Long>> {
         return registeredAlerts;
     }
 
-    private boolean registerAlert(long alertId) {
-        if (alertId < 0) {
+    private boolean registerAlert(String alertId) {
+        if (Strings.isNullOrEmpty(alertId)) {
             Log.w("[rest]", "Did not receive a valid alert id: " + alertId);
             return false;
         }
 
-        String token = new InstanceIdTokenStore(context).getToken();
-
-        AlertDetails alertDetails = ServiceFactory.createZmonService(context).getAlertDetails(String.valueOf(alertId));
+        ZmonService zmonService = ServiceFactory.createZmonService(context);
+        AlertDetails alertDetails = zmonService.getAlertDetails(String.valueOf(alertId));
 
         Alert alert = new Alert();
         alert.setAlertDefinitionId(alertDetails.getAlertDefinition().getId());
@@ -57,23 +57,21 @@ public class RegisterAlertTask extends AsyncTask<Long, Void, List<Long>> {
         alert.setLastModified(new Date());
         Alert.saveInTx(alert);
 
-        try {
-            GcmPubSub pubSub = GcmPubSub.getInstance(context);
-            pubSub.subscribe(token, "/topics/zmon-alert-" + alertId, null);
 
-            Log.i("[zmon]", "Successfully registered alert " + alertId + " for monitoring");
-            displayToastMessage(R.string.register_alert_success_message, (int) alertId);
+        Response response = zmonService.registerAlert(
+                new AlertSubscription(alertDetails.getAlertDefinition().getId()));
 
-            return true;
-
-        } catch (IOException e) {
-            displayToastMessage(R.string.register_alert_error_text, (int) alertId);
+        if (response.getStatus() == 200) {
+            Log.i("[rest]", "Successfully registered alert " + alertId + " for monitoring");
+            displayToastMessage(R.string.register_alert_success_message, alertId);
+        } else {
+            displayToastMessage(R.string.register_alert_error_text, alertId);
         }
 
-        return false;
+        return true;
     }
 
-    private void displayToastMessage(final int stringId, final int alertId) {
+    private void displayToastMessage(final int stringId, final String alertId) {
         Handler handler = new Handler(Looper.getMainLooper());
         handler.post(new Runnable() {
             @Override

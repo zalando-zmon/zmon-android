@@ -94,7 +94,6 @@ public class AlertDetailActivity extends BaseActivity {
     }
 
     private void startMonitoring() {
-        // TODO change type of id!
-        new RegisterAlertTask(this).execute(Long.valueOf(alertId));
+        new RegisterAlertTask(this).execute(alertId);
     }
 }
