@@ -57,6 +57,9 @@ public abstract class HttpSafeAsyncTask<Params, Progress, Result> extends AsyncT
             case 503:
                 displayError(context.getString(R.string.error_503));
                 break;
+            default:
+                displayError("Unknown error occured: http code = " + code + " , reason = " + reason);
+                break;
         }
     }
 

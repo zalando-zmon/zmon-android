@@ -15,10 +15,11 @@ public class AlertDefinition {
 
     private String parentId;
 
+    private Parameters parameters;
+
     private String responsibleTeam;
     private String period; // XXX correct type?
     private String checkDefinitionId;
-    private String parameters;
     private String condition;
 
 
@@ -117,11 +118,11 @@ public class AlertDefinition {
         this.checkDefinitionId = checkDefinitionId;
     }
 
-    public String getParameters() {
+    public Parameters getParameters() {
         return parameters;
     }
 
-    public void setParameters(String parameters) {
+    public void setParameters(Parameters parameters) {
         this.parameters = parameters;
     }
 

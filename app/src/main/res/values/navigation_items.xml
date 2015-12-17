@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+    <string name="nav_login">Login</string>
     <string name="nav_zmon_status">ZMON Status</string>
     <string name="nav_dashboard">Dashboard</string>
     <string name="nav_observed_teams">Observed Teams</string>

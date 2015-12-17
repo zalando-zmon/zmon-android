@@ -1,6 +1,7 @@
 package de.zalando.zmon;
 
 import android.os.Bundle;
+import android.util.Log;
 
 import java.util.Collection;
 import java.util.List;
@@ -38,12 +39,18 @@ public class ZmonDashboardActivity extends SelfUpdatableActivity implements Zmon
         new GetActiveAlertsTask(this) {
             @Override
             protected void onPostExecute(final List<AlertDetails> activeAlerts) {
-                runOnUiThread(new Runnable() {
-                    @Override
-                    public void run() {
-                        alertListFragment.setAlertDetails(activeAlerts);
-                    }
-                });
+                if (activeAlerts == null) {
+                    Log.w("[zmon]", "Did not receive any alerts");
+                } else {
+                    Log.w("[zmon]", "Received " + activeAlerts.size() + " alerts");
+
+                    runOnUiThread(new Runnable() {
+                        @Override
+                        public void run() {
+                            alertListFragment.setAlertDetails(activeAlerts);
+                        }
+                    });
+                }
             }
         }.execute(teamNames.toArray(new String[teamNames.size()]));
     }
