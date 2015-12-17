@@ -85,6 +85,8 @@ public class NavigationAdapter extends RecyclerView.Adapter<NavigationAdapter.Vi
                 case R.string.nav_observe_alerts:
                     holder.imageView.setImageResource(R.drawable.ic_notifications_active_white_24dp);
                     break;
+                case R.string.title_activity_zmon_settings:
+                    holder.imageView.setImageResource(R.drawable.ic_settings_white_24dp);
             }
         }
     }
