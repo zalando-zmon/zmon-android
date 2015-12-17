@@ -13,16 +13,18 @@ public abstract class BaseListAdapter<T> extends BaseAdapter {
     protected final Context context;
     protected List<T> items;
 
+    @SuppressWarnings("unchecked")
     public BaseListAdapter(final Context context, final List<T> items) {
         super();
         this.context = context;
-        this.items = new ArrayList<>(items);
+        this.items = items != null ? new ArrayList<>(items) : (List<T>) Collections.EMPTY_LIST;
     }
 
+    @SuppressWarnings("unchecked")
     public BaseListAdapter(final Context context, final List<T> items, Comparator<T> comparator) {
         super();
         this.context = context;
-        this.items = new ArrayList<>(items);
+        this.items = items != null ? new ArrayList<>(items) : (List<T>) Collections.EMPTY_LIST;
 
         Collections.sort(this.items, comparator);
     }
