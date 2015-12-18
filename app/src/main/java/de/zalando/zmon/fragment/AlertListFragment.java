@@ -1,5 +1,6 @@
 package de.zalando.zmon.fragment;
 
+import android.app.Activity;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
@@ -23,6 +24,12 @@ import de.zalando.zmon.persistence.Alert;
 
 public class AlertListFragment extends Fragment {
 
+    public interface Callback {
+        void onAlertClicked(Alert alert);
+    }
+
+    private Callback callback;
+
     private ListView alertList;
     private BaseListAdapter<Alert> adapter;
 
@@ -40,8 +47,24 @@ public class AlertListFragment extends Fragment {
 
         alertList = (ListView) view.findViewById(R.id.alert_list);
         alertList.setAdapter(adapter);
+        alertList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+            }
+        });
 
         setupSwipeToDismissListener();
+    }
+
+    @Override
+    public void onStart() {
+        super.onStart();
+
+        Activity activity = getActivity();
+
+        if (activity instanceof Callback) {
+            callback = (Callback) activity;
+        }
     }
 
     @SuppressWarnings("unchecked")
@@ -74,6 +97,8 @@ public class AlertListFragment extends Fragment {
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 if (touchListener.existPendingDismisses()) {
                     touchListener.undoPendingDismiss();
+                } else if (callback != null) {
+                    callback.onAlertClicked(adapter.getTypedItem(position));
                 }
             }
         });

@@ -7,12 +7,14 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 
+import com.google.common.base.Strings;
+
 import java.util.List;
 
 import de.zalando.zmon.fragment.AlertListFragment;
 import de.zalando.zmon.persistence.Alert;
 
-public class ObservedAlertsActivity extends BaseActivity {
+public class ObservedAlertsActivity extends BaseActivity implements AlertListFragment.Callback {
 
     private AlertListFragment alertListFragment;
 
@@ -70,5 +72,12 @@ public class ObservedAlertsActivity extends BaseActivity {
     @Override
     protected int getLayoutId() {
         return R.layout.activity_observed_alerts;
+    }
+
+    @Override
+    public void onAlertClicked(Alert alert) {
+        if (alert != null && !Strings.isNullOrEmpty(alert.getAlertDefinitionId())) {
+            startActivity(new AlertDetailActivity.AlertDetailActivityIntent(this, alert.getAlertDefinitionId()));
+        }
     }
 }
