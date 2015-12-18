@@ -5,7 +5,7 @@ import android.content.SharedPreferences;
 import android.preference.PreferenceManager;
 
 /**
- * Created by jobuchholz on 18.12.15.
+ * Created by Jochen Buchholz on 18.12.15.
  */
 public class PreferencesHelper {
     private static final String ZMON_BASE_URL = "https://zmon-notification-service.stups.zalan.do";
