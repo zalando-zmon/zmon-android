@@ -1,8 +1,6 @@
 package de.zalando.zmon.client;
 
 import android.content.Context;
-import android.content.SharedPreferences;
-import android.preference.PreferenceManager;
 
 import com.google.gson.FieldNamingPolicy;
 import com.google.gson.Gson;
@@ -20,6 +18,7 @@ import de.zalando.zmon.client.exception.ZmonErrorHandler;
 import de.zalando.zmon.client.interceptor.BasicAuthRequestInterceptor;
 import de.zalando.zmon.client.interceptor.OAuthTokenInterceptor;
 import de.zalando.zmon.client.profiler.LoggingProfiler;
+import de.zalando.zmon.util.PreferencesHelper;
 import retrofit.RestAdapter;
 import retrofit.converter.GsonConverter;
 
@@ -28,9 +27,9 @@ public class ServiceFactory {
     private static final String ZMON_BASE_URL = "https://zmon-notification-service.stups.zalan.do";
 
     public static OAuthAccessTokenService createOAuthService(Context context) {
-        SharedPreferences settings = PreferenceManager.getDefaultSharedPreferences(context);
+        PreferencesHelper preferencesHelper = new PreferencesHelper(context);
         return new RestAdapter.Builder()
-                .setEndpoint(settings.getString("zmon_oauth_token_service_url","https://token.auth.zalando.com"))
+                .setEndpoint(preferencesHelper.getOauthTokenUrl() )
                 .setRequestInterceptor(new BasicAuthRequestInterceptor(context))
                 .setErrorHandler(new ZmonErrorHandler())
                 .setLogLevel(RestAdapter.LogLevel.BASIC)
@@ -40,9 +39,9 @@ public class ServiceFactory {
     }
 
     public static ZmonService createZmonService(Context context) {
-        SharedPreferences settings = PreferenceManager.getDefaultSharedPreferences(context);
+        PreferencesHelper preferencesHelper = new PreferencesHelper(context);
         return new RestAdapter.Builder()
-                .setEndpoint(settings.getString("zmon_notification_service_url",ZMON_BASE_URL))
+                .setEndpoint(preferencesHelper.getNotificationServiceUrl())
                 .setRequestInterceptor(new OAuthTokenInterceptor(context))
                 .setErrorHandler(new ZmonErrorHandler())
                 .setLogLevel(RestAdapter.LogLevel.BASIC)
