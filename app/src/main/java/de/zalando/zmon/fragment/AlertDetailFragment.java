@@ -47,8 +47,7 @@ public class AlertDetailFragment extends Fragment {
     public void setAlertDetails(AlertDetails alert) {
         if (alert == null || alert.getAlertDefinition() == null) {
             Toast.makeText(getActivity(), "Something went wrong", Toast.LENGTH_SHORT).show();
-        }
-        else {
+        } else {
             description.setText(alert.getAlertDefinition().getDescription());
             team.setText(alert.getAlertDefinition().getTeam());
             responsibleTeam.setText(alert.getAlertDefinition().getResponsibleTeam());
