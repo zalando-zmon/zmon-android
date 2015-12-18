@@ -13,6 +13,7 @@ import java.util.List;
 
 import de.zalando.zmon.fragment.AlertListFragment;
 import de.zalando.zmon.persistence.Alert;
+import de.zalando.zmon.task.UnregisterAlertTask;
 
 public class ObservedAlertsActivity extends BaseActivity implements AlertListFragment.Callback {
 
@@ -78,6 +79,13 @@ public class ObservedAlertsActivity extends BaseActivity implements AlertListFra
     public void onAlertClicked(Alert alert) {
         if (alert != null && !Strings.isNullOrEmpty(alert.getAlertDefinitionId())) {
             startActivity(new AlertDetailActivity.AlertDetailActivityIntent(this, alert.getAlertDefinitionId()));
+        }
+    }
+
+    @Override
+    public void onAlertRemoved(Alert alert) {
+        if (alert != null && !Strings.isNullOrEmpty(alert.getAlertDefinitionId())) {
+            new UnregisterAlertTask(this).execute(alert.getAlertDefinitionId());
         }
     }
 }

@@ -12,6 +12,9 @@
     <string name="register_device_success_message">Successfully registered Device for Push Notifications</string>
     <string name="register_device_error_message">Device Registration for Push Notifications failed!</string>
 
+    <string name="unregister_alert_success_message">Successfully unregistered Alert %s for Push Notifications</string>
+    <string name="unregister_alert_error_message">Failed to unregistered Alert %s for Push Notifications!</string>
+
     <string name="notification_new_alert">Alert raised: %s</string>
 
     <string name="search_hint">Search Content</string>

@@ -26,6 +26,7 @@ public class AlertListFragment extends Fragment {
 
     public interface Callback {
         void onAlertClicked(Alert alert);
+        void onAlertRemoved(Alert alert);
     }
 
     private Callback callback;
@@ -84,6 +85,11 @@ public class AlertListFragment extends Fragment {
                             @Override
                             public void onDismiss(ListViewAdapter view, int position) {
                                 Alert alert = adapter.getTypedItem(position);
+
+                                if (callback != null) {
+                                    callback.onAlertRemoved(alert);
+                                }
+
                                 alert.delete();
 
                                 adapter.remove(position);
