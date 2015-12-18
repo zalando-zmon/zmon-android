@@ -29,7 +29,7 @@ public class NotificationHelper {
         Notification notification = new Notification.Builder(context)
                 .setContentTitle(title)
                 .setContentText(message)
-                .setSmallIcon(R.drawable.zmon_logo)
+                .setSmallIcon(R.drawable.ic_zmon_orange_24dp)
                 .setContentIntent(resultPendingIntent)
                 .setLights(context.getResources().getColor(R.color.colorPrimary), 3000, 3000)
                 .build();
