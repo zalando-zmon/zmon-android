@@ -33,9 +33,13 @@ public class AlertDetailsListAdapter extends BaseListAdapter<AlertDetails> {
             if (prio1 < prio2) {
                 return -1;
             } else if (prio1 == prio2) {
-                return a1.getEntities().get(0).getStartTime().getTime() < a2.getEntities().get(0).getStartTime().getTime()
-                        ? 1
-                        : -1;
+                if (a1.getEntities() != null && !a1.getEntities().isEmpty() && a2.getEntities() != null && !a2.getEntities().isEmpty()) {
+                    return a1.getEntities().get(0).getStartTime().getTime() < a2.getEntities().get(0).getStartTime().getTime()
+                            ? 1
+                            : -1;
+                } else {
+                    return 0;
+                }
             } else {
                 return 1;
             }
