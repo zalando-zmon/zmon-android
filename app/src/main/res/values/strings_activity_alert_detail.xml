@@ -6,10 +6,10 @@
     <string name="alertdetail_label_responsibleteam">Responsible Team:</string>
     <string name="alertdetail_label_description">Description:</string>
     <string name="alertdetail_label_priority">Priority:</string>
-    <string name="alertdetail_label_checkdetails">Check Details:</string>
-    <string name="alertdetail_label_checkteam">Check Team:</string>
-    <string name="alertdetail_label_checkinterval">Check Interval:</string>
-    <string name="alertdetail_label_checkentities">Check Entities:</string>
+    <string name="alertdetail_label_condition">Condition:</string>
+    <string name="alertdetail_label_last_modified">Last Modified:</string>
+    <string name="alertdetail_label_last_modified_by">Last Modified By:</string>
+    <string name="alertdetail_label_status">Status:</string>
 
     <string name="alertdetail_error_invalid_alert_id">Received Invalid Alert ID: %s</string>
     <string name="alertdetail_error_load_alert_failed">Unable to load Alert: %s</string>
