@@ -12,6 +12,8 @@ public class Alert extends SugarRecord<Alert> {
 
     private Date lastModified;
 
+    private String teamName;
+
     public String getAlertDefinitionId() {
         return alertDefinitionId;
     }
@@ -34,6 +36,14 @@ public class Alert extends SugarRecord<Alert> {
 
     public void setLastModified(Date lastModified) {
         this.lastModified = lastModified;
+    }
+
+    public String getTeamName() {
+        return teamName;
+    }
+
+    public void setTeamName(String teamName) {
+        this.teamName = teamName;
     }
 
     public static Alert of(String alertId, String name) {

@@ -54,6 +54,7 @@ public class RegisterAlertTask extends AsyncTask<String, Void, List<String>> {
         Alert alert = new Alert();
         alert.setAlertDefinitionId(alertDetails.getAlertDefinition().getId());
         alert.setName(alertDetails.getAlertDefinition().getName());
+        alert.setTeamName(alertDetails.getAlertDefinition().getTeam());
         alert.setLastModified(new Date());
         Alert.saveInTx(alert);
 
