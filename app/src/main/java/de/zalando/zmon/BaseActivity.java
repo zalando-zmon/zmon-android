@@ -85,6 +85,9 @@ public abstract class BaseActivity extends AppCompatActivity {
         int item = NavigationAdapter.navigationItems[pos - 1];
 
         switch (item) {
+            case R.string.nav_login:
+                startActivity(new Intent(this, LoginActivity.class));
+                break;
             case R.string.nav_zmon_status:
                 startActivity(new Intent(this, ZmonStatusActivity.class));
                 break;

@@ -26,6 +26,12 @@
 
     <style name="AppTheme.Navigation.Drawer.Header.Image"></style>
 
+    <style name="AppTheme.Navigation.Drawer.Header.Image.User">
+        <item name="android:paddingLeft">16dp</item>
+        <item name="android:paddingRight">6dp</item>
+        <item name="android:paddingBottom">10dp</item>
+    </style>
+
     <style name="AppTheme.Navigation.Drawer.Header.Text">
         <item name="android:textSize">24sp</item>
         <item name="android:textStyle">bold</item>
@@ -33,7 +39,6 @@
 
     <style name="AppTheme.Navigation.Drawer.Header.Text.Username">
         <item name="android:textSize">16sp</item>
-        <item name="android:paddingLeft">16dp</item>
         <item name="android:paddingBottom">10dp</item>
     </style>
 
@@ -75,7 +80,12 @@
     <style name="AppTheme.List.Item">
         <item name="android:paddingLeft">16dp</item>
         <item name="android:paddingRight">16dp</item>
+        <item name="android:paddingTop">10dp</item>
+        <item name="android:paddingBottom">10dp</item>
+        <!--
         <item name="android:layout_height">72dp</item>
+        -->
+        <item name="android:layout_height">wrap_content</item>
         <item name="android:layout_width">match_parent</item>
         <item name="android:layout_centerVertical">true</item>
     </style>
@@ -84,9 +94,13 @@
         <item name="android:textSize">18sp</item>
         <item name="android:textColor">@color/list_item_title</item>
         <item name="android:gravity">center_vertical</item>
+        <item name="android:paddingLeft">0dp</item>
+        <item name="android:paddingRight">0dp</item>
+        <item name="android:paddingTop">0dp</item>
+        <item name="android:paddingBottom">0dp</item>
     </style>
 
-    <style name="AppTheme.List.Item.SmallText">
+    <style name="AppTheme.List.Item.Text.Small">
         <item name="android:textSize">14sp</item>
         <item name="android:textColor">@color/list_item_subtitle</item>
         <item name="android:gravity">center_vertical</item>

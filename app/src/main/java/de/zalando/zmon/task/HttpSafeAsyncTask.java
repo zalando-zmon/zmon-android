@@ -1,11 +1,13 @@
 package de.zalando.zmon.task;
 
 import android.content.Context;
+import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Handler;
 import android.os.Looper;
 import android.widget.Toast;
 
+import de.zalando.zmon.LoginActivity;
 import de.zalando.zmon.R;
 import de.zalando.zmon.client.exception.HttpException;
 
@@ -41,6 +43,7 @@ public abstract class HttpSafeAsyncTask<Params, Progress, Result> extends AsyncT
                 break;
             case 401:
                 displayError(context.getString(R.string.error_401));
+                context.startActivity(new Intent(context, LoginActivity.class));
                 break;
             case 403:
                 displayError(context.getString(R.string.error_403));
@@ -56,6 +59,9 @@ public abstract class HttpSafeAsyncTask<Params, Progress, Result> extends AsyncT
                 break;
             case 503:
                 displayError(context.getString(R.string.error_503));
+                break;
+            default:
+                displayError("Unknown error occured: http code = " + code + " , reason = " + reason);
                 break;
         }
     }

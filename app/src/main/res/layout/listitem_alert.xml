@@ -1,31 +1,62 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:id="@+id/container"
-    style="@style/AppTheme.List.Item"
-    android:orientation="vertical">
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
 
-    <TextView
-        android:id="@+id/id"
-        style="@style/AppTheme.List.Item.Text"
+    <LinearLayout
+        android:id="@+id/container"
+        style="@style/AppTheme.List.Item"
+        android:orientation="vertical">
+
+        <TextView
+            android:id="@+id/name"
+            style="@style/AppTheme.List.Item.Text"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:gravity="center_vertical" />
+
+        <TextView
+            android:id="@+id/team"
+            style="@style/AppTheme.List.Item.Text.Small"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:gravity="center_vertical" />
+    </LinearLayout>
+
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center_vertical"
-        android:gravity="center_vertical" />
+        android:layout_height="match_parent"
+        android:height="@dimen/list_item_height"
+        android:orientation="horizontal"
+        android:paddingLeft="@dimen/activity_horizontal_margin"
+        android:paddingRight="@dimen/activity_horizontal_margin"
+        android:visibility="gone"
+        android:weightSum="3">
 
-    <TextView
-        android:id="@+id/name"
-        style="@style/AppTheme.List.Item.Text"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center_vertical"
-        android:gravity="center_vertical" />
+        <TextView
+            android:id="@+id/txt_delete"
+            style="@style/AppTheme.List.Item.Text"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="2"
+            android:clickable="false"
+            android:gravity="center_vertical"
+            android:hapticFeedbackEnabled="true"
+            android:text="@string/deleted"
+            android:textColor="@color/textColorPrimary" />
 
-    <TextView
-        android:id="@+id/date"
-        style="@style/AppTheme.List.Item.Text"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center_vertical"
-        android:gravity="center_vertical" />
+        <TextView
+            android:id="@+id/txt_undo"
+            style="@style/AppTheme.List.Item.Text"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:clickable="false"
+            android:gravity="center"
+            android:text="@string/undo"
+            android:textColor="@color/colorPrimaryDark" />
 
-</LinearLayout>
+    </LinearLayout>
+</FrameLayout>

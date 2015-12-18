@@ -5,6 +5,8 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.List;
 
 import de.zalando.zmon.R;
@@ -21,13 +23,11 @@ public class AlertListAdapter extends BaseListAdapter<Alert> {
         Alert item = getTypedItem(i);
         View itemView = View.inflate(context, R.layout.listitem_alert, null);
 
-        TextView idView = (TextView) itemView.findViewById(R.id.id);
         TextView nameView = (TextView) itemView.findViewById(R.id.name);
-        TextView dateView = (TextView) itemView.findViewById(R.id.date);
+        TextView teamView = (TextView) itemView.findViewById(R.id.team);
 
-        idView.setText(String.valueOf(item.getId()));
-        nameView.setText(item.getName());
-        dateView.setText(item.getLastModified().toString());
+        nameView.setText(item.getAlertDefinitionId() + ": " + item.getName());
+        teamView.setText(item.getTeamName());
 
         return itemView;
     }

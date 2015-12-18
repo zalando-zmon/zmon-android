@@ -18,11 +18,11 @@ public class AlertDefinition extends SugarRecord<AlertDefinition> {
 
     private String parentId;
 
+    private AlertParameters parameters;
+
     private String period; // XXX correct type?
     private String checkDefinitionId;
-    private String parameters;
     private String condition;
-
 
     private Date lastModified;
     private String lastModifiedBy;
@@ -116,11 +116,11 @@ public class AlertDefinition extends SugarRecord<AlertDefinition> {
         this.checkDefinitionId = checkDefinitionId;
     }
 
-    public String getParameters() {
+    public AlertParameters getParameters() {
         return parameters;
     }
 
-    public void setParameters(String parameters) {
+    public void setParameters(AlertParameters parameters) {
         this.parameters = parameters;
     }
 

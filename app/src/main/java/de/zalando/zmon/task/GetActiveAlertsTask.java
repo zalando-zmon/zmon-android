@@ -11,8 +11,8 @@ import com.google.common.collect.Lists;
 import java.util.List;
 
 import de.zalando.zmon.client.ServiceFactory;
-import de.zalando.zmon.persistence.AlertDefinition;
 import de.zalando.zmon.persistence.AlertDetails;
+import de.zalando.zmon.util.EntityTransformator;
 
 public class GetActiveAlertsTask extends HttpSafeAsyncTask<String, Void, List<AlertDetails>> {
 
@@ -33,7 +33,13 @@ public class GetActiveAlertsTask extends HttpSafeAsyncTask<String, Void, List<Al
             alertDetails = ServiceFactory.createZmonService(context).getActiveAlerts();
         }
 
-        return map(alertDetails);
+        if (alertDetails == null) {
+            Log.d("[rest]", "Received no active alerts: null");
+            return null;
+        } else {
+            Log.d("[rest]", "Received " + alertDetails.size() + " active alerts");
+            return map(alertDetails);
+        }
     }
 
     @NonNull
@@ -41,32 +47,7 @@ public class GetActiveAlertsTask extends HttpSafeAsyncTask<String, Void, List<Al
         return Lists.transform(activeAlerts, new Function<de.zalando.zmon.client.domain.AlertDetails, AlertDetails>() {
             @Override
             public AlertDetails apply(de.zalando.zmon.client.domain.AlertDetails input) {
-                AlertDefinition alertDef = new AlertDefinition();
-                alertDef.setAlertId(input.getAlertDefinition().getId());
-                alertDef.setStatus(input.getAlertDefinition().getStatus());
-                alertDef.setName(input.getAlertDefinition().getName());
-                alertDef.setTeam(input.getAlertDefinition().getTeam());
-                alertDef.setResponsibleTeam(input.getAlertDefinition().getResponsibleTeam());
-                alertDef.setDescription(input.getAlertDefinition().getDescription());
-                alertDef.setTags(input.getAlertDefinition().getTags());
-                alertDef.setParentId(input.getAlertDefinition().getParentId());
-                alertDef.setPeriod(input.getAlertDefinition().getPeriod());
-                alertDef.setCheckDefinitionId(input.getAlertDefinition().getCheckDefinitionId());
-                alertDef.setParameters(input.getAlertDefinition().getParameters());
-                alertDef.setCondition(input.getAlertDefinition().getCondition());
-                alertDef.setLastModified(input.getAlertDefinition().getLastModified());
-                alertDef.setLastModifiedBy(input.getAlertDefinition().getLastModifiedBy());
-                alertDef.setCloneable(input.getAlertDefinition().isCloneable());
-                alertDef.setDeletable(input.getAlertDefinition().isDeletable());
-                alertDef.setEditable(input.getAlertDefinition().isEditable());
-                alertDef.setTemplate(input.getAlertDefinition().isTemplate());
-                alertDef.setPriority(input.getAlertDefinition().getPriority());
-
-                AlertDetails details = new AlertDetails();
-                details.setMessage(input.getMessage());
-                details.setAlertDefinition(alertDef);
-
-                return details;
+                return EntityTransformator.transform(input);
             }
         });
     }

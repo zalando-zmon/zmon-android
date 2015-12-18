@@ -6,6 +6,7 @@ import android.app.PendingIntent;
 import android.app.TaskStackBuilder;
 import android.content.Context;
 import android.content.Intent;
+import android.net.Uri;
 
 import de.zalando.zmon.R;
 import de.zalando.zmon.ZmonDashboardActivity;
@@ -31,6 +32,8 @@ public class NotificationHelper {
                 .setSmallIcon(R.drawable.zmon_logo)
                 .setContentIntent(resultPendingIntent)
                 .build();
+
+        notification.sound = Uri.parse("android.resource://" + context.getPackageName() + "/" + R.raw.zonk);
 
         NotificationManager notificationManager = (NotificationManager) context.getSystemService(Context.NOTIFICATION_SERVICE);
         notificationManager.notify(0, notification);

@@ -2,6 +2,8 @@ package de.zalando.zmon.persistence;
 
 import com.orm.SugarRecord;
 
+import java.util.List;
+
 
 public class AlertDetails extends SugarRecord<AlertDetails> {
 
@@ -9,8 +11,9 @@ public class AlertDetails extends SugarRecord<AlertDetails> {
 
     private AlertDefinition alertDefinition;
 
+    private List<Entity> entities;
+
     //"entities_exclude" : [],
-    //"entities" : [],
     //"notifications" : [],
 
     public String getMessage() {
@@ -27,5 +30,13 @@ public class AlertDetails extends SugarRecord<AlertDetails> {
 
     public void setAlertDefinition(AlertDefinition alertDefinition) {
         this.alertDefinition = alertDefinition;
+    }
+
+    public List<Entity> getEntities() {
+        return entities;
+    }
+
+    public void setEntities(List<Entity> entities) {
+        this.entities = entities;
     }
 }

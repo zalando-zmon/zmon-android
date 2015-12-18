@@ -15,6 +15,7 @@ public class NavigationAdapter extends RecyclerView.Adapter<NavigationAdapter.Vi
     private static final int TYPE_ITEM = 1;
 
     public static final int[] navigationItems = {
+            R.string.nav_login,
             R.string.nav_zmon_status,
             R.string.nav_dashboard,
             R.string.nav_observe_alerts,
@@ -73,6 +74,9 @@ public class NavigationAdapter extends RecyclerView.Adapter<NavigationAdapter.Vi
             holder.itemLabel.setText(item);
 
             switch (item) {
+                case R.string.nav_login:
+                    holder.imageView.setImageResource(R.drawable.ic_settings_power_white_24dp);
+                    break;
                 case R.string.nav_zmon_status:
                     holder.imageView.setImageResource(R.drawable.ic_favorite_white_24dp);
                     break;
