@@ -88,7 +88,7 @@ public class AlertDetailsListAdapter extends BaseListAdapter<AlertDetails> {
     }
 
     private String formatStartTime(List<Entity> entities) {
-        if (entities == null) {
+        if (entities == null || entities.isEmpty()) {
             Log.w("[zmon]", "got alert but not entity");
             return "";
         }
