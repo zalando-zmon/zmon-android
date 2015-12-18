@@ -7,6 +7,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import de.zalando.zmon.R;
 import de.zalando.zmon.persistence.AlertDetails;
@@ -43,8 +44,13 @@ public class AlertDetailFragment extends Fragment {
     }
 
     public void setAlertDetails(AlertDetails alert) {
-        description.setText(alert.getAlertDefinition().getDescription());
-        team.setText(alert.getAlertDefinition().getTeam());
-        responsibleTeam.setText(alert.getAlertDefinition().getResponsibleTeam());
+        if (alert == null || alert.getAlertDefinition() == null) {
+            Toast.makeText(getActivity(), "Something went wrong", Toast.LENGTH_SHORT).show();
+        }
+        else {
+            description.setText(alert.getAlertDefinition().getDescription());
+            team.setText(alert.getAlertDefinition().getTeam());
+            responsibleTeam.setText(alert.getAlertDefinition().getResponsibleTeam());
+        }
     }
 }

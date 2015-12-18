@@ -49,6 +49,10 @@ public class AlertDetailActivity extends BaseActivity {
         new GetAlertDetailsTask(this) {
             @Override
             public void onPostExecute(AlertDetails alertDetails) {
+                if (alertDetails != null && alertDetails.getAlertDefinition() != null) {
+                    setTitle(alertDetails.getAlertDefinition().getName());
+                }
+
                 alertDetailFragment.setAlertDetails(alertDetails);
             }
         }.execute(alertId);
