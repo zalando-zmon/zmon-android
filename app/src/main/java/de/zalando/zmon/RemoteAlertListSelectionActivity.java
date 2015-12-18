@@ -129,7 +129,9 @@ public class RemoteAlertListSelectionActivity extends BaseActivity implements Al
             Collection<AlertHeader> filteredHeaders = Collections2.filter(this.alertHeaders, new Predicate<AlertHeader>() {
                 @Override
                 public boolean apply(AlertHeader input) {
-                    return input.getName().toLowerCase().contains(filterQuery);
+                    return input.getName().toLowerCase().contains(filterQuery) ||
+                            input.getTeam().toLowerCase().contains(filterQuery) ||
+                            input.getResponsibleTeam().toLowerCase().contains(filterQuery);
                 }
             });
 
