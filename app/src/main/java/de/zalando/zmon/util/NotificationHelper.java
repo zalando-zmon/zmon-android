@@ -31,8 +31,10 @@ public class NotificationHelper {
                 .setContentText(message)
                 .setSmallIcon(R.drawable.zmon_logo)
                 .setContentIntent(resultPendingIntent)
+                .setLights(context.getResources().getColor(R.color.colorPrimary), 3000, 3000)
                 .build();
 
+        notification.defaults |= Notification.DEFAULT_VIBRATE;
         notification.sound = Uri.parse("android.resource://" + context.getPackageName() + "/" + R.raw.zonk);
 
         NotificationManager notificationManager = (NotificationManager) context.getSystemService(Context.NOTIFICATION_SERVICE);
