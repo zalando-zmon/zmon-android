@@ -1,5 +1,6 @@
 package de.zalando.zmon.fragment;
 
+import android.content.res.Resources;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
@@ -17,7 +18,7 @@ public class AlertDetailFragment extends Fragment {
     private TextView description;
     private TextView team;
     private TextView responsibleTeam;
-    private TextView technicalDetails;
+    private View priority;
     private TextView checkDetails;
     private TextView checkTeam;
     private TextView checkInterval;
@@ -36,7 +37,7 @@ public class AlertDetailFragment extends Fragment {
         description = (TextView) view.findViewById(R.id.description);
         team = (TextView) view.findViewById(R.id.team);
         responsibleTeam = (TextView) view.findViewById(R.id.responsible_team);
-        technicalDetails = (TextView) view.findViewById(R.id.technical_details);
+        priority = view.findViewById(R.id.priority);
         checkDetails = (TextView) view.findViewById(R.id.check_details);
         checkTeam = (TextView) view.findViewById(R.id.check_team);
         checkInterval = (TextView) view.findViewById(R.id.check_interval);
@@ -51,6 +52,22 @@ public class AlertDetailFragment extends Fragment {
             description.setText(alert.getAlertDefinition().getDescription());
             team.setText(alert.getAlertDefinition().getTeam());
             responsibleTeam.setText(alert.getAlertDefinition().getResponsibleTeam());
+            setPriorityColor(alert.getAlertDefinition().getPriority());
+        }
+    }
+
+    private void setPriorityColor(int priority) {
+        Resources resources = getResources();
+        switch (priority) {
+            case 1:
+                this.priority.setBackgroundColor(resources.getColor(R.color.alert_critical));
+                break;
+            case 2:
+                this.priority.setBackgroundColor(resources.getColor(R.color.alert_medium));
+                break;
+            case 3:
+                this.priority.setBackgroundColor(resources.getColor(R.color.alert_low));
+                break;
         }
     }
 }
