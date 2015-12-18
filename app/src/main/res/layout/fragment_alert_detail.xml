@@ -82,14 +82,35 @@
                 style="@style/AppTheme.AlertDetail.Text.Label"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:text="@string/alertdetail_label_status" />
+
+            <TextView
+                android:id="@+id/status"
+                style="@style/AppTheme.AlertDetail.Text.Value"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
+        </LinearLayout>
+
+        <View style="@style/AppTheme.AlertDetail.Divider" />
+
+        <LinearLayout
+            style="@style/AppTheme.AlertDetail.Row"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <TextView
+                style="@style/AppTheme.AlertDetail.Text.Label"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
                 android:text="@string/alertdetail_label_priority" />
 
             <View
                 android:id="@+id/priority"
+                android:layout_width="match_parent"
+                android:layout_height="32dp"
                 android:layout_marginLeft="@dimen/activity_horizontal_margin"
-                android:layout_marginRight="@dimen/activity_horizontal_margin"
-                android:layout_width="match_parent"
-                android:layout_height="32dp" />
+                android:layout_marginRight="@dimen/activity_horizontal_margin" />
         </LinearLayout>
 
         <View style="@style/AppTheme.AlertDetail.Divider" />
@@ -104,10 +125,10 @@
                 style="@style/AppTheme.AlertDetail.Text.Label"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="@string/alertdetail_label_checkdetails" />
+                android:text="@string/alertdetail_label_condition" />
 
             <TextView
-                android:id="@+id/check_details"
+                android:id="@+id/condition"
                 style="@style/AppTheme.AlertDetail.Text.Value"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content" />
@@ -125,10 +146,10 @@
                 style="@style/AppTheme.AlertDetail.Text.Label"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="@string/alertdetail_label_checkteam" />
+                android:text="@string/alertdetail_label_last_modified" />
 
             <TextView
-                android:id="@+id/check_team"
+                android:id="@+id/last_modified"
                 style="@style/AppTheme.AlertDetail.Text.Value"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content" />
@@ -146,31 +167,10 @@
                 style="@style/AppTheme.AlertDetail.Text.Label"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="@string/alertdetail_label_checkinterval" />
+                android:text="@string/alertdetail_label_last_modified_by" />
 
             <TextView
-                android:id="@+id/check_interval"
-                style="@style/AppTheme.AlertDetail.Text.Value"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content" />
-        </LinearLayout>
-
-        <View style="@style/AppTheme.AlertDetail.Divider" />
-
-        <LinearLayout
-            style="@style/AppTheme.AlertDetail.Row"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="vertical">
-
-            <TextView
-                style="@style/AppTheme.AlertDetail.Text.Label"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="@string/alertdetail_label_checkentities" />
-
-            <TextView
-                android:id="@+id/check_entities"
+                android:id="@+id/last_modified_by"
                 style="@style/AppTheme.AlertDetail.Text.Value"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content" />

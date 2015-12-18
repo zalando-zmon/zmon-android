@@ -10,19 +10,25 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+
 import de.zalando.zmon.R;
 import de.zalando.zmon.persistence.AlertDetails;
 
 public class AlertDetailFragment extends Fragment {
 
+    private static final DateFormat DATE_FORMAT = new SimpleDateFormat("yyyy-MM-dd HH:mm");
+
     private TextView description;
     private TextView team;
     private TextView responsibleTeam;
     private View priority;
-    private TextView checkDetails;
-    private TextView checkTeam;
-    private TextView checkInterval;
-    private TextView checkEntities;
+    private TextView condition;
+    private TextView lastModified;
+    private TextView lastModifiedBy;
+    private TextView status;
 
     @Nullable
     @Override
@@ -38,10 +44,10 @@ public class AlertDetailFragment extends Fragment {
         team = (TextView) view.findViewById(R.id.team);
         responsibleTeam = (TextView) view.findViewById(R.id.responsible_team);
         priority = view.findViewById(R.id.priority);
-        checkDetails = (TextView) view.findViewById(R.id.check_details);
-        checkTeam = (TextView) view.findViewById(R.id.check_team);
-        checkInterval = (TextView) view.findViewById(R.id.check_interval);
-        checkEntities = (TextView) view.findViewById(R.id.check_entities);
+        condition = (TextView) view.findViewById(R.id.condition);
+        lastModified = (TextView) view.findViewById(R.id.last_modified);
+        lastModifiedBy = (TextView) view.findViewById(R.id.last_modified_by);
+        status = (TextView) view.findViewById(R.id.status);
     }
 
     public void setAlertDetails(AlertDetails alert) {
@@ -51,6 +57,10 @@ public class AlertDetailFragment extends Fragment {
             description.setText(alert.getAlertDefinition().getDescription());
             team.setText(alert.getAlertDefinition().getTeam());
             responsibleTeam.setText(alert.getAlertDefinition().getResponsibleTeam());
+            condition.setText(alert.getAlertDefinition().getCondition());
+            lastModified.setText(formatDate(alert.getAlertDefinition().getLastModified()));
+            lastModifiedBy.setText(alert.getAlertDefinition().getLastModifiedBy());
+            status.setText(alert.getAlertDefinition().getStatus());
             setPriorityColor(alert.getAlertDefinition().getPriority());
         }
     }
@@ -68,5 +78,9 @@ public class AlertDetailFragment extends Fragment {
                 this.priority.setBackgroundColor(resources.getColor(R.color.alert_low));
                 break;
         }
+    }
+
+    private String formatDate(Date date) {
+        return DATE_FORMAT.format(date);
     }
 }
