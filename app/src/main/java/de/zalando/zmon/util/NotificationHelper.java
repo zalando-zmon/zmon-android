@@ -7,6 +7,7 @@ import android.app.TaskStackBuilder;
 import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
+import android.util.Log;
 
 import de.zalando.zmon.R;
 import de.zalando.zmon.ZmonDashboardActivity;
@@ -20,6 +21,11 @@ public class NotificationHelper {
     }
 
     public void publishNewAlert(String title, String message) {
+        if (isNotificationDisabled()) {
+            Log.d("[notify]", "Notification is not created because it is disabled.");
+            return;
+        }
+
         Intent startApplicationIntent = new Intent(context, ZmonDashboardActivity.class);
         TaskStackBuilder stackBuilder = TaskStackBuilder.create(context);
         stackBuilder.addParentStack(ZmonDashboardActivity.class);
@@ -34,10 +40,30 @@ public class NotificationHelper {
                 .setLights(context.getResources().getColor(R.color.colorPrimary), 3000, 3000)
                 .build();
 
-        notification.defaults |= Notification.DEFAULT_VIBRATE;
-        notification.sound = Uri.parse("android.resource://" + context.getPackageName() + "/" + R.raw.zonk);
+        if (shouldNotificationVibrate()) {
+            notification.defaults |= Notification.DEFAULT_VIBRATE;
+        }
+
+        if (shouldNotificationPlaySound()) {
+            notification.sound = Uri.parse("android.resource://" + context.getPackageName() + "/" + R.raw.zonk);
+        }
 
         NotificationManager notificationManager = (NotificationManager) context.getSystemService(Context.NOTIFICATION_SERVICE);
         notificationManager.notify(0, notification);
+    }
+
+    private boolean isNotificationDisabled() {
+        PreferencesHelper prefs = new PreferencesHelper(context);
+        return !prefs.isAlertNotificationActive();
+    }
+
+    private boolean shouldNotificationVibrate() {
+        PreferencesHelper prefs = new PreferencesHelper(context);
+        return prefs.shouldNotificationVibrate();
+    }
+
+    private boolean shouldNotificationPlaySound() {
+        PreferencesHelper prefs = new PreferencesHelper(context);
+        return prefs.shouldNotificationPlaySound();
     }
 }

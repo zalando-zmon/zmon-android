@@ -15,6 +15,7 @@
     <string name="pref_header_notifications">Notifications</string>
 
     <string name="pref_title_new_message_notifications">New alert notifications</string>
+    <string name="pref_title_new_message_should_play_sound">Play Sound</string>
 
     <string name="pref_title_ringtone">Ringtone</string>
     <string name="pref_ringtone_silent">Silent</string>
