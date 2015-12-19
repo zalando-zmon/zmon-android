@@ -8,4 +8,11 @@
         android:icon="@drawable/ic_add_white_24dp"
         android:title="@string/observedalerts_menu_add_alert"
         app:showAsAction="ifRoom" />
+
+    <item
+        android:id="@+id/sync_subscriptions"
+        android:enabled="true"
+        android:icon="@drawable/ic_sync_white_24dp"
+        android:title="@string/observedalerts_menu_sync_subscriptions"
+        app:showAsAction="ifRoom" />
 </menu>

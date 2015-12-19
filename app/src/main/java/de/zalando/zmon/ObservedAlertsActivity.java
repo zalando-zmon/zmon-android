@@ -13,6 +13,7 @@ import java.util.List;
 
 import de.zalando.zmon.fragment.AlertListFragment;
 import de.zalando.zmon.persistence.Alert;
+import de.zalando.zmon.task.SyncAlertSubscriptionsTask;
 import de.zalando.zmon.task.UnregisterAlertTask;
 
 public class ObservedAlertsActivity extends BaseActivity implements AlertListFragment.Callback {
@@ -37,18 +38,7 @@ public class ObservedAlertsActivity extends BaseActivity implements AlertListFra
 
         Log.d("[zmon]", "Update UI with all local alerts");
 
-        new AsyncTask<Void, Void, List<Alert>>() {
-            @Override
-            protected List<Alert> doInBackground(Void... voids) {
-                return Alert.listAll(Alert.class);
-            }
-
-            @Override
-            protected void onPostExecute(List<Alert> alerts) {
-                super.onPostExecute(alerts);
-                alertListFragment.setAlerts(alerts);
-            }
-        }.execute();
+        updateSubscribedAlerts();
     }
 
     @Override
@@ -64,6 +54,9 @@ public class ObservedAlertsActivity extends BaseActivity implements AlertListFra
         switch (item.getItemId()) {
             case R.id.add_alert:
                 startActivity(new Intent(this, RemoteAlertListSelectionActivity.class));
+                return true;
+            case R.id.sync_subscriptions:
+                syncSubscriptions();
                 return true;
             default:
                 return super.onOptionsItemSelected(item);
@@ -87,5 +80,34 @@ public class ObservedAlertsActivity extends BaseActivity implements AlertListFra
         if (alert != null && !Strings.isNullOrEmpty(alert.getAlertDefinitionId())) {
             new UnregisterAlertTask(this).execute(alert.getAlertDefinitionId());
         }
+    }
+
+    private void updateSubscribedAlerts() {
+        new AsyncTask<Void, Void, List<Alert>>() {
+            @Override
+            protected List<Alert> doInBackground(Void... voids) {
+                return Alert.listAll(Alert.class);
+            }
+
+            @Override
+            protected void onPostExecute(List<Alert> alerts) {
+                super.onPostExecute(alerts);
+                alertListFragment.setAlerts(alerts);
+            }
+        }.execute();
+    }
+
+    private void syncSubscriptions() {
+        new SyncAlertSubscriptionsTask(this) {
+            @Override
+            protected void onPostExecute(List<String> strings) {
+                runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        updateSubscribedAlerts();
+                    }
+                });
+            }
+        }.execute();
     }
 }

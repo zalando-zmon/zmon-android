@@ -223,8 +223,11 @@ public class LoginActivity extends Activity {
             showProgress(false);
 
             if (success) {
+                ZmonApplication application = (ZmonApplication) getApplication();
+                application.registerForPushNotifications();
+                application.syncAlertSubscriptions();
+
                 final Intent zmonStatusIntent = new Intent(LoginActivity.this, ZmonStatusActivity.class);
-                ((ZmonApplication) getApplication()).registerForPushNotifications();
                 startActivity(zmonStatusIntent);
             }
         }

@@ -4,6 +4,7 @@
 
     <string name="observedalerts_activity_label">Observed Alerts</string>
     <string name="observedalerts_menu_add_alert">Add Alert</string>
+    <string name="observedalerts_menu_sync_subscriptions">Sync Subscriptions</string>
 
     <string name="dialog_title_really_observe_alert">Alarm wirklich monitoren?</string>
     <string name="dialog_text_really_observe_alert">Sind Sie sicher, dass sie diesen Alarm monitoren wollen? %s</string>

@@ -38,6 +38,9 @@ public interface ZmonService {
     @POST("/api/v1/subscription")
     Response registerAlert(@Body AlertSubscription subscription);
 
+    @GET("/api/v1/user/subscriptions")
+    List<String> listSubscriptions();
+
     @DELETE("/api/v1/subscription/{alertId}")
     Response unregisterAlert(@Path("alertId") String alertId);
 
