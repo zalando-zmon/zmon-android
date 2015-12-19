@@ -56,7 +56,7 @@
             android:theme="@style/AppTheme" />
         <activity
             android:name=".RemoteTeamListSelectionActivity"
-            android:label="@string/label_observed_teams"
+            android:label="@string/remoteteamlist_activity_label"
             android:theme="@style/AppTheme" />
         <activity
             android:name=".RemoteAlertListSelectionActivity"

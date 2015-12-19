@@ -3,6 +3,7 @@
     <string name="observedteams_activity_label">Observed Teams</string>
     <string name="observedteams_menu_add_team">Add Team</string>
 
+    <string name="remoteteamlist_activity_label">Remote Teams</string>
     <string name="remoteteamlist_dialog_really_observe_title">Really observe Team?</string>
     <string name="remoteteamlist_dialog_really_observe_message">Are you sure that you want to monitor Team: %s ?</string>
     <string name="remoteteamlist_dialog_really_observe_positive_button">Yes</string>
