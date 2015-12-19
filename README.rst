@@ -6,6 +6,15 @@ This is the Android app for `ZMON, Zalando's open-source platform monitoring too
 
 Our `ZMON Documentation <http://zmon.readthedocs.org/>`_ provides more information.
 
+Building
+========
+
+Download Android SDK from https://developer.android.com/sdk/.
+
+.. code-block:: bash
+
+    $ ./gradlew
+
 License
 =======
 
