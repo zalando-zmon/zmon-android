@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="de.zalando.zmon" >
+    package="de.zalando.zmon">
 
     <!-- To auto-complete the email text field in the login form with the user's emails -->
     <uses-permission android:name="android.permission.GET_ACCOUNTS" />
@@ -14,14 +14,13 @@
         android:name="de.zalando.zmon.permission.C2D_MESSAGE"
         android:protectionLevel="signature" />
 
-    <application
-        xmlns:tools="http://schemas.android.com/tools"
+    <application xmlns:tools="http://schemas.android.com/tools"
         android:name=".ZmonApplication"
         android:allowBackup="true"
-        android:icon="@drawable/ic_zmon_orange_framed_bars_24dp"
+        android:icon="@drawable/zmon_logo"
         android:label="@string/app_name"
         android:theme="@style/AppTheme"
-        tools:replace="android:icon" >
+        tools:replace="android:icon">
         <meta-data
             android:name="DATABASE"
             android:value="zmon.db" />
@@ -37,7 +36,7 @@
 
         <activity
             android:name=".LoginActivity"
-            android:theme="@style/AppTheme" >
+            android:theme="@style/AppTheme">
             android:icon="@drawable/logo"
             android:label="@string/app_name"
             android:windowSoftInputMode="adjustResize|stateVisible">
@@ -77,16 +76,6 @@
             android:theme="@style/AppTheme" />
 
         <activity
-                android:name=".SearchActivity"
-                android:label="@string/title_activity_search" >
-            <intent-filter>
-                <action android:name="android.intent.action.SEARCH" />
-            </intent-filter>
-            <meta-data android:name="android.app.searchable"
-                       android:resource="@xml/searchable"/>
-        </activity>
-
-        <activity
             android:name=".ZmonSettingsActivity"
             android:label="@string/title_activity_zmon_settings"
             android:theme="@style/AppTheme" />
@@ -96,7 +85,7 @@
             android:name=".receiver.AlertMessagesWakeupReceiver"
             android:enabled="true"
             android:exported="true"
-            android:permission="com.google.android.c2dm.permission.SEND" >
+            android:permission="com.google.android.c2dm.permission.SEND">
             <intent-filter>
                 <action android:name="com.google.android.c2dm.intent.RECEIVE" />
                 <action android:name="com.google.android.c2dm.intent.REGISTRATION" />
@@ -109,7 +98,7 @@
         <service
             android:name=".service.GcmListenerService"
             android:enabled="true"
-            android:exported="false" >
+            android:exported="false">
             <intent-filter>
                 <action android:name="com.google.android.c2dm.intent.RECEIVE" />
             </intent-filter>
@@ -117,7 +106,7 @@
         <service
             android:name=".service.InstanceIdService"
             android:enabled="true"
-            android:exported="false" >
+            android:exported="false">
             <intent-filter>
                 <action android:name="com.google.android.gms.iid.InstanceID" />
             </intent-filter>
