@@ -10,6 +10,7 @@ import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ListView;
 
+import java.util.Collections;
 import java.util.List;
 
 import de.zalando.zmon.R;
@@ -35,6 +36,7 @@ public class ZmonDetailedAlertListFragment extends Fragment {
     public void onViewCreated(View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         alertList = (ListView) view.findViewById(R.id.alert_list);
+        alertList.setAdapter(new AlertDetailsListAdapter(getActivity(), Collections.EMPTY_LIST));
         alertList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
@@ -57,7 +59,11 @@ public class ZmonDetailedAlertListFragment extends Fragment {
         }
     }
 
-    public void setAlertDetails(List<AlertDetails> alertDetails) {
-        alertList.setAdapter(new AlertDetailsListAdapter(getActivity(), alertDetails));
+    public void setAlertDetailsByTeam(List<AlertDetails> alertDetails) {
+        ((AlertDetailsListAdapter) alertList.getAdapter()).setTeamAlerts(alertDetails);
+    }
+
+    public void setAlertDetailsByAlertIds(List<AlertDetails> alertDetails) {
+        ((AlertDetailsListAdapter) alertList.getAdapter()).setSubscribedAlerts(alertDetails);
     }
 }

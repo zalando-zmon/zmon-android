@@ -7,6 +7,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
+import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
 
@@ -15,6 +16,9 @@ import de.zalando.zmon.persistence.AlertDetails;
 import de.zalando.zmon.persistence.Entity;
 
 public class AlertDetailsListAdapter extends BaseListAdapter<AlertDetails> {
+
+    private List<AlertDetails> teamAlerts;
+    private List<AlertDetails> subscribedAlerts;
 
     private static class ViewHolder {
         View itemView;
@@ -48,6 +52,8 @@ public class AlertDetailsListAdapter extends BaseListAdapter<AlertDetails> {
 
     public AlertDetailsListAdapter(Context context, List<AlertDetails> alertDetails) {
         super(context, alertDetails, new AlertStatusPriorityComparator());
+        this.teamAlerts = new ArrayList<>();
+        this.subscribedAlerts = new ArrayList<>();
     }
 
     @Override
@@ -85,6 +91,24 @@ public class AlertDetailsListAdapter extends BaseListAdapter<AlertDetails> {
         }
 
         return view;
+    }
+
+    public void setTeamAlerts(List<AlertDetails> alerts) {
+        this.teamAlerts = new ArrayList<>(alerts);
+        mergeAndUpdateLists(this.teamAlerts, this.subscribedAlerts);
+    }
+
+    public void setSubscribedAlerts(List<AlertDetails> alerts) {
+        this.subscribedAlerts = new ArrayList<>(alerts);
+        mergeAndUpdateLists(this.teamAlerts, this.subscribedAlerts);
+    }
+
+    private void mergeAndUpdateLists(List<AlertDetails> teamAlerts, List<AlertDetails> subscribedAlerts) {
+        ArrayList<AlertDetails> mergedList = new ArrayList<>();
+        mergedList.addAll(teamAlerts);
+        mergedList.addAll(subscribedAlerts);
+
+        setItems(mergedList);
     }
 
     private String formatStartTime(List<Entity> entities) {
