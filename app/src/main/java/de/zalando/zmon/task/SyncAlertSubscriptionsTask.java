@@ -8,6 +8,7 @@ import com.google.common.base.Function;
 import com.google.common.base.Predicate;
 import com.google.common.collect.Collections2;
 
+import java.io.IOException;
 import java.util.Collection;
 import java.util.List;
 
@@ -29,8 +30,12 @@ public class SyncAlertSubscriptionsTask extends HttpSafeAsyncTask<Void, Void, Li
     }
 
     @Override
-    protected List<String> callSafe(final Void... voids) {
-        List<String> subscriptions = notificationService.listSubscriptions();
+    protected List<String> callSafe(final Void... voids) throws IOException {
+        List<String> subscriptions = notificationService
+                .listSubscriptions()
+                .execute()
+                .body();
+
         Log.d("[sync]", "Received " + subscriptions.size() + " subscriptions from server");
 
         removeOutdatedSubscriptions(subscriptions);
@@ -76,8 +81,12 @@ public class SyncAlertSubscriptionsTask extends HttpSafeAsyncTask<Void, Void, Li
         });
     }
 
-    private void addLocalSubscription(String alertId) {
-        AlertDetails alertDetails = dataService.getAlertDetails(alertId);
+    private void addLocalSubscription(String alertId) throws IOException {
+        AlertDetails alertDetails = dataService
+                .getAlertDetails(alertId)
+                .execute()
+                .body();
+
         Alert alert = Alert.of(
                 alertDetails.getAlertDefinition().getId(),
                 alertDetails.getAlertDefinition().getName());

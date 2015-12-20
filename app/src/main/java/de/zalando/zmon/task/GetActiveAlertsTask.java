@@ -8,6 +8,7 @@ import com.google.common.base.Function;
 import com.google.common.base.Joiner;
 import com.google.common.collect.Lists;
 
+import java.io.IOException;
 import java.util.List;
 
 import de.zalando.zmon.client.ServiceFactory;
@@ -21,16 +22,22 @@ public class GetActiveAlertsTask extends HttpSafeAsyncTask<String, Void, List<Al
     }
 
     @Override
-    protected List<AlertDetails> callSafe(String... teams) {
+    protected List<AlertDetails> callSafe(String... teams) throws IOException {
         List<de.zalando.zmon.client.domain.AlertDetails> alertDetails;
 
         if (teams != null && teams.length != 0) {
             String teamQueryString = makeTeamString(teams);
             Log.d("[rest]", "list active alerts by teams: " + teamQueryString);
-            alertDetails = ServiceFactory.createDataService(context).getActiveAlerts(teamQueryString);
+            alertDetails = ServiceFactory.createDataService(context)
+                    .getActiveAlerts(teamQueryString)
+                    .execute()
+                    .body();
         } else {
             Log.d("[rest]", "list all active alerts");
-            alertDetails = ServiceFactory.createDataService(context).getActiveAlerts();
+            alertDetails = ServiceFactory.createDataService(context)
+                    .getActiveAlerts()
+                    .execute()
+                    .body();
         }
 
         if (alertDetails == null) {

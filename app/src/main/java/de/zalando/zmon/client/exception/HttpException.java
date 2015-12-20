@@ -1,6 +1,8 @@
 package de.zalando.zmon.client.exception;
 
-public class HttpException extends Exception {
+import java.io.IOException;
+
+public class HttpException extends IOException {
 
     private int code;
     private String reason;

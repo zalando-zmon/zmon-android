@@ -6,6 +6,7 @@ import android.util.Log;
 import com.google.common.base.Function;
 import com.google.common.collect.Lists;
 
+import java.io.IOException;
 import java.util.List;
 
 import de.zalando.zmon.client.ServiceFactory;
@@ -18,11 +19,13 @@ public class GetAlertHeadersTask extends HttpSafeAsyncTask<Void, Void, List<Aler
     }
 
     @Override
-    protected List<AlertHeader> callSafe(Void... params) {
+    protected List<AlertHeader> callSafe(Void... params) throws IOException {
         Log.d("[rest]", "list all alert headers");
 
-        List<de.zalando.zmon.client.domain.AlertHeader> alertHeaders =
-                ServiceFactory.createDataService(context).listAlertHeaders();
+        List<de.zalando.zmon.client.domain.AlertHeader> alertHeaders = ServiceFactory.createDataService(context)
+                .listAlertHeaders()
+                .execute()
+                .body();
 
         return Lists.transform(alertHeaders, new Function<de.zalando.zmon.client.domain.AlertHeader, AlertHeader>() {
             @Override

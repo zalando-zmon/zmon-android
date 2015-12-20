@@ -1,14 +1,11 @@
 package de.zalando.zmon;
 
-import android.content.Context;
 import android.os.Bundle;
 import android.util.Log;
 
-import de.zalando.zmon.client.ServiceFactory;
-import de.zalando.zmon.client.DataService;
 import de.zalando.zmon.client.domain.ZmonStatus;
 import de.zalando.zmon.fragment.ZmonStatusFragment;
-import de.zalando.zmon.task.HttpSafeAsyncTask;
+import de.zalando.zmon.task.GetZmonStatusTask;
 
 public class ZmonStatusActivity extends SelfUpdatableActivity {
 
@@ -35,7 +32,7 @@ public class ZmonStatusActivity extends SelfUpdatableActivity {
     protected void runJob() {
         Log.d("[zmon]", "Start process to update zmon2 status");
 
-        new GetZmonStatusTask(this) {
+        new GetZmonStatusTask(this, this) {
             @Override
             protected void onPostExecute(ZmonStatus status) {
                 super.onPostExecute(status);
@@ -55,15 +52,4 @@ public class ZmonStatusActivity extends SelfUpdatableActivity {
         }.execute();
     }
 
-    public class GetZmonStatusTask extends HttpSafeAsyncTask<Void, Void, ZmonStatus> {
-        protected GetZmonStatusTask(Context context) {
-            super(context);
-        }
-
-        @Override
-        protected ZmonStatus callSafe(Void... voids) {
-            final DataService dataService = ServiceFactory.createDataService(ZmonStatusActivity.this);
-            return dataService.getStatus();
-        }
-    }
 }

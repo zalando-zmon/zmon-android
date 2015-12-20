@@ -20,16 +20,13 @@ import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.TextView;
 
-import org.apache.commons.io.IOUtils;
-
-import java.io.IOException;
-
 import de.zalando.zmon.auth.Credentials;
 import de.zalando.zmon.auth.CredentialsStore;
 import de.zalando.zmon.client.OAuthAccessTokenService;
 import de.zalando.zmon.client.ServiceFactory;
 import de.zalando.zmon.client.exception.HttpException;
-import retrofit.client.Response;
+import retrofit.Call;
+import retrofit.Response;
 
 /**
  * A login screen that offers login via email/password.
@@ -189,20 +186,16 @@ public class LoginActivity extends Activity {
 
             try {
                 final OAuthAccessTokenService OAuthAccessTokenService = ServiceFactory.createOAuthService(LoginActivity.this);
-                final Response loginResponse = OAuthAccessTokenService.login();
+                final Call<String> loginCall = OAuthAccessTokenService.login();
+                final Response<String> loginResponse = loginCall.execute();
 
-                if (loginResponse.getStatus() >= 200 && loginResponse.getStatus() < 300) {
-                    try {
-                        String accessToken = IOUtils.toString(loginResponse.getBody().in());
-                        credentialsStore.setAccessToken(accessToken);
-                        Log.i("[login]", "Successfully logged in: " + accessToken);
-                        return true;
-                    } catch (IOException e) {
-                        displayError(getString(R.string.error_stacktrace, e.getMessage()));
-                        return false;
-                    }
+                if (loginResponse.code() >= 200 && loginResponse.code() < 300) {
+                    String accessToken = loginResponse.body();
+                    credentialsStore.setAccessToken(accessToken);
+                    Log.i("[login]", "Successfully logged in: " + accessToken);
+                    return true;
                 } else {
-                    displayHttpError(loginResponse.getStatus(), loginResponse.getReason());
+                    displayHttpError(loginResponse.code(), loginResponse.message());
                     return false;
                 }
             } catch (Exception e) {

@@ -1,32 +1,30 @@
 package de.zalando.zmon.task;
 
 import android.content.Context;
-import android.os.AsyncTask;
 import android.os.Handler;
 import android.os.Looper;
 import android.util.Log;
 import android.widget.Toast;
 
 import com.google.common.base.Strings;
+import com.squareup.okhttp.Response;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
 import de.zalando.zmon.R;
 import de.zalando.zmon.client.NotificationService;
 import de.zalando.zmon.client.ServiceFactory;
-import retrofit.client.Response;
 
-public class UnregisterAlertTask extends AsyncTask<String, Void, List<String>> {
-
-    private final Context context;
+public class UnregisterAlertTask extends HttpSafeAsyncTask<String, Void, List<String>> {
 
     public UnregisterAlertTask(Context context) {
-        this.context = context;
+        super(context);
     }
 
     @Override
-    protected List<String> doInBackground(String... alertIds) {
+    protected List<String> callSafe(String... alertIds) throws IOException {
         List<String> unregisteredAlerts = new ArrayList<>();
 
         for (String alertId : alertIds) {
@@ -38,16 +36,19 @@ public class UnregisterAlertTask extends AsyncTask<String, Void, List<String>> {
         return unregisteredAlerts;
     }
 
-    private boolean unregisterAlert(String alertId) {
+    private boolean unregisterAlert(String alertId) throws IOException {
         if (Strings.isNullOrEmpty(alertId)) {
             Log.w("[rest]", "Did not receive a valid alert id: " + alertId);
             return false;
         }
 
         NotificationService service = ServiceFactory.createNotificationService(context);
-        Response response = service.unregisterAlert(alertId);
+        Response response = service
+                .unregisterAlert(alertId)
+                .execute()
+                .raw();
 
-        if (response.getStatus() == 200) {
+        if (response.code() == 200) {
             Log.i("[rest]", "Successfully unregistered alert " + alertId + " for monitoring");
             displayToastMessage(R.string.unregister_alert_success_message, alertId);
         } else {

@@ -1,14 +1,15 @@
 package de.zalando.zmon.task;
 
 import android.content.Context;
-import android.os.AsyncTask;
 import android.os.Handler;
 import android.os.Looper;
 import android.util.Log;
 import android.widget.Toast;
 
 import com.google.common.base.Strings;
+import com.squareup.okhttp.Response;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -20,18 +21,15 @@ import de.zalando.zmon.client.ServiceFactory;
 import de.zalando.zmon.client.domain.AlertDetails;
 import de.zalando.zmon.client.domain.AlertSubscription;
 import de.zalando.zmon.persistence.Alert;
-import retrofit.client.Response;
 
-public class RegisterAlertTask extends AsyncTask<String, Void, List<String>> {
-
-    private final Context context;
+public class RegisterAlertTask extends HttpSafeAsyncTask<String, Void, List<String>> {
 
     public RegisterAlertTask(Context context) {
-        this.context = context;
+        super(context);
     }
 
     @Override
-    protected List<String> doInBackground(String... alertIds) {
+    protected List<String> callSafe(String... alertIds) throws IOException {
         List<String> registeredAlerts = new ArrayList<>();
 
         for (String alertId : alertIds) {
@@ -43,7 +41,7 @@ public class RegisterAlertTask extends AsyncTask<String, Void, List<String>> {
         return registeredAlerts;
     }
 
-    private boolean registerAlert(String alertId) {
+    private boolean registerAlert(String alertId) throws IOException {
         if (Strings.isNullOrEmpty(alertId)) {
             Log.w("[rest]", "Did not receive a valid alert id: " + alertId);
             return false;
@@ -52,7 +50,10 @@ public class RegisterAlertTask extends AsyncTask<String, Void, List<String>> {
         final DataService dataService = ServiceFactory.createDataService(context);
         final NotificationService notificationService = ServiceFactory.createNotificationService(context);
 
-        AlertDetails alertDetails = dataService.getAlertDetails(String.valueOf(alertId));
+        AlertDetails alertDetails = dataService
+                .getAlertDetails(String.valueOf(alertId))
+                .execute()
+                .body();
 
         Alert alert = new Alert();
         alert.setAlertDefinitionId(alertDetails.getAlertDefinition().getId());
@@ -61,11 +62,12 @@ public class RegisterAlertTask extends AsyncTask<String, Void, List<String>> {
         alert.setLastModified(new Date());
         Alert.saveInTx(alert);
 
+        Response response = notificationService
+                .registerAlert(new AlertSubscription(alertDetails.getAlertDefinition().getId()))
+                .execute()
+                .raw();
 
-        Response response = notificationService.registerAlert(
-                new AlertSubscription(alertDetails.getAlertDefinition().getId()));
-
-        if (response.getStatus() == 200) {
+        if (response.code() == 200) {
             Log.i("[rest]", "Successfully registered alert " + alertId + " for monitoring");
             displayToastMessage(R.string.register_alert_success_message, alertId);
         } else {

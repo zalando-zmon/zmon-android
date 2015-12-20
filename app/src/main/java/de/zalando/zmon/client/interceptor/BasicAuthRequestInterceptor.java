@@ -2,13 +2,17 @@ package de.zalando.zmon.client.interceptor;
 
 import android.content.Context;
 import android.util.Base64;
-import android.util.Log;
+
+import com.squareup.okhttp.Interceptor;
+import com.squareup.okhttp.Request;
+import com.squareup.okhttp.Response;
+
+import java.io.IOException;
 
 import de.zalando.zmon.auth.Credentials;
 import de.zalando.zmon.auth.CredentialsStore;
-import retrofit.RequestInterceptor;
 
-public class BasicAuthRequestInterceptor implements RequestInterceptor {
+public class BasicAuthRequestInterceptor implements Interceptor {
 
     private final Context context;
 
@@ -17,11 +21,16 @@ public class BasicAuthRequestInterceptor implements RequestInterceptor {
     }
 
     @Override
-    public void intercept(RequestFacade request) {
-        String header = "Basic " + createAuthorizationHeader();
-        request.addHeader("Authorization", header);
+    public Response intercept(Chain chain) throws IOException {
+        final String header = "Basic " + createAuthorizationHeader();
 
-        Log.d("[login]", "Added Basic Authorization Http Header: " + header);
+        Request request = chain.request();
+        Request newRequest = request.newBuilder()
+                .addHeader("Authorization", header)
+                .method(request.method(), request.body())
+                .build();
+
+        return chain.proceed(newRequest);
     }
 
     private String createAuthorizationHeader() {

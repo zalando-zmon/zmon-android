@@ -7,6 +7,8 @@ import android.os.Handler;
 import android.os.Looper;
 import android.widget.Toast;
 
+import java.io.IOException;
+
 import de.zalando.zmon.LoginActivity;
 import de.zalando.zmon.R;
 import de.zalando.zmon.client.exception.HttpException;
@@ -19,7 +21,7 @@ public abstract class HttpSafeAsyncTask<Params, Progress, Result> extends AsyncT
         this.context = context;
     }
 
-    protected abstract Result callSafe(Params... params);
+    protected abstract Result callSafe(Params... params) throws IOException;
 
     protected Result doInBackground(Params... params) {
         try {

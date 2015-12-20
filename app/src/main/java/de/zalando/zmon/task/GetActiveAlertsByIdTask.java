@@ -3,6 +3,7 @@ package de.zalando.zmon.task;
 import android.content.Context;
 import android.util.Log;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
@@ -24,7 +25,7 @@ public class GetActiveAlertsByIdTask extends HttpSafeAsyncTask<String, Void, Lis
 
     @SuppressWarnings("unchecked")
     @Override
-    protected List<AlertDetails> callSafe(String... alertIds) {
+    protected List<AlertDetails> callSafe(String... alertIds) throws IOException {
         if (alertIds == null || alertIds.length == 0) {
             Log.d("[rest]", "Do not query for active alerts as no alertIds have been specified!");
             return Collections.EMPTY_LIST;
@@ -45,8 +46,11 @@ public class GetActiveAlertsByIdTask extends HttpSafeAsyncTask<String, Void, Lis
         return activeAlerts;
     }
 
-    private AlertDetails getActiveAlert(String alertId) {
-        de.zalando.zmon.client.domain.AlertDetails input = dataService.getAlertDetails(alertId);
+    private AlertDetails getActiveAlert(String alertId) throws IOException {
+        de.zalando.zmon.client.domain.AlertDetails input = dataService
+                .getAlertDetails(alertId)
+                .execute()
+                .body();
 
         if (input.getEntities() == null || input.getEntities().isEmpty()) {
             return null;
