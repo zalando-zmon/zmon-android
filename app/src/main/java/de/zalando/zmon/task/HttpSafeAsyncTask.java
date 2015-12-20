@@ -27,7 +27,10 @@ public abstract class HttpSafeAsyncTask<Params, Progress, Result> extends AsyncT
         try {
             return callSafe(params);
         } catch (Throwable e) {
-            if (e.getCause() instanceof HttpException) {
+            if (e instanceof HttpException) {
+                HttpException ex = (HttpException) e;
+                displayHttpError(ex.getCode(), ex.getReason());
+            } else if (e.getCause() instanceof HttpException) {
                 HttpException ex = (HttpException) e.getCause();
                 displayHttpError(ex.getCode(), ex.getReason());
             } else {
