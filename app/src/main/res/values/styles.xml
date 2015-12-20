@@ -202,4 +202,9 @@
         <item name="android:textSize">18sp</item>
     </style>
 
+    <style name="AppTheme.AlertDetail.Text.Code">
+        <item name="android:textColor">@color/list_item_title</item>
+        <item name="android:textSize">14sp</item>
+    </style>
+
 </resources>

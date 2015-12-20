@@ -52,13 +52,17 @@ public class RemoteAlertListSelectionActivity extends BaseActivity implements Al
         new GetAlertHeadersTask(app) {
             @Override
             protected void onPostExecute(List<AlertHeader> alertHeaders) {
-                Log.i("[zmon]", "Received " + alertHeaders.size() + " alerts");
-                setAlertHeaders(alertHeaders);
-
-                if (Strings.isNullOrEmpty(RemoteAlertListSelectionActivity.this.currentSearchFilter)) {
-                    displayAlertHeaders(alertHeaders);
+                if (alertHeaders == null) {
+                    Log.w("[zmon]", "Did not receive a valid response");
                 } else {
-                    filterAlertHeaders(RemoteAlertListSelectionActivity.this.currentSearchFilter);
+                    Log.i("[zmon]", "Received " + alertHeaders.size() + " alerts");
+                    setAlertHeaders(alertHeaders);
+
+                    if (Strings.isNullOrEmpty(RemoteAlertListSelectionActivity.this.currentSearchFilter)) {
+                        displayAlertHeaders(alertHeaders);
+                    } else {
+                        filterAlertHeaders(RemoteAlertListSelectionActivity.this.currentSearchFilter);
+                    }
                 }
             }
         }.execute();

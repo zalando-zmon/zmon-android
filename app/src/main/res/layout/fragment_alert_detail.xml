@@ -129,7 +129,7 @@
 
             <TextView
                 android:id="@+id/condition"
-                style="@style/AppTheme.AlertDetail.Text.Value"
+                style="@style/AppTheme.AlertDetail.Text.Code"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content" />
         </LinearLayout>
