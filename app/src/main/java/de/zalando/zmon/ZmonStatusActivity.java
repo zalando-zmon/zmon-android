@@ -5,7 +5,7 @@ import android.os.Bundle;
 import android.util.Log;
 
 import de.zalando.zmon.client.ServiceFactory;
-import de.zalando.zmon.client.ZmonService;
+import de.zalando.zmon.client.DataService;
 import de.zalando.zmon.client.domain.ZmonStatus;
 import de.zalando.zmon.fragment.ZmonStatusFragment;
 import de.zalando.zmon.task.HttpSafeAsyncTask;
@@ -62,8 +62,8 @@ public class ZmonStatusActivity extends SelfUpdatableActivity {
 
         @Override
         protected ZmonStatus callSafe(Void... voids) {
-            final ZmonService zmonService = ServiceFactory.createZmonService(ZmonStatusActivity.this);
-            return zmonService.getStatus();
+            final DataService dataService = ServiceFactory.createDataService(ZmonStatusActivity.this);
+            return dataService.getStatus();
         }
     }
 }

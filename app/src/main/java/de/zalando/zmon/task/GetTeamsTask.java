@@ -16,6 +16,6 @@ public class GetTeamsTask extends HttpSafeAsyncTask<Void, Void, List<String>> {
     @Override
     protected List<String> callSafe(final Void... voids) {
         Log.d("[rest]", "list all teams registered in zmon");
-        return ServiceFactory.createZmonService(context).listTeams();
+        return ServiceFactory.createDataService(context).listTeams();
     }
 }

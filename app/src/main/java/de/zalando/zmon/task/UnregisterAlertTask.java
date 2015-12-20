@@ -13,8 +13,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 import de.zalando.zmon.R;
+import de.zalando.zmon.client.NotificationService;
 import de.zalando.zmon.client.ServiceFactory;
-import de.zalando.zmon.client.ZmonService;
 import retrofit.client.Response;
 
 public class UnregisterAlertTask extends AsyncTask<String, Void, List<String>> {
@@ -44,8 +44,8 @@ public class UnregisterAlertTask extends AsyncTask<String, Void, List<String>> {
             return false;
         }
 
-        ZmonService zmonService = ServiceFactory.createZmonService(context);
-        Response response = zmonService.unregisterAlert(alertId);
+        NotificationService service = ServiceFactory.createNotificationService(context);
+        Response response = service.unregisterAlert(alertId);
 
         if (response.getStatus() == 200) {
             Log.i("[rest]", "Successfully unregistered alert " + alertId + " for monitoring");

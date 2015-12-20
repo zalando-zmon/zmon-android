@@ -16,6 +16,6 @@ public class GetAlertSubscriptionsTask extends HttpSafeAsyncTask<Void, Void, Lis
     @Override
     protected List<String> callSafe(Void... params) {
         Log.d("[rest]", "list all active alerts");
-        return ServiceFactory.createZmonService(context).listSubscriptions();
+        return ServiceFactory.createNotificationService(context).listSubscriptions();
     }
 }

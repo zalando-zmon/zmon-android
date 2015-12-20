@@ -18,7 +18,7 @@ public class GetAlertDetailsTask extends HttpSafeAsyncTask<String, Void, AlertDe
         Log.d("[rest]", "get alert details of alert: " + params[0]);
 
         de.zalando.zmon.client.domain.AlertDetails input =
-                ServiceFactory.createZmonService(context).getAlertDetails(params[0]);
+                ServiceFactory.createDataService(context).getAlertDetails(params[0]);
 
         return EntityTransformator.transform(input);
     }

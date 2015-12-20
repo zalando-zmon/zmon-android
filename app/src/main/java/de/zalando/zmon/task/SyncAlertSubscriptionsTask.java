@@ -11,22 +11,26 @@ import com.google.common.collect.Collections2;
 import java.util.Collection;
 import java.util.List;
 
+import de.zalando.zmon.client.DataService;
+import de.zalando.zmon.client.NotificationService;
 import de.zalando.zmon.client.ServiceFactory;
-import de.zalando.zmon.client.ZmonService;
 import de.zalando.zmon.client.domain.AlertDetails;
 import de.zalando.zmon.persistence.Alert;
 
 public class SyncAlertSubscriptionsTask extends HttpSafeAsyncTask<Void, Void, List<String>> {
 
+    private final DataService dataService;
+    private final NotificationService notificationService;
+
     public SyncAlertSubscriptionsTask(Context context) {
         super(context);
+        dataService = ServiceFactory.createDataService(context);
+        notificationService = ServiceFactory.createNotificationService(context);
     }
 
     @Override
     protected List<String> callSafe(final Void... voids) {
-        final ZmonService service = ServiceFactory.createZmonService(context);
-
-        List<String> subscriptions = service.listSubscriptions();
+        List<String> subscriptions = notificationService.listSubscriptions();
         Log.d("[sync]", "Received " + subscriptions.size() + " subscriptions from server");
 
         removeOutdatedSubscriptions(subscriptions);
@@ -35,7 +39,7 @@ public class SyncAlertSubscriptionsTask extends HttpSafeAsyncTask<Void, Void, Li
         Log.d("[sync]", "Found new subscriptions: " + newSubscriptions);
 
         for (String alertId : newSubscriptions) {
-            addLocalSubscription(service, alertId);
+            addLocalSubscription(alertId);
         }
 
         return null;
@@ -72,8 +76,8 @@ public class SyncAlertSubscriptionsTask extends HttpSafeAsyncTask<Void, Void, Li
         });
     }
 
-    private void addLocalSubscription(ZmonService service, String alertId) {
-        AlertDetails alertDetails = service.getAlertDetails(alertId);
+    private void addLocalSubscription(String alertId) {
+        AlertDetails alertDetails = dataService.getAlertDetails(alertId);
         Alert alert = Alert.of(
                 alertDetails.getAlertDefinition().getId(),
                 alertDetails.getAlertDefinition().getName());

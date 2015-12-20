@@ -3,12 +3,14 @@
     <SwitchPreference
         android:defaultValue="true"
         android:key="notifications_new_alert"
+        android:summary="@string/pref_summary_new_message_notifications"
         android:title="@string/pref_title_new_message_notifications" />
 
     <SwitchPreference
         android:defaultValue="true"
         android:dependency="notifications_new_alert"
         android:key="notifications_should_play_sound"
+        android:summary="@string/pref_summary_new_message_should_play_sound"
         android:title="@string/pref_title_new_message_should_play_sound" />
 
     <RingtonePreference
@@ -16,12 +18,14 @@
         android:dependency="notifications_should_play_sound"
         android:key="zmon_notifications_new_alert_ringtone"
         android:ringtoneType="notification"
+        android:summary="@string/pref_summary_ringtone"
         android:title="@string/pref_title_ringtone" />
 
     <SwitchPreference
         android:defaultValue="true"
         android:dependency="notifications_new_alert"
         android:key="zmon_notifications_new_alert_vibrate"
+        android:summary="@string/pref_summary_vibrate"
         android:title="@string/pref_title_vibrate" />
 
 </PreferenceScreen>

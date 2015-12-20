@@ -22,7 +22,7 @@ public class GetAlertHeadersTask extends HttpSafeAsyncTask<Void, Void, List<Aler
         Log.d("[rest]", "list all alert headers");
 
         List<de.zalando.zmon.client.domain.AlertHeader> alertHeaders =
-                ServiceFactory.createZmonService(context).listAlertHeaders();
+                ServiceFactory.createDataService(context).listAlertHeaders();
 
         return Lists.transform(alertHeaders, new Function<de.zalando.zmon.client.domain.AlertHeader, AlertHeader>() {
             @Override

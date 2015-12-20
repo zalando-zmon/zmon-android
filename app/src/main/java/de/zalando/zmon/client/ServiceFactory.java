@@ -24,12 +24,10 @@ import retrofit.converter.GsonConverter;
 
 public class ServiceFactory {
 
-    private static final String ZMON_BASE_URL = "https://zmon-notification-service.stups.zalan.do";
-
     public static OAuthAccessTokenService createOAuthService(Context context) {
         PreferencesHelper preferencesHelper = new PreferencesHelper(context);
         return new RestAdapter.Builder()
-                .setEndpoint(preferencesHelper.getOauthTokenUrl() )
+                .setEndpoint(preferencesHelper.getOauthTokenUrl())
                 .setRequestInterceptor(new BasicAuthRequestInterceptor(context))
                 .setErrorHandler(new ZmonErrorHandler())
                 .setLogLevel(RestAdapter.LogLevel.BASIC)
@@ -38,7 +36,20 @@ public class ServiceFactory {
                 .create(OAuthAccessTokenService.class);
     }
 
-    public static ZmonService createZmonService(Context context) {
+    public static DataService createDataService(Context context) {
+        PreferencesHelper preferencesHelper = new PreferencesHelper(context);
+        return new RestAdapter.Builder()
+                .setEndpoint(preferencesHelper.getDataServiceUrl())
+                .setRequestInterceptor(new OAuthTokenInterceptor(context))
+                .setErrorHandler(new ZmonErrorHandler())
+                .setLogLevel(RestAdapter.LogLevel.BASIC)
+                .setProfiler(new LoggingProfiler())
+                .setConverter(new GsonConverter(createGson()))
+                .build()
+                .create(DataService.class);
+    }
+
+    public static NotificationService createNotificationService(Context context) {
         PreferencesHelper preferencesHelper = new PreferencesHelper(context);
         return new RestAdapter.Builder()
                 .setEndpoint(preferencesHelper.getNotificationServiceUrl())
@@ -48,7 +59,7 @@ public class ServiceFactory {
                 .setProfiler(new LoggingProfiler())
                 .setConverter(new GsonConverter(createGson()))
                 .build()
-                .create(ZmonService.class);
+                .create(NotificationService.class);
     }
 
     private static Gson createGson() {

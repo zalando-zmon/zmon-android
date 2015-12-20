@@ -14,8 +14,9 @@ import java.util.Date;
 import java.util.List;
 
 import de.zalando.zmon.R;
+import de.zalando.zmon.client.DataService;
+import de.zalando.zmon.client.NotificationService;
 import de.zalando.zmon.client.ServiceFactory;
-import de.zalando.zmon.client.ZmonService;
 import de.zalando.zmon.client.domain.AlertDetails;
 import de.zalando.zmon.client.domain.AlertSubscription;
 import de.zalando.zmon.persistence.Alert;
@@ -48,8 +49,10 @@ public class RegisterAlertTask extends AsyncTask<String, Void, List<String>> {
             return false;
         }
 
-        ZmonService zmonService = ServiceFactory.createZmonService(context);
-        AlertDetails alertDetails = zmonService.getAlertDetails(String.valueOf(alertId));
+        final DataService dataService = ServiceFactory.createDataService(context);
+        final NotificationService notificationService = ServiceFactory.createNotificationService(context);
+
+        AlertDetails alertDetails = dataService.getAlertDetails(String.valueOf(alertId));
 
         Alert alert = new Alert();
         alert.setAlertDefinitionId(alertDetails.getAlertDefinition().getId());
@@ -59,7 +62,7 @@ public class RegisterAlertTask extends AsyncTask<String, Void, List<String>> {
         Alert.saveInTx(alert);
 
 
-        Response response = zmonService.registerAlert(
+        Response response = notificationService.registerAlert(
                 new AlertSubscription(alertDetails.getAlertDefinition().getId()));
 
         if (response.getStatus() == 200) {

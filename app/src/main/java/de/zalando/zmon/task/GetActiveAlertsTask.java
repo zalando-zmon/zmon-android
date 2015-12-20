@@ -27,10 +27,10 @@ public class GetActiveAlertsTask extends HttpSafeAsyncTask<String, Void, List<Al
         if (teams != null && teams.length != 0) {
             String teamQueryString = makeTeamString(teams);
             Log.d("[rest]", "list active alerts by teams: " + teamQueryString);
-            alertDetails = ServiceFactory.createZmonService(context).getActiveAlerts(teamQueryString);
+            alertDetails = ServiceFactory.createDataService(context).getActiveAlerts(teamQueryString);
         } else {
             Log.d("[rest]", "list all active alerts");
-            alertDetails = ServiceFactory.createZmonService(context).getActiveAlerts();
+            alertDetails = ServiceFactory.createDataService(context).getActiveAlerts();
         }
 
         if (alertDetails == null) {

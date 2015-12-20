@@ -7,8 +7,8 @@ import android.util.Log;
 import android.widget.Toast;
 
 import de.zalando.zmon.R;
+import de.zalando.zmon.client.NotificationService;
 import de.zalando.zmon.client.ServiceFactory;
-import de.zalando.zmon.client.ZmonService;
 import de.zalando.zmon.client.domain.DeviceSubscription;
 import retrofit.client.Response;
 
@@ -20,7 +20,7 @@ public class RegisterDeviceTask extends HttpSafeAsyncTask<String, Void, Boolean>
 
     @Override
     protected Boolean callSafe(String... deviceId) {
-        ZmonService service = ServiceFactory.createZmonService(context);
+        NotificationService service = ServiceFactory.createNotificationService(context);
 
         Response response = service.registerDevice(new DeviceSubscription(deviceId[0]));
 

@@ -6,11 +6,13 @@ import android.preference.PreferenceManager;
 
 public class PreferencesHelper {
 
-    private static final String ZMON_BASE_URL = "https://zmon-notification-service.stups.zalan.do";
-    private static final String HTTPS_TOKEN_AUTH_ZALANDO_COM = "https://token.auth.zalando.com";
+    private static final String DEFAULT_OAUTH_TOKEN_URL = "https://token.auth.zalando.com";
+    private static final String DEFAULT_DATA_SERVICE_URL = "https://zmon-notification-service.stups.zalan.do";
+    private static final String DEFAULT_NOTIFICATION_SERVICE_URL = "https://zmon-notification-service.stups.zalan.do";
     private static final String CONTENT_SETTINGS_SYSTEM_NOTIFICATION_SOUND = "content://settings/system/notification_sound";
 
     private static final String PREF_OAUTH_TOKEN_SERVICE_URL = "zmon_oauth_token_service_url";
+    private static final String PREF_DATA_SERVICE_URL = "zmon_notification_data_url";
     private static final String PREF_NOTIFICATION_SERVICE_URL = "zmon_notification_service_url";
 
     private static final String PREF_NOTIFICATION_SHOULD_PLAY_SOUND = "notifications_should_play_sound";
@@ -26,11 +28,15 @@ public class PreferencesHelper {
 
     // General settings
     public String getOauthTokenUrl() {
-        return settings.getString(PREF_OAUTH_TOKEN_SERVICE_URL, HTTPS_TOKEN_AUTH_ZALANDO_COM);
+        return settings.getString(PREF_OAUTH_TOKEN_SERVICE_URL, DEFAULT_OAUTH_TOKEN_URL);
+    }
+
+    public String getDataServiceUrl() {
+        return settings.getString(PREF_DATA_SERVICE_URL, DEFAULT_DATA_SERVICE_URL);
     }
 
     public String getNotificationServiceUrl() {
-        return settings.getString(PREF_NOTIFICATION_SERVICE_URL, ZMON_BASE_URL);
+        return settings.getString(PREF_NOTIFICATION_SERVICE_URL, DEFAULT_NOTIFICATION_SERVICE_URL);
     }
 
     // Notification Settings

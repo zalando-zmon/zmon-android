@@ -1,8 +1,5 @@
 <PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
 
-
-    <!-- NOTE: EditTextPreference accepts EditText attributes. -->
-    <!-- NOTE: EditTextPreference's summary should be set to its value by the activity code. -->
     <EditTextPreference
         android:capitalize="words"
         android:defaultValue="https://token.auth.zalando.com"
@@ -11,10 +8,20 @@
         android:maxLines="1"
         android:selectAllOnFocus="true"
         android:singleLine="true"
+        android:summary="@string/pref_zmon_oauth_token_service_url_summary"
         android:title="@string/pref_zmon_oauth_token_service_url" />
 
-    <!-- NOTE: EditTextPreference accepts EditText attributes. -->
-    <!-- NOTE: EditTextPreference's summary should be set to its value by the activity code. -->
+    <EditTextPreference
+        android:capitalize="words"
+        android:defaultValue="https://zmon-notification-service.stups.zalan.do"
+        android:inputType="textUri"
+        android:key="zmon_data_service_url"
+        android:maxLines="1"
+        android:selectAllOnFocus="true"
+        android:singleLine="true"
+        android:summary="@string/pref_zmon_data_service_url_summary"
+        android:title="@string/pref_zmon_data_service_url" />
+
     <EditTextPreference
         android:capitalize="words"
         android:defaultValue="https://zmon-notification-service.stups.zalan.do"
@@ -23,6 +30,7 @@
         android:maxLines="1"
         android:selectAllOnFocus="true"
         android:singleLine="true"
+        android:summary="@string/pref_zmon_notification_service_url_summary"
         android:title="@string/pref_zmon_notification_service_url" />
 
 </PreferenceScreen>
