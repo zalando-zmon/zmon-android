@@ -10,6 +10,9 @@ This is the Android app for `ZMON, Zalando's open-source platform monitoring too
 
 Our `ZMON Documentation <http://zmon.readthedocs.org/>`_ provides more information.
 
+.. image:: https://raw.githubusercontent.com/zalando/zmon-android/master/stuff/screenshots/screenshot-menu.png
+   :alt: Screenshot of app menu
+
 Building
 ========
 
