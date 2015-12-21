@@ -21,6 +21,16 @@ Download Android SDK from https://developer.android.com/sdk/.
     $ # connect your Android device (needs to have USB debugging enabled)
     $ adb install app/build/outputs/apk/app-debug.apk
 
+Configuration
+=============
+In order to use the feature to receive notifications for upcoming alerts via Google Cloud Messaging (GCM) Service, you need
+to configure those two string values in `google_api.xml`:
+
+.. code-block:: xml
+
+    <string name="google_api_key>YOUR_GOOGLE_API_KEY</string>
+    <string name="gcm_sender_id">YOUR_GCM_SENDER_ID</string>
+
 License
 =======
 
