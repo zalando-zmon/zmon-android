@@ -13,6 +13,9 @@ Our `ZMON Documentation <http://zmon.readthedocs.org/>`_ provides more informati
 .. image:: https://raw.githubusercontent.com/zalando/zmon-android/master/stuff/screenshots/screenshot-menu.png
    :alt: Screenshot of app menu
 
+.. image:: https://raw.githubusercontent.com/zalando/zmon-android/master/stuff/screenshots/screenshot-alert-detail.png
+   :alt: Screenshot of alert detail
+
 Building
 ========
 
