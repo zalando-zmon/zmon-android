@@ -19,13 +19,6 @@ allprojects {
     repositories {
         jcenter()
         mavenLocal()
-        maven {
-            url 'http://inselhome.org:8081/nexus/content/repositories/snapshots/'
-        }
-        maven {
-            url 'http://inselhome.org:8081/nexus/content/repositories/releases/'
-        }
-
     }
 }
 subprojects {
