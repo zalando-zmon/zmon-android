@@ -15,4 +15,10 @@
     <string name="alertdetail_error_load_alert_failed">Unable to load Alert: %s</string>
 
     <string name="alertdetail_menu_monitor_alert">Monitor Alert</string>
+
+    <string name="alertdetail_nav_details">Details</string>
+    <string name="alertdetail_nav_entities">Entities</string>
+
+    <string name="alertdetail_entities_captures_label">Captures:</string>
+    <string name="alertdetail_entities_value_label">Value:</string>
 </resources>

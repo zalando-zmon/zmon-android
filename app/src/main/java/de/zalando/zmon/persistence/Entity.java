@@ -1,5 +1,7 @@
 package de.zalando.zmon.persistence;
 
+import com.google.gson.JsonElement;
+
 import java.util.Date;
 
 public class Entity {
@@ -8,6 +10,9 @@ public class Entity {
     private String worker;
 
     private Date startTime;
+
+    private JsonElement captures;
+    private JsonElement value;
 
     public Entity() {
     }
@@ -40,5 +45,21 @@ public class Entity {
 
     public void setStartTime(Date startTime) {
         this.startTime = startTime;
+    }
+
+    public JsonElement getCaptures() {
+        return captures;
+    }
+
+    public void setCaptures(JsonElement captures) {
+        this.captures = captures;
+    }
+
+    public JsonElement getValue() {
+        return value;
+    }
+
+    public void setValue(JsonElement value) {
+        this.value = value;
     }
 }

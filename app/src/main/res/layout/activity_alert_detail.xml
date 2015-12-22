@@ -15,16 +15,85 @@
 
         </android.support.v7.widget.Toolbar>
 
-        <FrameLayout
-            android:id="@+id/alert_detail_fragment"
+        <RelativeLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent" />
+            android:layout_height="match_parent">
+
+            <LinearLayout
+                android:id="@+id/nav_header"
+                style="@style/AppTheme.AlertDetail.Header"
+                android:baselineAligned="false"
+                android:orientation="horizontal">
+
+                <RelativeLayout
+                    android:id="@+id/container_details"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1">
+
+                    <View
+                        android:id="@+id/indicator_details"
+                        android:layout_width="match_parent"
+                        android:layout_height="5dp"
+                        android:layout_alignParentBottom="true"
+                        android:background="@android:color/white"
+                        android:visibility="visible" />
+
+                    <TextView
+                        style="@style/AppTheme.AlertDetail.Header.Text"
+                        android:layout_above="@id/indicator_details"
+                        android:text="@string/alertdetail_nav_details" />
+                </RelativeLayout>
+
+                <RelativeLayout
+                    android:id="@+id/container_entities"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1">
+
+                    <View
+                        android:id="@+id/indicator_entities"
+                        android:layout_width="match_parent"
+                        android:layout_height="5dp"
+                        android:layout_alignParentBottom="true"
+                        android:background="@android:color/white"
+                        android:visibility="invisible" />
+
+                    <TextView
+                        style="@style/AppTheme.AlertDetail.Header.Text"
+                        android:layout_above="@id/indicator_entities"
+                        android:text="@string/alertdetail_nav_entities" />
+                </RelativeLayout>
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_alignParentBottom="true"
+                android:layout_below="@id/nav_header"
+                android:orientation="horizontal">
+
+                <FrameLayout
+                    android:id="@+id/alert_details_fragment"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent" />
+
+                <FrameLayout
+                    android:id="@+id/alert_entities_fragment"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:visibility="gone" />
+
+            </LinearLayout>
+
+        </RelativeLayout>
 
     </LinearLayout>
 
     <android.support.v7.widget.RecyclerView
-        style="@style/AppTheme.Navigation.Drawer"
         android:id="@+id/navigation_drawer"
+        style="@style/AppTheme.Navigation.Drawer"
         android:layout_gravity="start"
         android:scrollbars="vertical" />
 

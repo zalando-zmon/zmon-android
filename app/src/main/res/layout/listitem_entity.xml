@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    style="@style/AppTheme.AlertDetail.Entities.ListItem"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <TextView
+        android:id="@+id/entity"
+        style="@style/AppTheme.AlertDetail.Entities.ListItem.Text.Title"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+
+    <TextView
+        style="@style/AppTheme.AlertDetail.Entities.ListItem.Text.Label"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/alertdetail_entities_captures_label" />
+
+    <TextView
+        android:id="@+id/captures"
+        style="@style/AppTheme.AlertDetail.Entities.ListItem.Text"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+
+    <TextView
+        style="@style/AppTheme.AlertDetail.Entities.ListItem.Text.Label"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/alertdetail_entities_value_label" />
+
+    <TextView
+        android:id="@+id/value"
+        style="@style/AppTheme.AlertDetail.Entities.ListItem.Text"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+
+</LinearLayout>

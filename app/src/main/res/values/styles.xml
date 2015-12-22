@@ -176,6 +176,25 @@
     <!-- Alert Details -->
     <style name="AppTheme.AlertDetail"></style>
 
+    <style name="AppTheme.AlertDetail.Header">
+        <item name="android:layout_margin">0dp</item>
+        <item name="android:padding">0dp</item>
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">64dp</item>
+        <item name="android:background">@color/colorPrimaryDark</item>
+    </style>
+
+    <style name="AppTheme.AlertDetail.Header.Text">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">match_parent</item>
+        <item name="android:paddingTop">8dp</item>
+        <item name="android:paddingBottom">8dp</item>
+        <item name="android:textStyle">bold</item>
+        <item name="android:textSize">18sp</item>
+        <item name="android:gravity">center</item>
+        <item name="android:background">@android:color/transparent</item>
+    </style>
+
     <style name="AppTheme.AlertDetail.Row">
         <item name="android:paddingTop">6dp</item>
         <item name="android:paddingBottom">6dp</item>
@@ -205,6 +224,31 @@
     <style name="AppTheme.AlertDetail.Text.Code">
         <item name="android:textColor">@color/list_item_title</item>
         <item name="android:textSize">14sp</item>
+    </style>
+
+    <style name="AppTheme.AlertDetail.Entities"></style>
+
+    <style name="AppTheme.AlertDetail.Entities.ListItem">
+        <item name="android:paddingLeft">16dp</item>
+        <item name="android:paddingRight">16dp</item>
+    </style>
+
+    <style name="AppTheme.AlertDetail.Entities.ListItem.Text">
+        <item name="android:textSize">14sp</item>
+        <item name="android:paddingTop">6dp</item>
+        <item name="android:paddingBottom">6dp</item>
+        <item name="android:paddingLeft">0dp</item>
+        <item name="android:paddingRight">0dp</item>
+    </style>
+
+    <style name="AppTheme.AlertDetail.Entities.ListItem.Text.Title">
+        <item name="android:textSize">18sp</item>
+    </style>
+
+    <style name="AppTheme.AlertDetail.Entities.ListItem.Text.Label">
+        <item name="android:textSize">14sp</item>
+        <item name="android:textColor">@color/textColorPrimaryDark</item>
+        <item name="android:paddingBottom">0dp</item>
     </style>
 
 </resources>

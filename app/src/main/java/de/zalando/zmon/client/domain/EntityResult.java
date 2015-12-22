@@ -1,5 +1,7 @@
 package de.zalando.zmon.client.domain;
 
+import com.google.gson.JsonElement;
+
 import java.util.Date;
 
 public class EntityResult {
@@ -10,6 +12,9 @@ public class EntityResult {
     private String worker;
 
     private Date startTime;
+
+    private JsonElement captures;
+    private JsonElement value;
 
     public float getTs() {
         return ts;
@@ -41,5 +46,21 @@ public class EntityResult {
 
     public void setStartTime(Date startTime) {
         this.startTime = startTime;
+    }
+
+    public JsonElement getCaptures() {
+        return captures;
+    }
+
+    public void setCaptures(JsonElement captures) {
+        this.captures = captures;
+    }
+
+    public JsonElement getValue() {
+        return value;
+    }
+
+    public void setValue(JsonElement value) {
+        this.value = value;
     }
 }

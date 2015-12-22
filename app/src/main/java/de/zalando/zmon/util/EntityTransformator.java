@@ -4,6 +4,7 @@ import com.google.common.base.Function;
 import com.google.common.collect.Collections2;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import de.zalando.zmon.persistence.AlertDefinition;
 import de.zalando.zmon.persistence.AlertDetails;
@@ -48,23 +49,33 @@ public class EntityTransformator {
         AlertDetails details = new AlertDetails();
         details.setMessage(input.getMessage());
         details.setAlertDefinition(alertDef);
-
-        if (input.getEntities() != null) {
-            details.setEntities(new ArrayList<>(Collections2.transform(input.getEntities(), new Function<de.zalando.zmon.client.domain.Entity, Entity>() {
-                @Override
-                public Entity apply(de.zalando.zmon.client.domain.Entity input) {
-                    return transform(input);
-                }
-            })));
-        }
+        details.setEntities(transform(input.getEntities()));
 
         return details;
     }
 
+    private static List<Entity> transform(List<de.zalando.zmon.client.domain.Entity> input) {
+        if (input == null || input.isEmpty()) {
+            return new ArrayList<>(0);
+        } else {
+            return new ArrayList<>(Collections2.transform(input, new Function<de.zalando.zmon.client.domain.Entity, Entity>() {
+                @Override
+                public Entity apply(de.zalando.zmon.client.domain.Entity input) {
+                    return transform(input);
+                }
+            }));
+        }
+    }
+
     private static Entity transform(de.zalando.zmon.client.domain.Entity input) {
-        return new Entity(
+        Entity entity = new Entity(
                 input.getEntity(),
                 input.getResult().getWorker(),
                 input.getResult().getStartTime());
+
+        entity.setValue(input.getResult().getValue());
+        entity.setCaptures(input.getResult().getCaptures());
+
+        return entity;
     }
 }
