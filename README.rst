@@ -23,9 +23,9 @@ Download Android SDK from https://developer.android.com/sdk/.
 
 .. code-block:: bash
 
-    $ ./gradlew assemble
+    $ ./gradlew build
     $ # connect your Android device (needs to have USB debugging enabled)
-    $ adb install app/build/outputs/apk/app-debug.apk
+    $ adb install -r app/build/outputs/apk/app-debug.apk
 
 Configuration
 =============
