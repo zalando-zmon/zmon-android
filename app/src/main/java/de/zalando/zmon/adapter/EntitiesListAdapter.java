@@ -1,6 +1,7 @@
 package de.zalando.zmon.adapter;
 
 import android.content.Context;
+import android.text.Html;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -9,6 +10,7 @@ import android.widget.TextView;
 import java.util.ArrayList;
 import java.util.List;
 
+import de.iweinzierl.jsonformat.HtmlFormatter;
 import de.zalando.zmon.R;
 import de.zalando.zmon.persistence.Entity;
 
@@ -41,8 +43,8 @@ public class EntitiesListAdapter extends BaseListAdapter<Entity> {
             TextView valueView = (TextView) view.findViewById(R.id.value);
 
             entityView.setText(entity.getName());
-            capturesView.setText(buildCapturesJson(entity));
-            valueView.setText(buildValueJson(entity));
+            capturesView.setText(Html.fromHtml(buildCapturesJson(entity)));
+            valueView.setText(Html.fromHtml(buildValueJson(entity)));
 
             ViewHolder holder = new ViewHolder();
             holder.entity = entityView;
@@ -52,18 +54,18 @@ public class EntitiesListAdapter extends BaseListAdapter<Entity> {
         } else {
             ViewHolder holder = (ViewHolder) view.getTag();
             holder.entity.setText(entity.getName());
-            holder.captures.setText(buildCapturesJson(entity));
-            holder.value.setText(buildValueJson(entity));
+            holder.captures.setText(Html.fromHtml(buildCapturesJson(entity)));
+            holder.value.setText(Html.fromHtml(buildValueJson(entity)));
         }
 
         return view;
     }
 
     private String buildCapturesJson(Entity entity) {
-        return entity.getCaptures().toString();
+        return new HtmlFormatter().format(entity.getCaptures());
     }
 
     private String buildValueJson(Entity entity) {
-        return entity.getValue().toString();
+        return new HtmlFormatter().format(entity.getValue());
     }
 }
