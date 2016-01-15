@@ -7,10 +7,11 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
+import com.github.iweinzierl.jsonformat.HtmlFormatter;
+
 import java.util.ArrayList;
 import java.util.List;
 
-import de.iweinzierl.jsonformat.HtmlFormatter;
 import de.zalando.zmon.R;
 import de.zalando.zmon.persistence.Entity;
 
