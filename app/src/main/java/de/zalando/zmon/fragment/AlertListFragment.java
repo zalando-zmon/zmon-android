@@ -26,6 +26,7 @@ public class AlertListFragment extends Fragment {
 
     public interface Callback {
         void onAlertClicked(Alert alert);
+
         void onAlertRemoved(Alert alert);
     }
 
@@ -47,6 +48,7 @@ public class AlertListFragment extends Fragment {
         adapter = new AlertListAdapter(getActivity(), null);
 
         alertList = (ListView) view.findViewById(R.id.alert_list);
+        alertList.setEmptyView(view.findViewById(R.id.empty_text));
         alertList.setAdapter(adapter);
         alertList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override

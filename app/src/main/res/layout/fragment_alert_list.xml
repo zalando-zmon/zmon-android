@@ -6,6 +6,16 @@
     <ListView
         android:id="@+id/alert_list"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"/>
+        android:layout_height="match_parent" />
+
+    <TextView
+        android:id="@+id/empty_text"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:gravity="center"
+        android:paddingEnd="@dimen/activity_horizontal_margin"
+        android:paddingStart="@dimen/activity_horizontal_margin"
+        android:text="@string/observedalerts_empty_list_text"
+        android:visibility="gone" />
 
 </FrameLayout>

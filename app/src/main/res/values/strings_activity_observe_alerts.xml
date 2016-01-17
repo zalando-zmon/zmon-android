@@ -10,4 +10,6 @@
     <string name="dialog_text_really_observe_alert">Sind Sie sicher, dass sie diesen Alarm monitoren wollen? %s</string>
     <string name="dialog_button_cancel_observe_alert">Nein</string>
     <string name="dialog_button_submit_observe_alert">Ja</string>
+
+    <string name="observedalerts_empty_list_text">No observed alerts found. Did you already add some?</string>
 </resources>

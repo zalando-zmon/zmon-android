@@ -6,15 +6,15 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
-import java.util.List;
+import java.util.Collections;
 
 import de.zalando.zmon.R;
 import de.zalando.zmon.persistence.Team;
 
 public class TeamListAdapter extends BaseListAdapter<Team> {
 
-    public TeamListAdapter(final Context context, final List<Team> teams) {
-        super(context, teams);
+    public TeamListAdapter(final Context context) {
+        super(context, Collections.EMPTY_LIST);
     }
 
     @Override
