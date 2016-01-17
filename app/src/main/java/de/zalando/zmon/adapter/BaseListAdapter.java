@@ -29,7 +29,12 @@ public abstract class BaseListAdapter<T> extends BaseAdapter {
         this.items = items != null ? new ArrayList<>(items) : (List<T>) Collections.EMPTY_LIST;
         this.comparator = comparator;
 
-        Collections.sort(this.items, comparator);
+        try {
+            Collections.sort(this.items, comparator);
+        }
+        catch (IllegalArgumentException iae) {
+            // iae can be thrown for unknown reason
+        }
     }
 
     @SuppressWarnings("unchecked")
@@ -37,7 +42,11 @@ public abstract class BaseListAdapter<T> extends BaseAdapter {
         this.items = items != null ? new ArrayList<>(items) : (List<T>) Collections.EMPTY_LIST;
 
         if (comparator != null) {
-            Collections.sort(this.items, comparator);
+            try {
+                Collections.sort(this.items, comparator);
+            } catch (IllegalArgumentException iae) {
+                // iae can be thrown for unknown reason
+            }
         }
 
         notifyDataSetChanged();
