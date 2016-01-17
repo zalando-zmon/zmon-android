@@ -6,6 +6,16 @@
     <ListView
         android:id="@+id/alert_list"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"/>
+        android:layout_height="match_parent" />
+
+    <TextView
+        android:id="@+id/empty_text"
+        android:paddingStart="@dimen/activity_horizontal_margin"
+        android:paddingEnd="@dimen/activity_horizontal_margin"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:text="@string/dashboard_empty_list_text"
+        android:gravity="center"
+        android:visibility="gone" />
 
 </FrameLayout>

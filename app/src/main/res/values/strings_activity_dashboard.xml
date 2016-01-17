@@ -1,4 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="label_dashboard">Dashboard</string>
+
+    <string name="dashboard_empty_list_text">No active alerts found. Did you already register at least one team or a specific alerts?</string>
 </resources>

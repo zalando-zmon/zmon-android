@@ -36,6 +36,7 @@ public class ZmonDetailedAlertListFragment extends Fragment {
     public void onViewCreated(View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         alertList = (ListView) view.findViewById(R.id.alert_list);
+        alertList.setEmptyView(view.findViewById(R.id.empty_text));
         alertList.setAdapter(new AlertDetailsListAdapter(getActivity(), Collections.EMPTY_LIST));
         alertList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override

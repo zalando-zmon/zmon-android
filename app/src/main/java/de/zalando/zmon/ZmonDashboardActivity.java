@@ -40,24 +40,26 @@ public class ZmonDashboardActivity extends SelfUpdatableActivity implements Zmon
     @Override
     protected void runJob() {
         final Collection<String> teamNames = Team.getAllObservedTeamNames();
+        if (!teamNames.isEmpty()) {
 
-        new GetActiveAlertsTask(this) {
-            @Override
-            protected void onPostExecute(final List<AlertDetails> activeAlerts) {
-                if (activeAlerts == null) {
-                    Log.w("[zmon]", "Did not receive any alerts");
-                } else {
-                    Log.w("[zmon]", "Received " + activeAlerts.size() + " alerts");
+            new GetActiveAlertsTask(this) {
+                @Override
+                protected void onPostExecute(final List<AlertDetails> activeAlerts) {
+                    if (activeAlerts == null) {
+                        Log.w("[zmon]", "Did not receive any alerts");
+                    } else {
+                        Log.w("[zmon]", "Received " + activeAlerts.size() + " alerts");
 
-                    runOnUiThread(new Runnable() {
-                        @Override
-                        public void run() {
-                            alertListFragment.setAlertDetailsByTeam(activeAlerts);
-                        }
-                    });
+                        runOnUiThread(new Runnable() {
+                            @Override
+                            public void run() {
+                                alertListFragment.setAlertDetailsByTeam(activeAlerts);
+                            }
+                        });
+                    }
                 }
-            }
-        }.execute(teamNames.toArray(new String[teamNames.size()]));
+            }.execute(teamNames.toArray(new String[teamNames.size()]));
+        }
 
         new GetActiveAlertsByIdTask(this) {
             @Override
