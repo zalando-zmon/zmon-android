@@ -12,6 +12,7 @@ import java.util.concurrent.TimeUnit;
 public abstract class SelfUpdatableActivity extends BaseActivity {
 
     private static final String EXTRA_IS_STATUS_UPDATER_PAUSED = "extra.is.status.updater.paused";
+    public static final int PERIOD = 15000;
 
     private MenuItem pauseItem;
     private MenuItem resumeItem;
@@ -93,7 +94,7 @@ public abstract class SelfUpdatableActivity extends BaseActivity {
                 public void run() {
                     runJob();
                 }
-            }, 0, 5000, TimeUnit.MILLISECONDS);
+            }, 0, PERIOD, TimeUnit.MILLISECONDS);
         }
     }
 
