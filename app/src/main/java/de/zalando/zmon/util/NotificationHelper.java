@@ -9,6 +9,7 @@ import android.content.Intent;
 import android.net.Uri;
 import android.util.Log;
 
+import de.zalando.zmon.AlertDetailActivity;
 import de.zalando.zmon.R;
 import de.zalando.zmon.ZmonDashboardActivity;
 
@@ -20,13 +21,13 @@ public class NotificationHelper {
         this.context = context;
     }
 
-    public void publishNewAlert(String title, String message) {
+    public void publishNewAlert(String alertId, String title, String message) {
         if (isNotificationDisabled()) {
             Log.d("[notify]", "Notification is not created because it is disabled.");
             return;
         }
 
-        Intent startApplicationIntent = new Intent(context, ZmonDashboardActivity.class);
+        Intent startApplicationIntent = new AlertDetailActivity.AlertDetailActivityIntent(context, alertId);
         TaskStackBuilder stackBuilder = TaskStackBuilder.create(context);
         stackBuilder.addParentStack(ZmonDashboardActivity.class);
         stackBuilder.addNextIntent(startApplicationIntent);

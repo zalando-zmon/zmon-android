@@ -28,7 +28,7 @@ public class GcmListenerService extends com.google.android.gms.gcm.GcmListenerSe
         String alertId = data.getString(NOTIFICATION_ALERT_ID);
 
         new NotificationHelper(getApplicationContext())
-                .publishNewAlert(title, message + " / " + entity + " (" + alertId + ")");
+                .publishNewAlert(alertId, title, message + " / " + entity + " (" + alertId + ")");
     }
 
     @Override
