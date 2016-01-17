@@ -12,6 +12,7 @@ import android.widget.ListView;
 import com.hudomju.swipe.SwipeToDismissTouchListener;
 import com.hudomju.swipe.adapter.ListViewAdapter;
 
+import java.util.Comparator;
 import java.util.List;
 
 import de.zalando.zmon.R;
@@ -30,6 +31,13 @@ public class RemovableTeamListFragment extends Fragment {
         View view = inflater.inflate(R.layout.fragment_team_list, container, false);
 
         teamListAdapter = new TeamListAdapter(getActivity());
+        teamListAdapter.setComparator(new Comparator<Team>() {
+            @Override
+            public int compare(Team lhs, Team rhs) {
+                return lhs.getName().compareTo(rhs.getName());
+            }
+        });
+
         teamList = (ListView) view.findViewById(R.id.team_list);
         teamList.setAdapter(teamListAdapter);
         teamList.setEmptyView(view.findViewById(R.id.empty_text));

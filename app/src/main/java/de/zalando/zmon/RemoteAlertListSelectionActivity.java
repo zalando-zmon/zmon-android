@@ -48,24 +48,26 @@ public class RemoteAlertListSelectionActivity extends BaseActivity implements Al
     protected void onStart() {
         super.onStart();
 
-        final ZmonApplication app = (ZmonApplication) getApplication();
-        new GetAlertHeadersTask(app) {
-            @Override
-            protected void onPostExecute(List<AlertHeader> alertHeaders) {
-                if (alertHeaders == null) {
-                    Log.w("[zmon]", "Did not receive a valid response");
-                } else {
-                    Log.i("[zmon]", "Received " + alertHeaders.size() + " alerts");
-                    setAlertHeaders(alertHeaders);
-
-                    if (Strings.isNullOrEmpty(RemoteAlertListSelectionActivity.this.currentSearchFilter)) {
-                        displayAlertHeaders(alertHeaders);
+        if (alertHeaders == null || alertHeaders.isEmpty()) {
+            final ZmonApplication app = (ZmonApplication) getApplication();
+            new GetAlertHeadersTask(app) {
+                @Override
+                protected void onPostExecute(List<AlertHeader> alertHeaders) {
+                    if (alertHeaders == null) {
+                        Log.w("[zmon]", "Did not receive a valid response");
                     } else {
-                        filterAlertHeaders(RemoteAlertListSelectionActivity.this.currentSearchFilter);
+                        Log.i("[zmon]", "Received " + alertHeaders.size() + " alerts");
+                        setAlertHeaders(alertHeaders);
+
+                        if (Strings.isNullOrEmpty(RemoteAlertListSelectionActivity.this.currentSearchFilter)) {
+                            displayAlertHeaders(alertHeaders);
+                        } else {
+                            filterAlertHeaders(RemoteAlertListSelectionActivity.this.currentSearchFilter);
+                        }
                     }
                 }
-            }
-        }.execute();
+            }.execute();
+        }
     }
 
     @Override

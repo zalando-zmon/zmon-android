@@ -8,22 +8,23 @@ import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.SearchView;
 import android.util.Log;
 import android.view.Menu;
+
 import com.google.common.base.Function;
 import com.google.common.base.Predicate;
 import com.google.common.collect.Collections2;
 import com.google.common.collect.Lists;
-import de.zalando.zmon.fragment.TeamListFragment;
-import de.zalando.zmon.persistence.Team;
-import de.zalando.zmon.task.GetTeamsTask;
 
 import java.util.ArrayList;
 import java.util.List;
 
+import de.zalando.zmon.fragment.TeamListFragment;
+import de.zalando.zmon.persistence.Team;
+import de.zalando.zmon.task.GetTeamsTask;
+
 public class RemoteTeamListSelectionActivity extends BaseActivity implements TeamListFragment.Callback {
 
     private TeamListFragment teamListFragment;
-
-    final List<String> teamNameList = new ArrayList<>();
+    private List<String> teamNameList = new ArrayList<>();
 
     @Override
     protected int getLayoutId() {
@@ -42,38 +43,37 @@ public class RemoteTeamListSelectionActivity extends BaseActivity implements Tea
     protected void onStart() {
         super.onStart();
 
-        new GetTeamsTask(this) {
-            @Override
-            public void onPostExecute(final List<String> teams) {
-                Log.i("zmon", "Successfully fetched " + teams.size() + " teams");
-                teamNameList.addAll(teams);
-                transFormTeamListAndSetFragment(teamNameList);
-            }
-        }.execute();
+        if (teamNameList == null || teamNameList.isEmpty()) {
+            new GetTeamsTask(this) {
+                @Override
+                public void onPostExecute(final List<String> teams) {
+                    Log.i("zmon", "Successfully fetched " + teams.size() + " teams");
+                    setTeamNames(teams);
+                }
+            }.execute();
+        }
     }
 
     @Override
     public void onTeamSelected(final Team team) {
         new AlertDialog.Builder(this).setTitle(R.string.remoteteamlist_dialog_really_observe_title)
-                                     .setMessage(getString(R.string.remoteteamlist_dialog_really_observe_message,
-                                             team.getName()))
-                                     .setPositiveButton(R.string.remoteteamlist_dialog_really_observe_positive_button,
-                                         new DialogInterface.OnClickListener() {
-                                             @Override
-                                             public void onClick(final DialogInterface dialogInterface, final int i) {
-                                                 team.setObserved(true);
-                                                 team.save();
-
-                                                 finish();
-                                             }
-                                         })
-                                     .setNegativeButton(R.string.remoteteamlist_dialog_really_observe_negative_button,
-                                         new DialogInterface.OnClickListener() {
-                                             @Override
-                                             public void onClick(final DialogInterface dialogInterface, final int i) {
-                                                 dialogInterface.dismiss();
-                                             }
-                                         }).create().show();
+                .setMessage(getString(R.string.remoteteamlist_dialog_really_observe_message,
+                        team.getName()))
+                .setPositiveButton(R.string.remoteteamlist_dialog_really_observe_positive_button,
+                        new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(final DialogInterface dialogInterface, final int i) {
+                                team.setObserved(true);
+                                team.save();
+                            }
+                        })
+                .setNegativeButton(R.string.remoteteamlist_dialog_really_observe_negative_button,
+                        new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(final DialogInterface dialogInterface, final int i) {
+                                dialogInterface.dismiss();
+                            }
+                        }).create().show();
     }
 
     @Override
@@ -90,36 +90,41 @@ public class RemoteTeamListSelectionActivity extends BaseActivity implements Tea
         searchView.setIconifiedByDefault(false); // Do not iconify the widget; expand it by default
 
         searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
-                @Override
-                public boolean onQueryTextSubmit(final String query) {
-                    Log.i("[SEARCH]", "Searching for teams with name: " + query);
+            @Override
+            public boolean onQueryTextSubmit(final String query) {
+                Log.i("[SEARCH]", "Searching for teams with name: " + query);
 
-                    getAndFilterTeams(query);
+                getAndFilterTeams(query);
 
-                    return true;
-                }
+                return true;
+            }
 
-                @Override
-                public boolean onQueryTextChange(final String newText) {
-                    Log.i("[SEARCH]", "Searching for teams with name: " + newText);
+            @Override
+            public boolean onQueryTextChange(final String newText) {
+                Log.i("[SEARCH]", "Searching for teams with name: " + newText);
 
-                    getAndFilterTeams(newText);
-                    return true;
-                }
-            });
+                getAndFilterTeams(newText);
+                return true;
+            }
+        });
 
         return true;
+    }
+
+    private void setTeamNames(List<String> teamNames) {
+        teamNameList = teamNames;
+        transFormTeamListAndSetFragment(teamNameList);
     }
 
     private void getAndFilterTeams(final String query) {
 
         // Filter all teams
         List<String> filteredTeams = new ArrayList<>(Collections2.filter(teamNameList, new Predicate<String>() {
-                        @Override
-                        public boolean apply(final String input) {
-                            return input.toLowerCase().contains(query.toLowerCase());
-                        }
-                    }));
+            @Override
+            public boolean apply(final String input) {
+                return input.toLowerCase().contains(query.toLowerCase());
+            }
+        }));
 
         // Map to Team entities
         transFormTeamListAndSetFragment(filteredTeams);
@@ -127,16 +132,16 @@ public class RemoteTeamListSelectionActivity extends BaseActivity implements Tea
 
     private void transFormTeamListAndSetFragment(final List<String> teams) {
         List<Team> teamList = Lists.transform(teams, new Function<String, Team>() {
-                    @Override
-                    public Team apply(final String name) {
-                        List<Team> teams = Team.find(Team.class, "name = ?", name);
-                        if (teams == null || teams.isEmpty()) {
-                            return Team.of(name);
-                        } else {
-                            return teams.get(0);
-                        }
-                    }
-                });
+            @Override
+            public Team apply(final String name) {
+                List<Team> teams = Team.find(Team.class, "name = ?", name);
+                if (teams == null || teams.isEmpty()) {
+                    return Team.of(name);
+                } else {
+                    return teams.get(0);
+                }
+            }
+        });
         teamListFragment.setTeams(teamList);
     }
 }

@@ -15,6 +15,7 @@ import android.widget.ListView;
 import com.hudomju.swipe.SwipeToDismissTouchListener;
 import com.hudomju.swipe.adapter.ListViewAdapter;
 
+import java.util.Comparator;
 import java.util.List;
 
 import de.zalando.zmon.R;
@@ -46,6 +47,12 @@ public class AlertListFragment extends Fragment {
         super.onViewCreated(view, savedInstanceState);
 
         adapter = new AlertListAdapter(getActivity(), null);
+        adapter.setComparator(new Comparator<Alert>() {
+            @Override
+            public int compare(Alert lhs, Alert rhs) {
+                return lhs.getAlertDefinitionId().compareTo(rhs.getAlertDefinitionId());
+            }
+        });
 
         alertList = (ListView) view.findViewById(R.id.alert_list);
         alertList.setEmptyView(view.findViewById(R.id.empty_text));

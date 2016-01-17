@@ -1,6 +1,7 @@
 package de.zalando.zmon.adapter;
 
 import android.content.Context;
+import android.util.Log;
 import android.widget.BaseAdapter;
 
 import java.util.ArrayList;
@@ -31,8 +32,7 @@ public abstract class BaseListAdapter<T> extends BaseAdapter {
 
         try {
             Collections.sort(this.items, comparator);
-        }
-        catch (IllegalArgumentException iae) {
+        } catch (IllegalArgumentException iae) {
             // iae can be thrown for unknown reason
         }
     }
@@ -46,6 +46,7 @@ public abstract class BaseListAdapter<T> extends BaseAdapter {
                 Collections.sort(this.items, comparator);
             } catch (IllegalArgumentException iae) {
                 // iae can be thrown for unknown reason
+                Log.w("[adapter]", "Unable to sort items", iae);
             }
         }
 
@@ -75,6 +76,14 @@ public abstract class BaseListAdapter<T> extends BaseAdapter {
         if (i < getCount()) {
             items.remove(i);
             notifyDataSetChanged();
+        }
+    }
+
+    public void setComparator(Comparator<T> comparator) {
+        this.comparator = comparator;
+
+        if (this.comparator != null) {
+            Collections.sort(this.items, comparator);
         }
     }
 }

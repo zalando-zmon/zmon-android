@@ -10,6 +10,8 @@ import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ListView;
 
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 
 import de.zalando.zmon.R;
@@ -25,6 +27,7 @@ public class AlertHeadersListFragment extends Fragment {
     private Callback callback;
 
     private ListView alertList;
+    private AlertStatusListAdapter alertListAdapter;
 
     @Nullable
     @Override
@@ -35,7 +38,17 @@ public class AlertHeadersListFragment extends Fragment {
     @Override
     public void onViewCreated(View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+
+        alertListAdapter = new AlertStatusListAdapter(getActivity(), Collections.EMPTY_LIST);
+        alertListAdapter.setComparator(new Comparator<AlertHeader>() {
+            @Override
+            public int compare(AlertHeader lhs, AlertHeader rhs) {
+                return lhs.getAlertId().compareTo(rhs.getAlertId());
+            }
+        });
+
         alertList = (ListView) view.findViewById(R.id.alert_list);
+        alertList.setAdapter(alertListAdapter);
         alertList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
@@ -58,6 +71,6 @@ public class AlertHeadersListFragment extends Fragment {
     }
 
     public void setAlertHeaders(List<AlertHeader> alertHeaders) {
-        alertList.setAdapter(new AlertStatusListAdapter(getActivity(), alertHeaders));
+        alertListAdapter.setItems(alertHeaders);
     }
 }
