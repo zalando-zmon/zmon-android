@@ -7,8 +7,8 @@ import android.preference.PreferenceManager;
 public class PreferencesHelper {
 
     private static final String DEFAULT_OAUTH_TOKEN_URL = "https://token.auth.zalando.com";
-    private static final String DEFAULT_DATA_SERVICE_URL = "https://zmon-notification-service.stups.zalan.do";
-    private static final String DEFAULT_NOTIFICATION_SERVICE_URL = "https://zmon-notification-service.stups.zalan.do";
+    private static final String DEFAULT_DATA_SERVICE_URL = "https://notification-service.zmon.zalan.do";
+    private static final String DEFAULT_NOTIFICATION_SERVICE_URL = "https://notification-service.zmon.zalan.do";
     private static final String CONTENT_SETTINGS_SYSTEM_NOTIFICATION_SOUND = "content://settings/system/notification_sound";
 
     private static final String PREF_OAUTH_TOKEN_SERVICE_URL = "zmon_oauth_token_service_url";
