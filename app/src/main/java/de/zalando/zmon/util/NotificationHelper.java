@@ -46,7 +46,7 @@ public class NotificationHelper {
         }
 
         if (shouldNotificationPlaySound()) {
-            notification.sound = Uri.parse("android.resource://" + context.getPackageName() + "/" + R.raw.zonk);
+            notification.defaults |= Notification.DEFAULT_SOUND;
         }
 
         NotificationManager notificationManager = (NotificationManager) context.getSystemService(Context.NOTIFICATION_SERVICE);
