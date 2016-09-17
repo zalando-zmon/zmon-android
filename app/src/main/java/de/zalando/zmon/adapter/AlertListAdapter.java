@@ -1,6 +1,7 @@
 package de.zalando.zmon.adapter;
 
 import android.content.Context;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
@@ -21,14 +22,26 @@ public class AlertListAdapter extends BaseListAdapter<Alert> {
     @Override
     public View getView(int i, View view, ViewGroup viewGroup) {
         Alert item = getTypedItem(i);
-        View itemView = View.inflate(context, R.layout.listitem_alert, null);
+        ViewHolder holder;
+        if(view == null) {
+            LayoutInflater inflater =  LayoutInflater.from(context);
+            view = inflater.inflate(R.layout.listitem_alert, viewGroup, false);
+            holder = new ViewHolder();
+            holder.name = (TextView) view.findViewById(R.id.name);
+            holder.team = (TextView) view.findViewById(R.id.team);
+            view.setTag(holder);
+        } else {
+            holder = (ViewHolder) view.getTag();
+        }
 
-        TextView nameView = (TextView) itemView.findViewById(R.id.name);
-        TextView teamView = (TextView) itemView.findViewById(R.id.team);
+        holder.name.setText(item.getAlertDefinitionId() + ": " + item.getName());
+        holder.team.setText(item.getTeamName());
 
-        nameView.setText(item.getAlertDefinitionId() + ": " + item.getName());
-        teamView.setText(item.getTeamName());
+        return view;
+    }
 
-        return itemView;
+    private static class ViewHolder {
+        TextView name;
+        TextView team;
     }
 }
