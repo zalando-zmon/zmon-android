@@ -2,8 +2,8 @@
 ZMON Android App
 ================
 
-.. image:: https://travis-ci.org/zalando/zmon-android.svg?branch=master
-   :target: https://travis-ci.org/zalando/zmon-android
+.. image:: https://travis-ci.org/zalando-zmon/zmon-android.svg?branch=master
+   :target: https://travis-ci.org/zalando-zmon/zmon-android
    :alt: Build Status
 
 This is the Android app for `ZMON, Zalando's open-source platform monitoring tool <http://zalando.github.io/zmon/>`_.
