@@ -2,7 +2,6 @@
 
     <EditTextPreference
         android:capitalize="words"
-        android:defaultValue="https://token.auth.zalando.com"
         android:inputType="textUri"
         android:key="zmon_oauth_token_service_url"
         android:maxLines="1"
@@ -13,7 +12,6 @@
 
     <EditTextPreference
         android:capitalize="words"
-        android:defaultValue="https://notification-service.zmon.zalan.do"
         android:inputType="textUri"
         android:key="zmon_data_service_url"
         android:maxLines="1"
@@ -24,7 +22,6 @@
 
     <EditTextPreference
         android:capitalize="words"
-        android:defaultValue="https://notification-service.zmon.zalan.do"
         android:inputType="textUri"
         android:key="zmon_notification_service_url"
         android:maxLines="1"

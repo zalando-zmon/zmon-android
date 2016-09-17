@@ -29,6 +29,20 @@ Download Android SDK from https://developer.android.com/sdk/.
 
 Configuration
 =============
+The app needs some configuration URLs to connect to ZMON:
+
+- **apiUrl**: ZMON API URL
+- **oauthUrl**: The OAuth token service URL
+- **notificationApiUrl**: The notification service URL (used for push notifications)
+
+There are multiple ways to provide these properties `More info on Gradle properties <https://docs.gradle.org/current/userguide/build_environment.html>`_).
+
+#. Override the values in root gradle.properties: Don't commit these changes into repo.
+#. Provide your own gradle-local.properties: This file is gitignored, so you can add your private configuration without troubles.
+#. Through commandline: using -P argument (i.e. ./gradlew -PapiUrl="http://example.com"). This is more suitable for CI servers.
+
+Additional Configuration for GCM
+---------------------------------
 In order to use the feature to receive notifications for upcoming alerts via Google Cloud Messaging (GCM) Service, you need
 to configure those two string values in `google_api.xml`:
 
