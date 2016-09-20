@@ -2,6 +2,7 @@ package de.zalando.zmon;
 
 import android.os.Bundle;
 import android.util.Log;
+import android.widget.Toast;
 
 import com.google.common.base.Function;
 import com.google.common.collect.Collections2;
@@ -15,6 +16,7 @@ import de.zalando.zmon.persistence.AlertDetails;
 import de.zalando.zmon.persistence.Team;
 import de.zalando.zmon.task.GetActiveAlertsByIdTask;
 import de.zalando.zmon.task.GetActiveAlertsTask;
+import de.zalando.zmon.util.PreferencesHelper;
 
 public class ZmonDashboardActivity extends SelfUpdatableActivity implements ZmonDetailedAlertListFragment.Callback {
 
@@ -28,6 +30,11 @@ public class ZmonDashboardActivity extends SelfUpdatableActivity implements Zmon
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        PreferencesHelper preferencesHelper = new PreferencesHelper(this);
+        if(preferencesHelper.isSetupIncomplete()) {
+            Toast.makeText(this, R.string.setup_incomplete_message, Toast.LENGTH_LONG).show();
+        }
 
         alertListFragment = new ZmonDetailedAlertListFragment();
 

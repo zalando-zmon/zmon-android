@@ -25,4 +25,5 @@
 
     <string name="deleted">Delete</string>
     <string name="undo">Undo</string>
+    <string name="setup_incomplete_message">Configuration URLs are missing. Please go to Settings.</string>
 </resources>

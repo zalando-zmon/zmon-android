@@ -2,6 +2,15 @@ apply plugin: 'com.android.application'
 apply plugin: 'maven'
 apply plugin: 'com.google.gms.google-services'
 
+def propFile = new File('gradle-local.properties')
+if (propFile.canRead()) {
+    def Properties props = new Properties()
+    props.load(new FileInputStream(propFile))
+    for (Map.Entry property in props) {
+        ext[property.key] = property.value;
+    }
+}
+
 android {
     compileSdkVersion 23
     buildToolsVersion "22.0.1"
@@ -12,6 +21,10 @@ android {
         targetSdkVersion 23
         versionCode 2
         versionName "1.0.1"
+
+        buildConfigField "String", "DEFAULT_OAUTH_TOKEN_URL", project.property("oauthUrl")
+        buildConfigField "String", "DEFAULT_DATA_SERVICE_URL", project.property("apiUrl")
+        buildConfigField "String", "DEFAULT_NOTIFICATION_SERVICE_URL", project.property("notificationApiUrl")
     }
     buildTypes {
         release {
