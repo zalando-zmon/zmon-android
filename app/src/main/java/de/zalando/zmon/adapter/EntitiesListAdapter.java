@@ -35,29 +35,24 @@ public class EntitiesListAdapter extends BaseListAdapter<Entity> {
     public View getView(int i, View view, ViewGroup viewGroup) {
         Entity entity = getTypedItem(i);
 
+        ViewHolder holder;
+
         if (view == null) {
-            LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+            LayoutInflater inflater =  LayoutInflater.from (context);
             view = inflater.inflate(R.layout.listitem_entity, viewGroup, false);
+            holder = new ViewHolder();
+            holder.entity = (TextView) view.findViewById(R.id.entity);
+            holder.captures = (TextView) view.findViewById(R.id.captures);
+            holder.value = (TextView) view.findViewById(R.id.value);
 
-            TextView entityView = (TextView) view.findViewById(R.id.entity);
-            TextView capturesView = (TextView) view.findViewById(R.id.captures);
-            TextView valueView = (TextView) view.findViewById(R.id.value);
-
-            entityView.setText(entity.getName());
-            capturesView.setText(Html.fromHtml(buildCapturesJson(entity)));
-            valueView.setText(Html.fromHtml(buildValueJson(entity)));
-
-            ViewHolder holder = new ViewHolder();
-            holder.entity = entityView;
-            holder.captures = capturesView;
-            holder.value = valueView;
             view.setTag(holder);
         } else {
-            ViewHolder holder = (ViewHolder) view.getTag();
-            holder.entity.setText(entity.getName());
-            holder.captures.setText(Html.fromHtml(buildCapturesJson(entity)));
-            holder.value.setText(Html.fromHtml(buildValueJson(entity)));
+            holder = (ViewHolder) view.getTag();
         }
+
+        holder.entity.setText(entity.getName());
+        holder.captures.setText(Html.fromHtml(buildCapturesJson(entity)));
+        holder.value.setText(Html.fromHtml(buildValueJson(entity)));
 
         return view;
     }

@@ -27,29 +27,24 @@ public class AlertStatusListAdapter extends BaseListAdapter<AlertHeader> {
     @Override
     public View getView(int i, View view, ViewGroup viewGroup) {
         AlertHeader alertHeader = getTypedItem(i);
+        ViewHolder holder;
 
         if (view == null) {
-            LayoutInflater layoutInflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+            LayoutInflater inflater =  LayoutInflater.from(context);
+            view = inflater.inflate(R.layout.listitem_zmon_alert, viewGroup, false);
 
-            view = layoutInflater.inflate(R.layout.listitem_zmon_alert, viewGroup, false);
-
-            TextView alertName = (TextView) view.findViewById(R.id.name);
-            alertName.setText(alertHeader.getName());
-
-            TextView teamView = (TextView) view.findViewById(R.id.team);
-            teamView.setText(alertHeader.getTeam());
-
-            ViewHolder holder = new ViewHolder();
+            holder = new ViewHolder();
             holder.itemView = view;
-            holder.alertName = alertName;
-            holder.teamName = teamView;
+            holder.alertName = (TextView) view.findViewById(R.id.name);
+            holder.teamName = (TextView) view.findViewById(R.id.team);
 
             view.setTag(holder);
         } else {
-            ViewHolder holder = (ViewHolder) view.getTag();
-            holder.alertName.setText(alertHeader.getName());
-            holder.teamName.setText(alertHeader.getTeam());
+            holder = (ViewHolder) view.getTag();
         }
+
+        holder.alertName.setText(alertHeader.getName());
+        holder.teamName.setText(alertHeader.getTeam());
 
         return view;
     }

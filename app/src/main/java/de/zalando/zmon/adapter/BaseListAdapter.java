@@ -25,9 +25,7 @@ public abstract class BaseListAdapter<T> extends BaseAdapter {
 
     @SuppressWarnings("unchecked")
     public BaseListAdapter(final Context context, final List<T> items, Comparator<T> comparator) {
-        super();
-        this.context = context;
-        this.items = items != null ? new ArrayList<>(items) : (List<T>) Collections.EMPTY_LIST;
+        this(context, items);
         this.comparator = comparator;
 
         try {

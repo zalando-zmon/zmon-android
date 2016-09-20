@@ -18,16 +18,25 @@ public class TeamListAdapter extends BaseListAdapter<Team> {
     }
 
     @Override
-    public View getView(final int i, final View view, final ViewGroup viewGroup) {
+    public View getView(int i, View view, ViewGroup viewGroup) {
         final Team team = (Team) getItem(i);
 
-        LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+        ViewHolder holder;
 
-        final View itemView = inflater.inflate(R.layout.removable_listitem_team, viewGroup, false);
-        final TextView name = (TextView) itemView.findViewById(R.id.name);
-        name.setText(team.getName());
+        if(view == null) {
+            LayoutInflater inflater = LayoutInflater.from(context);
+            view = inflater.inflate(R.layout.removable_listitem_team, viewGroup, false);
 
-        return itemView;
+            holder = new ViewHolder();
+            holder.teamName = (TextView) view.findViewById(R.id.name);
+            view.setTag(holder);
+        } else {
+            holder = (ViewHolder) view.getTag();
+        }
+
+        holder.teamName.setText(team.getName());
+
+        return view;
     }
 
     public void remove(final int position) {
@@ -35,12 +44,7 @@ public class TeamListAdapter extends BaseListAdapter<Team> {
         notifyDataSetChanged();
     }
 
-    static class ViewHolder {
-        TextView dataTextView;
-
-        ViewHolder(final View view) {
-            dataTextView = ((TextView) view.findViewById(R.id.name));
-            view.setTag(this);
-        }
+    private static class ViewHolder {
+        TextView teamName;
     }
 }

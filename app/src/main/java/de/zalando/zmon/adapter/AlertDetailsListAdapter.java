@@ -60,35 +60,26 @@ public class AlertDetailsListAdapter extends BaseListAdapter<AlertDetails> {
     public View getView(int i, View view, ViewGroup viewGroup) {
         AlertDetails alertDetails = getTypedItem(i);
 
+        ViewHolder holder;
         if (view == null) {
-            LayoutInflater layoutInflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-
+            LayoutInflater layoutInflater = LayoutInflater.from(context);
             view = layoutInflater.inflate(R.layout.listitem_detailed_zmon_alert, viewGroup, false);
-            setBackgroundColor(view, alertDetails.getAlertDefinition().getPriority());
 
-            TextView messageView = (TextView) view.findViewById(R.id.message);
-            messageView.setText(alertDetails.getMessage());
-
-            TextView startTimeView = (TextView) view.findViewById(R.id.start_time);
-            startTimeView.setText(formatStartTime(alertDetails.getEntities()));
-
-            TextView teamView = (TextView) view.findViewById(R.id.team);
-            teamView.setText(alertDetails.getAlertDefinition().getTeam());
-
-            ViewHolder holder = new ViewHolder();
+            holder = new ViewHolder();
             holder.itemView = view;
-            holder.messageView = messageView;
-            holder.teamView = teamView;
-            holder.startTimeView = startTimeView;
+            holder.messageView = (TextView) view.findViewById(R.id.message);
+            holder.startTimeView = (TextView) view.findViewById(R.id.start_time);
+            holder.teamView = (TextView) view.findViewById(R.id.team);
 
             view.setTag(holder);
         } else {
-            ViewHolder holder = (ViewHolder) view.getTag();
-            holder.messageView.setText(alertDetails.getMessage());
-            holder.startTimeView.setText(formatStartTime(alertDetails.getEntities()));
-            holder.teamView.setText(alertDetails.getAlertDefinition().getTeam());
-            setBackgroundColor(holder.itemView, alertDetails.getAlertDefinition().getPriority());
+            holder = (ViewHolder) view.getTag();
         }
+
+        holder.messageView.setText(alertDetails.getMessage());
+        holder.startTimeView.setText(formatStartTime(alertDetails.getEntities()));
+        holder.teamView.setText(alertDetails.getAlertDefinition().getTeam());
+        setBackgroundColor(holder.itemView, alertDetails.getAlertDefinition().getPriority());
 
         return view;
     }
